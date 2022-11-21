@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_ServiceBus_using_Virtual_Network_ServiceEndPt",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/235359c5-7c52-4b82-9055-01c75cf9f60e",
+  "display_name": "Azure Audit ServiceBus using Virtual Network ServiceEndPt",
+  "description": "This policy audits whether ServiceBus is using Virtual Network Service EndPoint.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"Indexed\",\n \"policy_description\": \"This policy audits any Service Bus not configured to use a virtual network service endpoint.\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/235359c5-7c52-4b82-9055-01c75cf9f60e\",\n \"policy_description\": \"This policy, audits any Service Bus not configured to use a virtual network service endpoint.\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Network\",\n \"service_resource\": [\n \"Namespaces\"\n ],\n \"resource_type\": \"Service_Bus\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/VtPEe\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.ServiceBus/namespaces\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.ServiceBus/namespaces/virtualNetworkRules\",\n \"existenceCondition\": {\n \"field\": \"Microsoft.ServiceBus/namespaces/virtualNetworkRules/virtualNetworkSubnetId\",\n \"exists\": \"true\"\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Namespaces"
+  ],
+  "resource_type": "Service_Bus",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_ServiceBus_using_Virtual_Network_ServiceEndPt",
+    "description": "It is recommended to configure virtual network service endpoint for Service Bus. Endpoints allow you to secure your critical Azure service resources to only your virtual networks. ",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/VtPEe"
+}

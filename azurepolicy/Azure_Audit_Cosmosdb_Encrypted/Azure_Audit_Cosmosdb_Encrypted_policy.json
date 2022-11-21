@@ -1,0 +1,73 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/43d13c14-f536-4c60-9aea-473b84e47138",
+    "policy_description": "This policy Audits if encryption is enabled for CosmosDB's",
+    "recommendation_name": "Azure_Audit_Cosmosdb_Encrypted",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Azure_CosmosDB",
+    "service_resource": [
+      "Databases"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/5945b"
+  },
+  "parameters": {
+    "type": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Type of the back up policy",
+        "description": "If the policy type given in the parameters is equal to the policy type of the cosmosdb then it will be compliant."
+      }
+    },
+    "keyVaultKeyUri": {
+      "type": "String",
+      "metadata": {
+        "displayName": "keyVaultKeyUri of the cosmosdb",
+        "description": "If the keyVaultKeyUri given in the parameters is equal to the keyVaultKeyUri of the cosmosdb then it will be compliant."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.DocumentDB/databaseAccounts"
+        },
+        {
+          "not": {
+            "allOf": [
+              {
+                "field": "Microsoft.DocumentDB/databaseAccounts/backupPolicy.type",
+                "equals": "[parameters('type')]"
+              },
+              {
+                "field": "Microsoft.DocumentDB/databaseAccounts/keyVaultKeyUri",
+                "equals": "[parameters('keyVaultKeyUri')]"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

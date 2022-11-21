@@ -1,0 +1,32 @@
+{
+  "name": "Azure_Audit_IPSec_IEA_Policy_Virt_Ntw_Gateway_Connections",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/50b83b09-03da-41c1-b656-c293c914862b",
+  "display_name": "Azure Audit IPSec IEA Policy Virt Ntw Gateway Connections",
+  "description": "This policy ensures that all Azure virtual network gateway connections use a custom Internet Protocol Security(Ipsec)/Internet Key Exchange(IKE) policy. Supported algorithms and key strengths - https://aka.ms/AA62kb0",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/50b83b09-03da-41c1-b656-c293c914862b\",\n \"policy_description\": \"This policy ensures that all Azure virtual network gateway connections use a custom Internet Protocol Security(Ipsec)/Internet Key Exchange(IKE) policy. Supported algorithms and key strengths - https://aka.ms/AA62kb0\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Network\",\n \"service_resource\": [\n \"Virtual_Networks\"\n ],\n \"resource_type\": \"Virtual_Networks\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/XWwZp\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"Audit\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Audit\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n }\n },\n \"IPsecEncryption\": {\n \"type\": \"Array\",\n \"metadata\": {\n \"displayName\": \"IPsec Encryption\",\n \"description\": \"IPsec Encryption\"\n }\n },\n \"IPsecIntegrity\": {\n \"type\": \"Array\",\n \"metadata\": {\n \"displayName\": \"IPsec Integrity\",\n \"description\": \"IPsec Integrity\"\n }\n },\n \"IKEEncryption\": {\n \"type\": \"Array\",\n \"metadata\": {\n \"displayName\": \"IKE Encryption\",\n \"description\": \"IKE Encryption\"\n }\n },\n \"IKEIntegrity\": {\n \"type\": \"Array\",\n \"metadata\": {\n \"displayName\": \"IKE Integrity\",\n \"description\": \"IKE Integrity\"\n }\n },\n \"DHGroup\": {\n \"type\": \"Array\",\n \"metadata\": {\n \"displayName\": \"DH Group\",\n \"description\": \"DH Group\"\n }\n },\n \"PFSGroup\": {\n \"type\": \"Array\",\n \"metadata\": {\n \"displayName\": \"PFS Group\",\n \"description\": \"PFS Group\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Network/connections\"\n },\n {\n \"anyOf\": [\n {\n \"field\": \"Microsoft.Network/connections/ipsecPolicies[*].ipsecEncryption\",\n \"notIn\": \"[parameters('IPsecEncryption')]\"\n },\n {\n \"field\": \"Microsoft.Network/connections/ipsecPolicies[*].ipsecIntegrity\",\n \"notIn\": \"[parameters('IPsecIntegrity')]\"\n },\n {\n \"field\": \"Microsoft.Network/connections/ipsecPolicies[*].ikeEncryption\",\n \"notIn\": \"[parameters('IKEEncryption')]\"\n },\n {\n \"field\": \"Microsoft.Network/connections/ipsecPolicies[*].ikeIntegrity\",\n \"notIn\": \"[parameters('IKEIntegrity')]\"\n },\n {\n \"field\": \"Microsoft.Network/connections/ipsecPolicies[*].dhGroup\",\n \"notIn\": \"[parameters('DHGroup')]\"\n },\n {\n \"field\": \"Microsoft.Network/connections/ipsecPolicies[*].pfsGroup\",\n \"notIn\": \"[parameters('PFSGroup')]\"\n }\n ]\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Virtual_Networks"
+  ],
+  "resource_type": "Virtual_Networks",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendations": [
+    "Azure_Audit_IPSec_IEA_Policy_Virt_Ntw_Gateway_Connections"
+  ],
+  "uri": "policy/azure_policy/global/azure/compliance/others/XWwZp"
+}

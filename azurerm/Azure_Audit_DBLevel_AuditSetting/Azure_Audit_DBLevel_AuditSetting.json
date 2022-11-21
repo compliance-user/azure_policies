@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether  DB level audit setting is enabled for SQL databases.",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "MSSQL"
+  ],
+  "resource_type": "Servers",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit DBLevel AuditSetting",
+  "name": "Azure_Audit_DBLevel_AuditSetting",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/na5fb",
+  "content": "{\n  \"mode\": \"All\",\n  \"parameters\": {\n    \"setting\": {\n      \"allowedValues\": [\n        \"enabled\",\n        \"disabled\"\n      ],\n      \"metadata\": {\n        \"displayName\": \"Audit Setting\"\n      },\n      \"defaultValue\": \"enabled\",\n      \"type\": \"String\"\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"equals\": \"Microsoft.Sql/servers/databases\",\n          \"field\": \"type\"\n        },\n        {\n          \"field\": \"name\",\n          \"notEquals\": \"master\"\n        }\n      ]\n    },\n    \"then\": {\n      \"details\": {\n        \"existenceCondition\": {\n          \"allOf\": [\n            {\n              \"equals\": \"[parameters('setting')]\",\n              \"field\": \"Microsoft.Sql/auditingSettings.state\"\n            }\n          ]\n        },\n        \"name\": \"default\",\n        \"type\": \"Microsoft.Sql/servers/databases/auditingSettings\"\n      },\n      \"effect\": \"AuditIfNotExists\"\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_DBLevel_AuditSetting"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_DBLevel_AuditSetting.json"
+  }
+}

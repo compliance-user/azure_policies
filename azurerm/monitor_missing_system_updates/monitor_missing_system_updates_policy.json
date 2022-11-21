@@ -1,0 +1,35 @@
+{
+  "parameters": {
+    "effect": {
+      "type": "string",
+      "allowedValues": [
+        "AuditIfNotExists"
+      ]
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": [
+        "Microsoft.Compute/virtualMachines",
+        "Microsoft.ClassicCompute/virtualMachines"
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/complianceResults",
+        "name": "systemUpdates",
+        "existenceCondition": {
+          "field": "Microsoft.Security/complianceResults/resourceStatus",
+          "in": [
+            "Monitored",
+            "NotApplicable",
+            "OffByPolicy",
+            "Healthy"
+          ]
+        }
+      }
+    }
+  }
+}

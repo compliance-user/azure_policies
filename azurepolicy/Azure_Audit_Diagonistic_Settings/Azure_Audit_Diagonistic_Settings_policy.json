@@ -1,0 +1,49 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/7f89b1eb-583c-429a-8828-af049802c1d9",
+    "policy_description": "Audit diagnostic setting for selected resource types.",
+    "classification": "Security",
+    "sub_classification": "Host",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/ced90"
+  },
+  "parameters": {
+    "listOfResourceTypes": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Resource Types",
+        "strongType": "resourceTypes"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": "[parameters('listOfResourceTypes')]"
+    },
+    "then": {
+      "effect": "AuditIfNotExists",
+      "details": {
+        "type": "Microsoft.Insights/diagnosticSettings",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+              "equals": "true"
+            },
+            {
+              "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled",
+              "equals": "true"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

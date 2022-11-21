@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/6104a7b4854113d1a12959560070a047",
+    "policy_description": "This policy checks to see if the SQL DB is allowing the external traffic in its firewall rule",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "MSSQL"
+    ],
+    "resource_type": "Servers",
+    "uri": "policy/azure_policy/global/azure/compliance/others/osnui"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Sql/servers/firewallRules"
+        },
+        {
+          "field": "Microsoft.Sql/servers/firewallRules/startIpAddress",
+          "equals": "0.0.0.0"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

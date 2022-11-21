@@ -1,0 +1,30 @@
+{
+  "name": "Azure_Audit_Multiple_Tags_And_Values",
+  "display_name": "Azure Audit Tags and Values For All Resources",
+  "description": "This policy audits whether Tags and Values for All Resources are provided.  This policy will identify the Azure resources not compliant with the assigned tagging policy for the given subscription. Tags are used for logical grouping of resources.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n  \"parameters\": {\n    \"tag1Name\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Tag1 Name\",\n        \"description\": \"Name of the tag, such as 'environment'\"\n      },\n      \"defaultValue\": \"env\"\n    },\n    \"tag1Value\": {\n      \"type\": \"Array\",\n      \"metadata\": {\n        \"displayName\": \"Tag1 Value\",\n        \"description\": \"Value of the tag, such as 'production'\"\n      },\n      \"defaultValue\": [\n        \"dev\"\n      ]\n    },\n    \"tag2Name\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Tag2 Name\",\n        \"description\": \"Name of the tag, such as 'environment'\"\n      },\n      \"defaultValue\": \"owner\"\n    },\n    \"tag2Value\": {\n      \"type\": \"Array\",\n      \"metadata\": {\n        \"displayName\": \"Tag2 Value\",\n        \"description\": \"Value of the tag, such as 'production'\"\n      },\n      \"defaultValue\": [\n        \"self\"\n      ]\n    },\n    \"tag3Name\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Tag3 Name\",\n        \"description\": \"Name of the tag, such as 'environment'\"\n      },\n      \"defaultValue\": \"team\"\n    },\n    \"tag3Value\": {\n      \"type\": \"Array\",\n      \"metadata\": {\n        \"displayName\": \"Tag3 Value\",\n        \"description\": \"Value of the tag, such as 'production'\"\n      },\n      \"defaultValue\": [\n        \"self\"\n      ]\n    },\n    \"tag4Name\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Tag4 Name\",\n        \"description\": \"Name of the tag, such as 'environment'\"\n      },\n      \"defaultValue\": \"version\"\n    },\n    \"tag4Value\": {\n      \"type\": \"Array\",\n      \"metadata\": {\n        \"displayName\": \"Tag4 Value\",\n        \"description\": \"Value of the tag, such as 'production'\"\n      },\n      \"defaultValue\": [\n        \"1\"\n      ]\n    },\n    \"tag5Name\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Tag5 Name\",\n        \"description\": \"Name of the tag, such as 'environment'\"\n      },\n      \"defaultValue\": \"organiztion\"\n    },\n    \"tag5Value\": {\n      \"type\": \"Array\",\n      \"metadata\": {\n        \"displayName\": \"Tag5 Value\",\n        \"description\": \"Value of the tag, such as 'production'\"\n      },\n      \"defaultValue\": [\n        \"CS\"\n      ]\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"anyOf\": [\n        {\n          \"field\": \"[concat('tags[', parameters('tag1Name'), ']')]\",\n          \"exists\": \"false\"\n        },\n        {\n          \"field\": \"[concat('tags[', parameters('tag2Name'), ']')]\",\n          \"exists\": \"false\"\n        },\n        {\n          \"field\": \"[concat('tags[', parameters('tag3Name'), ']')]\",\n          \"exists\": \"false\"\n        },\n        {\n          \"field\": \"[concat('tags[', parameters('tag4Name'), ']')]\",\n          \"exists\": \"false\"\n        },\n        {\n          \"field\": \"[concat('tags[', parameters('tag5Name'), ']')]\",\n          \"exists\": \"false\"\n        },\n        {\n          \"not\": {\n            \"field\": \"[concat('tags[', parameters('tag1Name'), ']')]\",\n            \"in\": \"[parameters('tag1Value')]\"\n          }\n        },\n        {\n          \"not\": {\n            \"field\": \"[concat('tags[', parameters('tag2Name'), ']')]\",\n            \"in\": \"[parameters('tag2Value')]\"\n          }\n        },\n        {\n          \"not\": {\n            \"field\": \"[concat('tags[', parameters('tag3Name'), ']')]\",\n            \"in\": \"[parameters('tag3Value')]\"\n          }\n        },\n        {\n          \"not\": {\n            \"field\": \"[concat('tags[', parameters('tag4Name'), ']')]\",\n            \"in\": \"[parameters('tag4Value')]\"\n          }\n        },\n        {\n          \"not\": {\n            \"field\": \"[concat('tags[', parameters('tag5Name'), ']')]\",\n            \"in\": \"[parameters('tag5Value')]\"\n          }\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"audit\"\n    }\n  }\n}",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "uri": "policy/azure_policy/global/azure/compliance/others/reilqz",
+  "recommendations": [
+    "Azure_Manage_Enforce_Tag_Missing_Resources"
+  ]
+}

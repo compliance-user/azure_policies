@@ -1,0 +1,84 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_description": "Budget is enabled at subscription",
+    "recommendation_name": "Azure_Audit_Budget_Enabled_At_Subscription",
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/abf1eac6-7775-4aff-830d-697f4d416c24",
+    "classification": "Access",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Subscription"
+    ],
+    "resource_type": "Subscription",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/7c4c9",
+    "category": "Consumption",
+    "createdBy": "7de373b9-42bc-49e8-b424-074f00bea8fb",
+    "createdOn": "2021-10-01T16:32:08.843299Z",
+    "updatedBy": null,
+    "updatedOn": null
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    },
+    "amount": {
+      "type": "String",
+      "metadata": {
+        "displayName": "amount of the budget",
+        "description": "The total amount of cost or usage to track with the budget."
+      }
+    },
+    "timeGrain": {
+      "type": "String",
+      "metadata": {
+        "displayName": "timeGrain of the budget",
+        "description": "timeGrain of the budget."
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Resources/subscriptions"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Consumption/budgets",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Consumption/budgets/amount",
+              "equals": "[parameters('amount')]"
+            },
+            {
+              "field": "Microsoft.Consumption/budgets/timeGrain",
+              "equals": "[parameters('timeGrain')]"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "abf1eac6-7775-4aff-830d-697f4d416c24",
+  "systemData": {
+    "createdBy": "tridib.borah@agiliz.tech",
+    "createdByType": "User",
+    "createdAt": "2021-10-01T16:32:08.6006857Z",
+    "lastModifiedBy": "tridib.borah@agiliz.tech",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2021-10-01T16:32:08.6006857Z"
+  }
+}

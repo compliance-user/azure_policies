@@ -1,0 +1,47 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/eb6f77b9-bd53-4e35-a23d-7f65d5f0e446",
+    "policy_description": "This policy helps audit any PostgreSQL databases in your environment without log_disconnections enabled.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Databases"
+    ],
+    "resource_type": "PGSQL",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/qGqjR"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.DBforPostgreSQL/servers"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.DBforPostgreSQL/servers/configurations",
+        "name": "log_disconnections",
+        "existenceCondition": {
+          "field": "Microsoft.DBforPostgreSQL/servers/configurations/value",
+          "equals": "ON"
+        }
+      }
+    }
+  }
+}

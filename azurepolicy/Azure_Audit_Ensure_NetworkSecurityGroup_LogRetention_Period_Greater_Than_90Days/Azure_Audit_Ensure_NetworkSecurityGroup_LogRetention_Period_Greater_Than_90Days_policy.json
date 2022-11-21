@@ -1,0 +1,59 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/2b213a6e-e077-47db-aee5-3bac27e36c29",
+    "policy_description": "Ensure that Network Security Group Flow Log retention period is 'greater than 90 days",
+    "recommendation_name": "Azure_Audit_Ensure_NetworkSecurityGroup_LogRetention_Period_Greater_Than_90Days",
+    "classification": "Network",
+    "sub_classification": "Application",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "service_resource"
+    ],
+    "uri": "policy/azure_policy/global/azure/compliance/others/8d25e",
+    "severity": "high"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Network/networkWatchers"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Network/networkWatchers/flowLogs",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Network/networkWatchers/flowLogs/format.version",
+              "equals": 2
+            },
+            {
+              "field": "Microsoft.Network/networkWatchers/flowLogs/retentionPolicy.enabled",
+              "equals": true
+            },
+            {
+              "field": "Microsoft.Network/networkWatchers/flowLogs/retentionPolicy.days",
+              "greaterOrEquals": 90
+            }
+          ]
+        }
+      }
+    }
+  }
+}

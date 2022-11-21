@@ -1,0 +1,47 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/efb09cbd589af002c19d0759955b80c4",
+    "policy_description": "This policy checks to see if the unattached or detached disks are being encrypted or not",
+    "classification": "Operation",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Disks"
+    ],
+    "resource_type": "Storage_Disks",
+    "uri": "policy/azure_policy/global/azure/compliance/others/ln2dx"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "auditIfNotExists"
+      ],
+      "defaultValue": "auditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/disks"
+        },
+        {
+          "field": "Microsoft.Compute/disks/diskState",
+          "equals": "unattached"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Compute/disks",
+        "existenceCondition": {
+          "field": "Microsoft.Compute/disks/encryptionSettingsCollection.enabled",
+          "equals": "true"
+        }
+      }
+    }
+  }
+}

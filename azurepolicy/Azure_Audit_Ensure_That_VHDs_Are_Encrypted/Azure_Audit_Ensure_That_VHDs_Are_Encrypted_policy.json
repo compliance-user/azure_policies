@@ -1,0 +1,58 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_description": "Ensure that VHD's are encrypted",
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/e7bfb476-7917-4e6a-bd7f-90fab5d85c62",
+    "recommendation_name": "Azure_Audit_Ensure_That_VHDs_Are_Encrypted",
+    "classification": "Network",
+    "sub_classification": "Application",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "uri": "policy/azure_policy/global/azure/compliance/others/ebbb0",
+    "severity": "high"
+  },
+  "parameters": {
+    "diskEncryptionSetId": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "diskEncryptionSetId for the given disk",
+        "description": "If the diskEncryptionSetId given in the parameter matches with the diskEncryptionSetId of the disk then it will be in compliant with this policy."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/disks"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Compute/disks/encryption.diskEncryptionSetId",
+            "in": "[parameters('diskEncryptionSetId')]"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

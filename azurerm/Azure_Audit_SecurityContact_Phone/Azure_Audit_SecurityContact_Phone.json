@@ -1,0 +1,33 @@
+{
+  "status": "active",
+  "description": "This policy audits whether Security contact phone has been set.",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "high",
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit SecurityContact Phone",
+  "name": "Azure_Audit_SecurityContact_Phone",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/qm5af",
+  "content": "{\n  \"mode\": \"All\",\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"equals\": \"Microsoft.Resources/subscriptions\"\n    },\n    \"then\": {\n      \"effect\": \"auditIfNotExists\",\n      \"details\": {\n        \"type\": \"Microsoft.Security/securityContacts\",\n        \"existenceCondition\": {\n          \"field\": \"Microsoft.Security/securityContacts/phone\",\n          \"notEquals\": \"\"\n        }\n      }\n    }\n  }\n}",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_SecurityContact_Phone_recommendation"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_SecurityContact_Phone_policy.json"
+  }
+}

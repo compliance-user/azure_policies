@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether all Advanced Threat Protection types are enabled on your SQL servers. Enabling all types protects against SQL injection, database vulnerabilities, and any other anomalous activities.",
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "MSSQL"
+  ],
+  "resource_type": "Servers",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit SQLInstance Property ATP",
+  "name": "Azure_Audit_SQLInstance_Property_ATP",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/r427r",
+  "content": "{\n  \"mode\": \"All\",\n  \"parameters\": {\n    \"effect\": {\n      \"allowedValues\": [\n        \"AuditIfNotExists\",\n        \"Disabled\"\n      ],\n      \"defaultValue\": \"AuditIfNotExists\",\n      \"metadata\": {\n        \"description\": \"Enable or disable the execution of the policy\",\n        \"displayName\": \"Effect\"\n      },\n      \"type\": \"String\"\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"equals\": \"Microsoft.Sql/managedInstances\",\n      \"field\": \"type\"\n    },\n    \"then\": {\n      \"details\": {\n        \"existenceCondition\": {\n          \"equals\": \"\",\n          \"field\": \"Microsoft.Sql/managedInstances/securityAlertPolicies/disabledAlerts[*]\"\n        },\n        \"name\": \"default\",\n        \"type\": \"Microsoft.Sql/managedInstances/securityAlertPolicies\"\n      },\n      \"effect\": \"[parameters('effect')]\"\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_SQLInstance_Property_Advance_Threat_Protection"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_SQLInstance_Property_ATP.json"
+  }
+}

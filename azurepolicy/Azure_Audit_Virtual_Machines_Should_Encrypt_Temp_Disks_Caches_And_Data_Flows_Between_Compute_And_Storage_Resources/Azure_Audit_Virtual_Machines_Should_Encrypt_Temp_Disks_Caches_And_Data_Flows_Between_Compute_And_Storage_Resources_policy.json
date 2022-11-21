@@ -1,0 +1,49 @@
+{
+    "policyType": "Custom",
+    "mode": "All",
+    "metadata": {
+      "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/95f6d9bf-e518-48a2-bec8-4efbbfe220ec",
+      "category": "Security Center"
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "AuditIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "AuditIfNotExists"
+      },
+      "code": {
+        "type": "String",
+        "metadata": {
+          "displayName": "code for the given security assessment status",
+          "description": "If the code given in the parameter matches with the code of the security assessment then it will be in compliant with this policy."
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "in": [
+          "Microsoft.ClassicCompute/virtualMachines",
+          "Microsoft.Compute/virtualMachines"
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.Security/assessments",
+          "name": "d57a4221-a804-52ca-3dea-768284f06bb7",
+          "existenceCondition": {
+            "field": "Microsoft.Security/assessments/status.code",
+            "equals": "[parameters('code')]"
+          }
+        }
+      }
+    }
+}

@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "Audits Reserved VirtualMachines that are expiring in X days",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Reservation_Order"
+  ],
+  "resource_type": "Reserved_VM_Instances",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Reserved VM Expiry",
+  "name": "Azure_Audit_Reserved_VM_Expiry",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/sa3rgs",
+  "content": "{\n  \"mode\": \"All\",\n  \"parameters\": {\n    \"numberOfDays\": {\n      \"metadata\": {\n        \"description\": \"Number of Days to Expire\",\n        \"displayName\": \"numberOfDays\"\n      },\n      \"type\": \"Integer\"\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"equals\": \"Microsoft.Capacity/reservationOrders\",\n          \"field\": \"type\"\n        },\n        {\n          \"field\": \"Microsoft.Capacity/reservationOrders/expiryDate\",\n          \"exists\": \"true\"\n        },\n        {\n          \"field\": \"Microsoft.Capacity/reservationOrders/expiryDate\",\n          \"less\": \"[first(split(addDays(utcNow(),parameters('numberOfDays')),':'))]\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"audit\"\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Reserved_VM_Expiry"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Reserved_VM_Expiry.json"
+  }
+}

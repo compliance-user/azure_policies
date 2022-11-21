@@ -1,0 +1,54 @@
+{
+  "status": "active",
+  "description": "This policy audits whether Accounts with owner who are MFA enabled.",
+  "classification": "Access",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Accounts with owner who are not MFA enabled",
+  "name": "Azure_Audit_Accounts_With_Owner_perm_not_MFA_Subscription",
+  "parameters": {
+    "effect": {
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/65zn4",
+  "content": "{\"policyRule\": {\"then\": {\"effect\": \"[parameters('effect')]\", \"details\": {\"type\": \"Microsoft.Security/complianceResults\", \"name\": \"EnableMFAForOwnerPermissions\", \"existenceCondition\": {\"field\": \"Microsoft.Security/complianceResults/resourceStatus\", \"in\": [\"NotApplicable\", \"OffByPolicy\", \"Healthy\"]}}}, \"if\": {\"field\": \"type\", \"equals\": \"Microsoft.Resources/subscriptions\"}}, \"parameters\": {\"effect\": {\"allowedValues\": [\"AuditIfNotExists\", \"Disabled\"], \"type\": \"String\", \"metadata\": {\"displayName\": \"Effect\", \"description\": \"Enable or disable the execution of the policy\"}}}}\n",
+  "is_system_policy": true,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Enable_MFA_for_owner_accounts"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "system_scheduled_details": [
+      {
+        "interval": 1440,
+        "args": {
+          "effect": "AuditIfNotExists"
+        }
+      }
+    ],
+    "file": "Azure_Audit_Accounts_With_Owner_perm_not_MFA_Subscription.json"
+  }
+}

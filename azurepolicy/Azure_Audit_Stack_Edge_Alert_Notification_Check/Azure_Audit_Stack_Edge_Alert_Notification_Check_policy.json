@@ -1,0 +1,48 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/dd9fc8c3-cfd0-43f5-8cf7-0e50ad6ed0a8",
+    "policy_description": "Audits stack edge alert notification",
+    "recommendation_name": "Azure_Audit_Stack_Edge_Alert_Notification_Check",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "Subscription",
+    "service_resource": [
+      "Subscription"
+    ],
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/9fd9f"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.DataBoxEdge/dataBoxEdgeDevices"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Insights/metricalerts",
+        "existenceScope": "Subscription",
+        "existenceCondition": {
+          "field": "Microsoft.Insights/metricalerts/enabled",
+          "equals": true
+        }
+      }
+    }
+  }
+}

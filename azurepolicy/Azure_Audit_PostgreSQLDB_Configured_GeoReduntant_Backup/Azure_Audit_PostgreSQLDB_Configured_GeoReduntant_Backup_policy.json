@@ -1,0 +1,47 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/48af4db5-9b8b-401c-8e74-076be876a430",
+    "policy_description": "This policy audits any Azure Database for PostgreSQL with geo-redundant backup not enabled.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Databases"
+    ],
+    "resource_type": "PGSQL",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/pcsYV"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit",
+        "Disabled"
+      ],
+      "defaultValue": "Audit",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.DBforPostgreSQL/servers"
+        },
+        {
+          "field": "Microsoft.DBforPostgreSQL/servers/storageProfile.geoRedundantBackup",
+          "notEquals": "Enabled"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

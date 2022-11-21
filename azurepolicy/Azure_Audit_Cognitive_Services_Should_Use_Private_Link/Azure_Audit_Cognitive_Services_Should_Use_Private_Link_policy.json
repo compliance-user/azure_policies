@@ -1,0 +1,56 @@
+{
+    "policyType": "BuiltIn",
+    "mode": "Indexed",
+    "metadata": {
+      "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/cddd188c-4b82-4c48-a19d-ddf74ee66a01",
+      "version": "2.0.0",
+      "category": "Cognitive Services"
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.CognitiveServices/accounts"
+          },
+          {
+            "count": {
+              "field": "Microsoft.CognitiveServices/accounts/privateEndpointConnections[*]",
+              "where": {
+                "field": "Microsoft.CognitiveServices/accounts/privateEndpointConnections[*].privateLinkServiceConnectionState.status",
+                "equals": "Approved"
+              }
+            },
+            "less": 1
+          },
+          {
+            "count": {
+              "field": "Microsoft.CognitiveServices/accounts/capabilities[*]",
+              "where": {
+                "field": "Microsoft.CognitiveServices/accounts/capabilities[*].name",
+                "equals": "VirtualNetworks"
+              }
+            },
+            "greater": 0
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+}

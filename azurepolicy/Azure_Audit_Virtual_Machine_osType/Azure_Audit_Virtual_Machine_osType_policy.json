@@ -1,0 +1,73 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/8950b5bb-95fb-4fc9-8517-a3e47b9a211f",
+    "policy_description": "This policy audit the os type of virtualMachine",
+    "recommendation_name": "Azure_Audit_Virtual_Machine_osType",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/b1fbd"
+  },
+  "parameters": {
+    "osType": {
+      "type": "String",
+      "metadata": {
+        "displayName": "osType of the virtual machine",
+        "description": "If the osType given in the parameter is equal to the osType of the virtual machine then it will be compliant."
+      }
+    },
+    "vmSize": {
+      "type": "String",
+      "metadata": {
+        "displayName": "vmSize of the virtual machine",
+        "description": "If the vmSize given in the parameter is equal to the vmSize of the virtual machine then it will be compliant."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/virtualMachines"
+        },
+        {
+          "not": {
+            "allOf": [
+              {
+                "field": "Microsoft.Compute/virtualMachines/storageProfile.osDisk.osType",
+                "equals": "[parameters('osType')]"
+              },
+              {
+                "field": "Microsoft.Compute/virtualMachines/hardwareProfile.vmSize",
+                "equals": "[parameters('vmSize')]"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

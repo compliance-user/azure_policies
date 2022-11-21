@@ -1,0 +1,42 @@
+{
+  "status": "active",
+  "description": "This policy audits whether VM vulnerabilities are resolved.",
+  "classification": "Security",
+  "sub_classification": "Host",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Monitor VM Vulnerabilities",
+  "name": "Azure_Monitor_VM_Vulnerabilities",
+  "parameters": {
+    "effect": {
+      "type": "string",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ]
+    }
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/izhd6",
+  "content": "{\"policyRule\": {\"then\": {\"effect\": \"[parameters('effect')]\", \"details\": {\"type\": \"Microsoft.Security/complianceResults\", \"name\": \"vulnerabilityAssessment\", \"existenceCondition\": {\"field\": \"Microsoft.Security/complianceResults/resourceStatus\", \"in\": [\"Monitored\", \"NotApplicable\", \"OffByPolicy\", \"Healthy\"]}}}, \"if\": {\"field\": \"type\", \"in\": [\"Microsoft.Compute/virtualMachines\", \"Microsoft.ClassicCompute/virtualMachines\"]}}, \"parameters\": {\"effect\": {\"type\": \"string\", \"allowedValues\": [\"AuditIfNotExists\", \"Disabled\"]}}}",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Enable_VM_for_vulnerabilities"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Monitor_VM_Vulnerabilities.json"
+  }
+}

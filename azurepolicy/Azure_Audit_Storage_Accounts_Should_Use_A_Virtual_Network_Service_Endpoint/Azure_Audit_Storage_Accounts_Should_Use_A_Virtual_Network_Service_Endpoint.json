@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Storage_Accounts_Should_Use_A_Virtual_Network_Service_Endpoint",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/60d21c4f-21a3-4d94-85f4-b924e6aeeda4",
+  "display_name": "Azure Audit Storage Accounts Should Use A Virtual Network Service Endpoint",
+  "description": "This policy audits any Storage Account not configured to use a virtual network service endpoint",
+  "category": "service",
+  "status": "active",
+  "content": "{\n    \"policyType\": \"BuiltIn\",\n    \"mode\": \"Indexed\",\n    \"description\": \"This policy audits any Storage Account not configured to use a virtual network service endpoint.\",\n    \"metadata\": {\n      \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/60d21c4f-21a3-4d94-85f4-b924e6aeeda4\",\n      \"version\": \"1.0.0\",\n      \"category\": \"Network\"\n    },\n    \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"Enable or disable the execution of the policy\"\n        },\n        \"allowedValues\": [\n          \"Audit\",\n          \"Disabled\"\n        ],\n        \"defaultValue\": \"Audit\"\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"allOf\": [\n          {\n            \"field\": \"type\",\n            \"equals\": \"Microsoft.Storage/storageAccounts\"\n          },\n          {\n            \"anyOf\": [\n              {\n                \"field\": \"Microsoft.Storage/storageAccounts/networkAcls.defaultAction\",\n                \"notEquals\": \"Deny\"\n              },\n              {\n                \"field\": \"Microsoft.Storage/storageAccounts/networkAcls.virtualNetworkRules[*].id\",\n                \"exists\": \"false\"\n              }\n            ]\n          }\n        ]\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\"\n      }\n    }\n  }\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "High",
+  "service_resource": [
+    "Storage_Accounts"
+  ],
+  "resource_type": "Storage_Accounts",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Storage_Accounts_Should_Use_A_Virtual_Network_Service_Endpoint",
+    "description": "This policy audits any Storage Account not configured to use a virtual network service endpoint.",
+    "actions": []
+  },
+    "uri": "policy/azure_policy/global/azure/compliance/others/kopfg"
+}

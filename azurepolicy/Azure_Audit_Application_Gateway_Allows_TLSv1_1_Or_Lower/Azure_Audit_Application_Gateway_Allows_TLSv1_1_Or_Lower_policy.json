@@ -1,0 +1,69 @@
+{
+  "policyType": "Custom",
+  "description": "Azure Application Gateway allows TLSv1.1 or lower.",
+  "mode": "All",
+  "metadata": {
+    "policy_description": "Azure Application Gateway allows TLSv1.1 or lower",
+    "recommendation_name": "Azure_Audit_Application_Gateway_Allows_TLSv1.1_Or_Lower",
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/ebe6c74a-45cd-41dc-8bd2-567480b33376",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "App_Services",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/a7b1c",
+    "category": "Network",
+    "createdBy": "7de373b9-42bc-49e8-b424-074f00bea8fb",
+    "createdOn": "2021-10-12T13:48:01.2771141Z"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Network/applicationGateways"
+        },
+        {
+          "field": "Microsoft.Network/applicationGateways/sslPolicy.policyType",
+          "equals": "Custom"
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "field": "Microsoft.Network/applicationGateways/sslPolicy.minProtocolVersion",
+                "equals": "TLSv1_1"
+              },
+              {
+                "field": "Microsoft.Network/applicationGateways/sslPolicy.minProtocolVersion",
+                "equals": "TLSv1_0"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "ebe6c74a-45cd-41dc-8bd2-567480b33376"
+}

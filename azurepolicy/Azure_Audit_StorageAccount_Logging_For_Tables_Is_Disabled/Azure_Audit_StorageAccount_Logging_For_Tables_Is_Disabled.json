@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_StorageAccount_Logging_For_Tables_Is_Disabled",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/d0a370c9-18aa-4a5e-aabb-0bfcbc4d7c2f",
+  "display_name": "Azure Audit StorageAccount Logging For Tables Is Disabled",
+  "description": "Azure storage account logging for tables is disabled",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/d0a370c9-18aa-4a5e-aabb-0bfcbc4d7c2f\",\n \"policy_description\": \"Azure storage account logging for tables is disabled\",\n \"recommendation_name\": \"Azure_Audit_StorageAccount_Logging_For_Tables_Is_Disabled\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Data\",\n \"resource_type\": \"Accounts\",\n \"service_resource\": [\n \"Storage_Accounts\"\n ],\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/5e9fc\",\n \"category\": \"Storage\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n },\n \"logAnalytics\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Log Analytics workspace\",\n \"description\": \"Select Log Analytics workspace from dropdown list. If this workspace is outside of the scope of the assignment you must manually grant 'Log Analytics Contributor' permissions (or similar) to the policy assignment's principal ID.\",\n \"strongType\": \"omsWorkspace\",\n \"assignPermissions\": true\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Storage/storageAccounts/tableServices\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Insights/diagnosticSettings\",\n \"existenceCondition\": {\n \"allOf\": [\n {\n \"count\": {\n \"field\": \"Microsoft.Insights/diagnosticSettings/metrics[*]\"\n },\n \"equals\": 2\n },\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/workspaceId\",\n \"equals\": \"[parameters('logAnalytics')]\"\n }\n ]\n }\n }\n }\n },\n \"type\": \"Microsoft.Authorization/policyDefinitions\",\n \"name\": \"d0a370c9-18aa-4a5e-aabb-0bfcbc4d7c2f\"\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "Storage_Accounts"
+  ],
+  "resource_type": "Accounts",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_StorageAccount_Logging_For_Tables_Is_Disabled",
+    "description": "Azure storage account logging for tables is disabled",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/5e9fc"
+}

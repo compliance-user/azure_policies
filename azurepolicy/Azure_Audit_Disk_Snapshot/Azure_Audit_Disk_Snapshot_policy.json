@@ -1,0 +1,58 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/70edc01d-11b3-448b-a29b-9cafac02609e",
+    "policy_description": "This policy audits disks snapshot",
+    "recommendation_name": "Azure_Audit_Disk_Snapshot",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/a4f82"
+  },
+  "parameters": {
+    "name": {
+      "type": "String",
+      "metadata": {
+        "displayName": "sku name for the given snapshot",
+        "description": "If the sku name given in the parameter matches with the sku name of the snapshot then it will be in compliant with this policy."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/snapshots"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Compute/snapshots/sku.name",
+            "equals": "[parameters('name')]"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_DBLevel_AuditSetting",
+  "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/674e768f0a2606338c9f328243c1bee6",
+  "display_name": "Azure Audit DBLevel AuditSetting",
+  "description": "Audit DB level audit setting for SQL databases",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/674e768f0a2606338c9f328243c1bee6\",\n \"policy_description\": \"Audit DB level audit setting for SQL databases\",\n \"classification\": \"Operation\",\n \"sub_classification\": \"Standards\",\n \"service_resource\": [\n \"MSSQL\"\n ],\n \"resource_type\": \"Servers\",\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/na5fb\"\n },\n \"parameters\": {\n \"setting\": {\n \"allowedValues\": [\n \"enabled\",\n \"disabled\"\n ],\n \"metadata\": {\n \"displayName\": \"Audit Setting\"\n },\n \"defaultValue\": \"enabled\",\n \"type\": \"String\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"equals\": \"Microsoft.Sql/servers/databases\",\n \"field\": \"type\"\n },\n {\n \"field\": \"name\",\n \"notEquals\": \"master\"\n }\n ]\n },\n \"then\": {\n \"details\": {\n \"existenceCondition\": {\n \"allOf\": [\n {\n \"equals\": \"[parameters('setting')]\",\n \"field\": \"Microsoft.Sql/auditingSettings.state\"\n }\n ]\n },\n \"name\": \"default\",\n \"type\": \"Microsoft.Sql/servers/databases/auditingSettings\"\n },\n \"effect\": \"AuditIfNotExists\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "MSSQL"
+  ],
+  "resource_type": "Servers",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_DBLevel_AuditSetting",
+    "description": "Audit DB level audit setting for SQL databases",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/na5fb"
+}

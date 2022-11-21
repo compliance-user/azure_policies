@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_StorageAccount_Logging_For_Queues_Is_Disabled",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/e0afa3bd-b548-4d8c-b6d9-a91c0e63ec14",
+  "display_name": "Azure Audit StorageAccount Logging For Queues Is Disabled",
+  "description": "Azure storage account logging for queues is disabled",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_description\": \"Azure storage account logging for queues is disabled\",\n \"recommendation_name\": \"Azure_Audit_StorageAccount_Logging_For_Queues_Is_Disabled\",\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/e0afa3bd-b548-4d8c-b6d9-a91c0e63ec14\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Data\",\n \"resource_type\": \"Accounts\",\n \"service_resource\": [\n \"Storage_Accounts\"\n ],\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/0e721\",\n \"category\": \"Storage\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n },\n \"metricsEnabled\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Enable metrics\",\n \"description\": \"Whether to enable metrics stream to the Log Analytics workspace - True or False\"\n },\n \"allowedValues\": [\n \"True\",\n \"False\"\n ],\n \"defaultValue\": \"True\"\n },\n \"logAnalytics\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Log Analytics workspace\",\n \"description\": \"Select Log Analytics workspace from dropdown list. If this workspace is outside of the scope of the assignment you must manually grant 'Log Analytics Contributor' permissions (or similar) to the policy assignment's principal ID.\",\n \"strongType\": \"omsWorkspace\",\n \"assignPermissions\": true\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Storage/storageAccounts/queueServices\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Insights/diagnosticSettings\",\n \"existenceCondition\": {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/metrics.enabled\",\n \"equals\": \"[parameters('metricsEnabled')]\"\n },\n {\n \"count\": {\n \"field\": \"Microsoft.Insights/diagnosticSettings/metrics[*]\",\n \"where\": {\n \"field\": \"Microsoft.Insights/diagnosticSettings/metrics[*].category\",\n \"equals\": \"Transaction\"\n }\n },\n \"equals\": 1\n },\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/workspaceId\",\n \"equals\": \"[parameters('logAnalytics')]\"\n }\n ]\n }\n }\n }\n },\n \"type\": \"Microsoft.Authorization/policyDefinitions\",\n \"name\": \"e0afa3bd-b548-4d8c-b6d9-a91c0e63ec14\"\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "Storage_Accounts"
+  ],
+  "resource_type": "Accounts",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_StorageAccount_Logging_For_Queues_Is_Disabled",
+    "description": "Azure storage account logging for queues is disabled",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/0e721"
+}

@@ -1,0 +1,45 @@
+{
+  "status": "active",
+  "description": "This policy audits whether Deprecated accounts with owner permissions are in your subscription. Deprecated accounts are accounts that have been blocked from signing in.",
+  "classification": "Access",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Deprecated Accts with Owner Perm",
+  "name": "Azure_Audit_Deprecated_Accounts_With_Owner_Permission",
+  "parameters": {
+    "effect": {
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/arlno",
+  "content": "{\"policyRule\": {\"then\": {\"effect\": \"[parameters('effect')]\", \"details\": {\"type\": \"Microsoft.Security/complianceResults\", \"name\": \"RemoveDeprecatedAccountsWithOwnerPermissions\", \"existenceCondition\": {\"field\": \"Microsoft.Security/complianceResults/resourceStatus\", \"in\": [\"NotApplicable\", \"OffByPolicy\", \"Healthy\"]}}}, \"if\": {\"field\": \"type\", \"equals\": \"Microsoft.Resources/subscriptions\"}}, \"parameters\": {\"effect\": {\"allowedValues\": [\"AuditIfNotExists\", \"Disabled\"], \"type\": \"String\", \"metadata\": {\"displayName\": \"Effect\", \"description\": \"Enable or disable the execution of the policy\"}}}}",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Deprecated_owner_accounts_recom"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Deprecated_Accounts_With_Owner_Permission.json"
+  }
+}

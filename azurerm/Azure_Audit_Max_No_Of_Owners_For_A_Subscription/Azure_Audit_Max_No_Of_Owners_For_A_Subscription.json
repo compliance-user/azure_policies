@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether Max No Of Owners For A Subscription is reached as per the defined standard. It should not be exceeded.",
+  "classification": "Access",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Max No Of Owners For A Subscription",
+  "name": "Azure_Audit_Max_No_Of_Owners_For_A_Subscription",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/c75tm",
+  "content": "{\n  \"mode\": \"All\",\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"equals\": \"Microsoft.Resources/subscriptions\"\n    },\n    \"then\": {\n      \"effect\": \"AuditIfNotExists\",\n      \"details\": {\n        \"type\": \"Microsoft.Security/complianceResults\",\n        \"name\": \"DesignateLessThanXOwners\",\n        \"existenceCondition\": {\n          \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\n          \"in\": [\n            \"NotApplicable\",\n            \"OffByPolicy\",\n            \"Healthy\"\n          ]\n        }\n      }\n    }\n  }\n}\n\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Max_No_Of_Owners_For_A_Subscription"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Max_No_Of_Owners_For_A_Subscription.json"
+  }
+}

@@ -1,0 +1,64 @@
+{
+    "policyType": "Custom",
+    "mode": "All",
+    "metadata": {
+      "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/b426503c-64b3-4adf-b3be-f6b3b7e13246",
+      "category": "Security Center"
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy."
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      },
+      "securityType": {
+        "type": "String",
+        "metadata": {
+          "displayName": "securityType for the given virtual machine",
+          "description": "If the securityType given in the parameter matches with the securityType of the virtual machine then it will be in compliant with this policy."
+        }
+      },
+      "vTpmEnabled": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Whether vTpm enabled for the given virtual machine",
+          "description": "If the value of vTpmEnabled given in the parameter matches with the value of vTpmEnabled of the virtual machine then it will be in compliant with this policy."
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Compute/virtualMachines"
+          },
+          {
+            "not": {
+              "allOf": [
+                {
+                  "field": "Microsoft.Compute/virtualMachines/securityProfile.securityType",
+                  "equals": "[parameters('securityType')]"
+                },
+                {
+                  "field": "Microsoft.Compute/virtualMachines/securityProfile.uefiSettings.vTpmEnabled",
+                  "equals": "[parameters('vTpmEnabled')]"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+}

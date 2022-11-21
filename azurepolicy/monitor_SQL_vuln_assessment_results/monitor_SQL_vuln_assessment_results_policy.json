@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/17c4c68bc340e8000d03165b2be206e2",
+    "policy_description": "Monitor Vulnerability Assessment scan results and recommendations for how to remediate database vulnerabilities",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "service_resource": [
+      "MSSQL"
+    ],
+    "resource_type": "Servers",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/sn4yt"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": [
+        "Microsoft.Sql/servers/databases",
+        "Microsoft.Sql/managedinstances/databases"
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/complianceResults",
+        "name": "sqlVulnerabilityAssessment",
+        "existenceCondition": {
+          "field": "Microsoft.Security/complianceResults/resourceStatus",
+          "in": [
+            "NotApplicable",
+            "OffByPolicy",
+            "Healthy"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Synapse_Workspaces_Allow_Outbound_Data_Traffic_To_Approved_Targets",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/3484ce98-c0c5-4c83-994b-c5ac24785218",
+  "display_name": "Azure Synapse workspaces should allow outbound data traffic only to approved targets",
+  "description": "Increase security of your Synapse workspace by allowing outbound data traffic only to approved targets. This helps prevention against data exfiltration by validating the target before sending data.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n    \"displayName\": \"Azure Synapse workspaces should allow outbound data traffic only to approved targets\",\n    \"policyType\": \"BuiltIn\",\n    \"mode\": \"Indexed\",\n    \"description\": \"Increase security of your Synapse workspace by allowing outbound data traffic only to approved targets. This helps prevention against data exfiltration by validating the target before sending data.\",\n    \"metadata\": {\n      \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/3484ce98-c0c5-4c83-994b-c5ac24785218\",\n      \"version\": \"1.0.0\",\n      \"category\": \"Synapse\"\n    },\n    \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"Enable or disable the execution of the policy\"\n        },\n        \"allowedValues\": [\n          \"Audit\",\n          \"Disabled\",\n          \"Deny\"\n        ],\n        \"defaultValue\": \"Audit\"\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"allOf\": [\n          {\n            \"field\": \"type\",\n            \"equals\": \"Microsoft.Synapse/workspaces\"\n          },\n          {\n            \"field\": \"Microsoft.Synapse/workspaces/managedVirtualNetworkSettings.preventDataExfiltration\",\n            \"notEquals\": \"true\"\n          }\n        ]\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\"\n      }\n    }\n}",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Synapse_Workspaces_Allow_Outbound_Data_Traffic_To_Approved_Targets",
+    "description": "Increase security of your Synapse workspace by allowing outbound data traffic only to approved targets. This helps prevention against data exfiltration by validating the target before sending data.",
+    "actions": []
+  },
+    "uri": "policy/azure_policy/global/azure/compliance/others/qoagv"
+}

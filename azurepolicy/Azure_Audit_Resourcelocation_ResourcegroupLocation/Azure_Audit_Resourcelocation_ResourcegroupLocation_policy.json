@@ -1,0 +1,28 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/0a914e76-4921-4c19-b460-a2d36003525a",
+    "policy_description": "Audit that the resource location matches its resource group location",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Subscription"
+    ],
+    "resource_type": "Subscription",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/xPemi"
+  },
+  "policyRule": {
+    "if": {
+      "field": "location",
+      "notIn": [
+        "[resourcegroup().location]",
+        "global"
+      ]
+    },
+    "then": {
+      "effect": "audit"
+    }
+  }
+}

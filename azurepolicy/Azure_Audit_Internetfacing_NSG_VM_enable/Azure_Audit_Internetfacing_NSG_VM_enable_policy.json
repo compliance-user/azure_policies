@@ -1,0 +1,53 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/f6de0be7-9a8a-4b8a-b349-43cf02d22f7c",
+    "policy_description": "Protect your virtual machines from potential threats by restricting access to them with network security groups (NSG). Learn more about controlling traffic with NSGs at https://aka.ms/nsg-doc",
+    "classification": "Security",
+    "sub_classification": "Host",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "resource_type": "Virtual_Machines",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/59bee"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": [
+        "Microsoft.Compute/virtualMachines",
+        "Microsoft.ClassicCompute/virtualMachines"
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/complianceResults",
+        "name": "networkSecurityGroupsOnVirtualMachines",
+        "existenceCondition": {
+          "field": "Microsoft.Security/complianceResults/resourceStatus",
+          "in": [
+            "OffByPolicy",
+            "Healthy"
+          ]
+        }
+      }
+    }
+  }
+}

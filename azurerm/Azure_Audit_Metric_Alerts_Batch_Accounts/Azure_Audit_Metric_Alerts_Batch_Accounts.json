@@ -1,0 +1,33 @@
+{
+  "status": "active",
+  "description": "This policy audits whether configuration of metric alert rules on Batch account is done.",
+  "classification": "Access",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Batch_Account"
+  ],
+  "resource_type": "Batch_Service",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Metric Alerts in Batch Accounts",
+  "name": "Azure_Audit_Metric_Alerts_Batch_Account",
+  "uri": "policy/azure_policy/global/azure/compliance/others/kfod*",
+  "content": "{\n  \"parameters\": {\n    \"effect\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Effect\",\n        \"description\": \"Enable or disable the execution of the policy\"\n      },\n      \"allowedValues\": [\n        \"AuditIfNotExists\"\n      ]\n    },\n    \"metricName\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Metric name\",\n        \"description\": \"The metric name that an alert rule must be enabled on\"\n      },\n      \"allowedValues\": [\n        \"CoreCount\",\n        \"TotalNodeCount\",\n        \"LowPriorityCoreCount\",\n        \"TotalLowPriorityNodeCount\",\n        \"CreatingNodeCount\",\n        \"StartingNodeCount\",\n        \"WaitingForStartTaskNodeCount\",\n        \"StartTaskFailedNodeCount\",\n        \"IdleNodeCount\",\n        \"OfflineNodeCount\",\n        \"RebootingNodeCount\",\n        \"ReimagingNodeCount\",\n        \"RunningNodeCount\",\n        \"LeavingPoolNodeCount\",\n        \"UnusableNodeCount\",\n        \"PreemptedNodeCount\",\n        \"TaskStartEvent\",\n        \"TaskCompleteEvent\",\n        \"TaskFailEvent\",\n        \"PoolCreateEvent\",\n        \"PoolResizeStartEvent\",\n        \"PoolResizeCompleteEvent\",\n        \"PoolDeleteStartEvent\",\n        \"PoolDeleteCompleteEvent\",\n        \"JobDeleteCompleteEvent\",\n        \"JobDeleteStartEvent\",\n        \"JobDisableCompleteEvent\",\n        \"JobDisableStartEvent\",\n        \"JobStartEvent\",\n        \"JobTerminateCompleteEvent\",\n        \"JobTerminateStartEvent\"\n      ]\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"equals\": \"Microsoft.Batch/batchAccounts\"\n    },\n    \"then\": {\n      \"effect\": \"[parameters('effect')]\",\n      \"details\": {\n        \"type\": \"Microsoft.Insights/alertRules\",\n        \"existenceScope\": \"Subscription\",\n        \"existenceCondition\": {\n          \"allOf\": [\n            {\n              \"field\": \"Microsoft.Insights/alertRules/isEnabled\",\n              \"equals\": \"true\"\n            },\n            {\n              \"field\": \"Microsoft.Insights/alertRules/condition.dataSource.metricName\",\n              \"equals\": \"[parameters('metricName')]\"\n            },\n            {\n              \"field\": \"Microsoft.Insights/alertRules/condition.dataSource.resourceUri\",\n              \"equals\": \"[concat('/subscriptions/', subscription().subscriptionId, '/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Batch/batchAccounts/', field('name'))]\"\n            }\n          ]\n        }\n      }\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Metric_Alerts_Batch_Account"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Metric_Alerts_Batch_Accounts.json"
+  }
+}
+

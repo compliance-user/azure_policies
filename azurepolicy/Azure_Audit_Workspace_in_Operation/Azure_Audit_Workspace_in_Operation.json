@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Workspace_in_Operation",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/fd93b394-93cb-4a3d-b354-1a3e22c2d0a2",
+  "display_name": "Azure Audit Workspace in Operation",
+  "description": "This policy audits workspace operation",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/fd93b394-93cb-4a3d-b354-1a3e22c2d0a2\",\n \"policy_description\": \"This policy audits workspace operation\",\n \"recommendation_name\": \"Azure_Audit_Workspace_in_Operation\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Standards\",\n \"resource_type\": \"Virtual_Machines\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/368f2\"\n },\n \"parameters\": {\n \"description\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Description of the workspace\",\n \"description\": \"If the description given in the parameters is equal to the description of the workspace then it will be compliant.\"\n }\n },\n \"friendlyName\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Friendly name of the workspace\",\n \"description\": \"If the friendly name given in the parameters is equal to the friendly name of the workspace then it will be compliant.\"\n }\n },\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy.\"\n },\n \"allowedValues\": [\n \"Audit\",\n \"Deny\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Deny\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.DesktopVirtualization/workspaces\"\n },\n {\n \"not\": {\n \"allOf\": [\n {\n \"field\": \"Microsoft.DesktopVirtualization/workspaces/description\",\n \"equals\": \"[parameters('description')]\"\n },\n {\n \"field\": \"Microsoft.DesktopVirtualization/workspaces/friendlyName\",\n \"equals\": \"[parameters('friendlyName')]\"\n }\n ]\n }\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Workspace_in_Operation",
+    "description": "This policy audits workspace operation",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/368f2"
+}

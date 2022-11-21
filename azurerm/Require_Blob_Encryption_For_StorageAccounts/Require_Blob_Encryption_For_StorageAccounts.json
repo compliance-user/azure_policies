@@ -1,0 +1,38 @@
+{
+  "name": "Require_Blob_Encryption_For_StorageAccounts",
+  "display_name": "Azure Require blob encryption for storage accounts",
+  "description": "This policy audits whether BLOB encryption for Storage Accounts is turned on.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Storage/storageAccounts\"\n        },\n        {\n          \"field\": \"Microsoft.Storage/storageAccounts/enableBlobEncryption\",\n          \"equals\": \"false\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"audit\"\n    }\n  }\n}",
+  "parameters": {},
+  "classification": "Security",
+  "automation_enabled": true,
+  "sub_classification": "Data",
+  "service_resource": [
+    "Storage_Accounts"
+  ],
+  "resource_type": "Accounts",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+    "system_scheduled_details": [
+      {
+        "interval": 1440
+      }
+    ]
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": true,
+  "uri": "policy/azure_policy/global/azure/compliance/storage/xg5cm",
+  "recommendations": [
+    "Require_Blob_Encryption_For_StorageAccounts"
+  ]
+}

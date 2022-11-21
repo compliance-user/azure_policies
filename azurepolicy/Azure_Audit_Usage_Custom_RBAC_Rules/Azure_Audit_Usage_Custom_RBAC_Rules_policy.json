@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/7fd1fb4fd0d0c33a17d376eae9019b2c",
+    "policy_description": "Audit built-in roles such as Owner, Contributor, Reader instead of custom RBAC roles, which are error prone. Using custom roles is treated as an exception and requires a rigorous review and threat modeling",
+    "classification": "Access",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Subscription"
+    ],
+    "resource_type": "Subscription",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/mceg7"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit"
+      ]
+    },
+    "defaultValue": "Audit"
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Authorization/roleDefinitions"
+        },
+        {
+          "field": "Microsoft.Authorization/roleDefinitions/type",
+          "equals": "CustomRole"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

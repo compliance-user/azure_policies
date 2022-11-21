@@ -1,0 +1,55 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/94a182de-d6c6-4fe8-95f1-0d602f0e716c",
+    "policy_description": "This policy audits virtual machines using IAM Role",
+    "recommendation_name": "Azure_Audit_Virtual_Machine_Using_IAM_Role",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/bea0c"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    },
+    "roleDefinitionId": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Approved Role Definitions",
+        "description": "The list of allowed role definition IDs. Example: If you were to put in 8e3af657-a8ff-443c-a75c-2fe8c4bcb635 as a value then only the Owner role definition could be assigned."
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Compute/virtualMachines"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Authorization/roleAssignments",
+        "existenceScope": "Subscription",
+        "existenceCondition": {
+          "field": "Microsoft.Authorization/roleAssignments/roleDefinitionId",
+          "equals": "[parameters('roleDefinitionId')]"
+        }
+      }
+    }
+  }
+}

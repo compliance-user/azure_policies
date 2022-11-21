@@ -1,0 +1,19 @@
+{
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Network/networkInterfaces"
+        },
+        {
+          "field": "Microsoft.Network/networkInterfaces/virtualMachine.id",
+          "exists": false
+        }
+      ]
+    },
+    "then": {
+      "effect": "audit"
+    }
+  }
+}

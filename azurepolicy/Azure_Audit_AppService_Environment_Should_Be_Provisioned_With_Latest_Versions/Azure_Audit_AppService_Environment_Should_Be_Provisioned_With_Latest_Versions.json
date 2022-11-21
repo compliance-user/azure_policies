@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_AppService_Environment_Should_Be_Provisioned_With_Latest_Versions",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/a4e02305-894c-4b23-8ca8-9dc8753750a8",
+  "display_name": "Azure Audit AppService Environment Should Be Provisioned With Latest Versions",
+  "description": "This policy audits app service environment should be provisioned with latest versions",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/a4e02305-894c-4b23-8ca8-9dc8753750a8\",\n \"policy_description\": \"This policy audits app service environment should be provisioned with latest versions\",\n \"recommendation_name\": \"Azure_Audit_AppService_Environment_Should_Be_Provisioned_With_Latest_Versions\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Application\",\n \"resource_type\": \"App_Services\",\n \"service_resource\": [\n \"Web_Apps\"\n ],\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/a10f3\"\n },\n \"parameters\": {\n \"kind\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"kind of the app service environment\",\n \"description\": \"If the kind given in the parameters is equal to the kind of the app service environment then it will be compliant.\"\n }\n },\n \"id\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"virtual network id of the app svc environment\",\n \"description\": \"If the id given in the parameters is equal to the id of the app service environment then it will be compliant.\"\n }\n },\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy.\"\n },\n \"allowedValues\": [\n \"Audit\",\n \"Deny\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Deny\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Web/hostingEnvironments\"\n },\n {\n \"not\": {\n \"allOf\": [\n {\n \"field\": \"kind\",\n \"equals\": \"[parameters('kind')]\"\n },\n {\n \"field\": \"Microsoft.Web/hostingEnvironments/virtualNetwork.id\",\n \"equals\": \"[parameters('id')]\"\n }\n ]\n }\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Web_Apps"
+  ],
+  "resource_type": "App_Services",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_AppService_Environment_Should_Be_Provisioned_With_Latest_Versions",
+    "description": "This policy audits app service environment should be provisioned with latest versions",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/a10f3"
+}

@@ -1,0 +1,58 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Microsoft.Kubernetes.Data",
+  "metadata": {
+    "version": "4.0.1",
+    "category": "Kubernetes",
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/0a15ec92-a229-4763-bb14-0ea34a568f8d",
+    "policy_description": "Azure Kubernetes Management Policy add-on extends Gatekeeper v3, an admission controller webhook for Open Policy Agent (OPA), to apply at-scale enforcements and safeguards on your clusters in a centralized, consistent manner",
+    "classification": "Security",
+    "sub_classification": "Host",
+    "resource_type": "Azure_Kubernetes_Service",
+    "service_resources": [
+      "Cluster"
+    ],
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/3b37c"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy"
+      },
+      "allowedValues": [
+        "audit",
+        "deny",
+        "disabled"
+      ],
+      "defaultValue": "audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.ContainerService/managedClusters"
+        },
+        {
+          "anyOf": [
+            {
+              "field": "Microsoft.ContainerService/managedClusters/addonProfiles.azurePolicy.enabled",
+              "exists": "false"
+            },
+            {
+              "field": "Microsoft.ContainerService/managedClusters/addonProfiles.azurePolicy.enabled",
+              "equals": "false"
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

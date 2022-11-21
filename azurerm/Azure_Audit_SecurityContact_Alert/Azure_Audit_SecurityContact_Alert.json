@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether SecurityContact Alert is enabled. This ensures that the designated security contact are aware of any potential compromise in order to mitigate the risk in a timely fashion.",
+  "classification": "Operation",
+  "sub_classification": "Monitoring",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit SecurityContact Alert",
+  "name": "Azure_Audit_SecurityContact_Alert",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/hxl3x",
+  "content": "{\n  \"mode\": \"All\",\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"equals\": \"Microsoft.Resources/subscriptions\"\n    },\n    \"then\": {\n      \"effect\": \"auditIfNotExists\",\n      \"details\": {\n        \"type\": \"Microsoft.Security/securityContacts\",\n        \"existenceCondition\": {\n          \"field\": \"Microsoft.Security/securityContacts/alertNotifications\",\n          \"Equals\": \"On\"\n        }\n      }\n    }\n  }\n}",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_SecurityContact_Alert_recommendation"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_SecurityContact_Alert_policy.json"
+  }
+}

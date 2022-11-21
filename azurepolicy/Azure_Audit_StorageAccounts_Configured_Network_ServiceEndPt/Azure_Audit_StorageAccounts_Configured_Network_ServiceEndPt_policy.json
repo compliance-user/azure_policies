@@ -1,0 +1,55 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/60d21c4f-21a3-4d94-85f4-b924e6aeeda4",
+    "policy_description": "This policy ,audits any Storage Account not configured to use a virtual network service endpoint.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Storage_Accounts"
+    ],
+    "resource_type": "Accounts",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/XZSuJ"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit",
+        "Disabled"
+      ],
+      "defaultValue": "Audit",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Storage/storageAccounts"
+        },
+        {
+          "anyOf": [
+            {
+              "field": "Microsoft.Storage/storageAccounts/networkAcls.defaultAction",
+              "notEquals": "Deny"
+            },
+            {
+              "field": "Microsoft.Storage/storageAccounts/networkAcls.virtualNetworkRules[*].id",
+              "exists": "false"
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

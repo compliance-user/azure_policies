@@ -1,0 +1,51 @@
+{
+    "policyType": "BuiltIn",
+    "mode": "Indexed",
+    "metadata": {
+      "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/1d320205-c6a1-4ac6-873d-46224024e8e2",
+      "version": "1.0.0",
+      "category": "Storage"
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "AuditIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "AuditIfNotExists"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.StorageSync/storageSyncServices"
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.StorageSync/storageSyncServices/privateEndpointConnections",
+          "existenceCondition": {
+            "allOf": [
+              {
+                "field": "Microsoft.StorageSync/storageSyncServices/privateEndpointConnections/privateEndpoint",
+                "exists": "true"
+              },
+              {
+                "field": "Microsoft.StorageSync/storageSyncServices/privateEndpointConnections/provisioningState",
+                "equals": "Succeeded"
+              },
+              {
+                "field": "Microsoft.StorageSync/storageSyncServices/privateEndpointConnections/privateLinkServiceConnectionState.status",
+                "equals": "Approved"
+              }
+            ]
+          }
+        }
+      }
+    }
+}

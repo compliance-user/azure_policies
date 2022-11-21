@@ -1,0 +1,55 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/4d24b6d4-5e53-4a4f-a7f4-618fa573ee4b",
+    "policy_description": "Enable FTPS enforcement for enhanced security",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "resource_type": "App_Services",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/Ixlxy"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Web/sites"
+        },
+        {
+          "field": "kind",
+          "like": "app*"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Web/sites/config",
+        "name": "web",
+        "existenceCondition": {
+          "field": "Microsoft.Web/sites/config/ftpsState",
+          "equals": "FtpsOnly"
+        }
+      }
+    }
+  }
+}

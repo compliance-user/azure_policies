@@ -1,0 +1,48 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/7594f9f9fa318c96114d3b0412a309f8",
+    "policy_description": "This policy checks if there are any disks that are not encrypted and being attached to VMs",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Disks"
+    ],
+    "resource_type": "Storage_Disks",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/ikuz4"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": [
+        "Microsoft.Compute/virtualMachines",
+        "Microsoft.ClassicCompute/virtualMachines"
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/complianceResults",
+        "name": "encryption",
+        "existenceCondition": {
+          "field": "Microsoft.Security/complianceResults/resourceStatus",
+          "in": [
+            "Monitored",
+            "NotApplicable",
+            "OffByPolicy",
+            "Healthy"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_SQL_Database_Ingress",
+  "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/6104a7b4854113d1a12959560070a047",
+  "display_name": "Azure Audit SQL Database Ingress",
+  "description": "This policy audits whether SQL Database Ingress (external traffic in firewall rules) are correctly configured.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"metadata\": {\n \"policy_id\": \"/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/6104a7b4854113d1a12959560070a047\",\n \"policy_description\": \"This policy checks to see if the SQL DB is allowing the external traffic in its firewall rule\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Standards\",\n \"service_resource\": [\n \"MSSQL\"\n ],\n \"resource_type\": \"Servers\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/osnui\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"Audit\"\n ],\n \"defaultValue\": \"Audit\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Sql/servers/firewallRules\"\n },\n {\n \"field\": \"Microsoft.Sql/servers/firewallRules/startIpAddress\",\n \"equals\": \"0.0.0.0\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "MSSQL"
+  ],
+  "resource_type": "Servers",
+  "severity": "null",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_SQL_Database_Ingress",
+    "description": "It is recommended to exmaine the external traffic in firewall rules. Manual steps: Go to SQL servers, For each SQL server, Click on Firewall / Virtual Networks, Set firewall rules to limit access to only authorized connections",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/osnui"
+}

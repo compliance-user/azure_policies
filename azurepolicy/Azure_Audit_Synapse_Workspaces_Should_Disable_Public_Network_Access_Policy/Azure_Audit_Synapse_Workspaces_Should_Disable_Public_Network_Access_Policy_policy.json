@@ -1,0 +1,49 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/38d8df46-cf4e-4073-8e03-48c24b29de0d",
+    "policy_description": "Disabling public network access improves security by ensuring that the Synapse workspace isn't exposed on the public internet. Creating private endpoints can limit exposure of your Synapse workspaces. Learn more at: https://docs.microsoft.com/azure/synapse-analytics/security/connectivity-settings.",
+    "recommendation_name": "Azure_Audit_Synapse_Workspaces_Should_Disable_Public_Network_Access_Policy",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "Virtual_Networks",
+    "service_resource": [
+      "Virtual_Networks"
+    ],
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/cacf4"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Synapse/workspaces"
+        },
+        {
+          "field": "Microsoft.Synapse/workspaces/publicNetworkAccess",
+          "notEquals": "Disabled"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

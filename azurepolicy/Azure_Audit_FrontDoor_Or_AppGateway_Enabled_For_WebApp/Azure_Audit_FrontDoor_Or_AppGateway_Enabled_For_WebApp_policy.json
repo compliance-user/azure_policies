@@ -1,0 +1,78 @@
+{
+  "displayName": "Front door or app gateway enabled for webapp",
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/5700ae6f-97dd-4694-93db-4777e33a4c31",
+    "policy_description": "Front door or app gateway is enabled for webapp",
+    "recommendation_name": "Azure_Audit_FrontDoor_Or_AppGateway_Enabled_For_WebApp",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "resource_type": "App_Services",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/1a3fb",
+    "category": "App Service",
+    "createdBy": "7de373b9-42bc-49e8-b424-074f00bea8fb",
+    "createdOn": "2021-10-07T08:01:07.719159Z",
+    "updatedBy": null,
+    "updatedOn": null
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    },
+    "resourceState": {
+      "type": "String",
+      "metadata": {
+        "displayName": "resourceState of the azure front door",
+        "description": "resourceState of the azure front door."
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Web/sites"
+        },
+        {
+          "field": "kind",
+          "like": "app"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Network/frontdoors",
+        "existenceCondition": {
+          "field": "Microsoft.Network/frontdoors/resourceState",
+          "equals": "[parameters('resourceState')]"
+        }
+      }
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "5700ae6f-97dd-4694-93db-4777e33a4c31",
+  "systemData": {
+    "createdBy": "tridib.borah@agiliz.tech",
+    "createdByType": "User",
+    "createdAt": "2021-10-07T08:01:07.6718809Z",
+    "lastModifiedBy": "tridib.borah@agiliz.tech",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2021-10-07T08:01:07.6718809Z"
+  }
+}

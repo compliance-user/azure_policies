@@ -1,0 +1,91 @@
+{
+  "name": "Azure_Network_SecurityGroup_Port_Violation",
+  "display_name": "Azure Network Security Group Port Violation",
+  "description": "Policy to check for port(s) opened with CIDR block 0.0.0.0/0 in an Azure subscription. Port(s) can be specified when executing the policy\nUse case(s): \nCan be used to identify SSH/RDP/DB port if open to public",
+  "category": "service",
+  "status": "active",
+  "content": "sg(SG_id, SG_name, SG_rule_id, SG_rule_name, location, direction, destination_port_range, source_address_prefix) :- azure_compute_sg:securitygroup(id=SG_id, name=SG_name, location=location), azure_compute_sg:securitygroup_rules(sg_id=SG_id, id=SG_rule_id, name=SG_rule_name, direction=direction, destinationPortRange=destination_port_range, sourceAddressPrefix=source_address_prefix, access=access), equal('*', source_address_prefix), equal('Allow', access), equal('Inbound', direction), equal('#port#', destination_port_range);",
+  "parameters": {
+    "port": {
+      "type": "number",
+      "description": "Port number if opened with CIDR block 0.0.0.0/0 to be considered as violation",
+      "label": "Port",
+      "default": 22,
+      "constraints": [
+        {
+          "range": {
+            "min": 1,
+            "max": 65535
+          }
+        }
+      ]
+    }
+  },
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Security_Groups"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+    "system_scheduled_details": [
+      {
+        "interval": 320,
+        "args": {
+          "port": "22"
+        }
+      },
+      {
+        "interval": 320,
+        "args": {
+          "port": "80"
+        }
+      },
+      {
+        "interval": 320,
+        "args": {
+          "port": "21"
+        }
+      },
+      {
+        "interval": 320,
+        "args": {
+          "port": "3389"
+        }
+      },
+      {
+        "interval": 320,
+        "args": {
+          "port": "1433"
+        }
+      },
+      {
+        "interval": 320,
+        "args": {
+          "port": "3306"
+        }
+      },
+      {
+        "interval": 320,
+        "args": {
+          "port": "27017"
+        }
+      }
+    ]
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": true,
+  "uri": "policy/congress/global/azure/compliance/security_group/bmd2t",
+  "recommendations": [
+    "Azure_Fix_Violated_NetworkSecurityGroup_Rules"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "mode": "All",
+  "parameters": {
+    "numberOfDays": {
+      "metadata": {
+        "description": "Number of Days to Expire",
+        "displayName": "numberOfDays"
+      },
+      "type": "Integer"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "equals": "Microsoft.Capacity/reservationOrders",
+          "field": "type"
+        },
+        {
+          "field": "Microsoft.Capacity/reservationOrders/expiryDate",
+          "exists": "true"
+        },
+        {
+          "field": "Microsoft.Capacity/reservationOrders/expiryDate",
+          "less": "[first(split(addDays(utcNow(),parameters('numberOfDays')),':'))]"
+        }
+      ]
+    },
+    "then": {
+      "effect": "audit"
+    }
+  }
+}

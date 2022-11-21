@@ -1,0 +1,67 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/1891baca-b0d5-436e-bc3c-073b904987c6",
+    "policy_description": "This policy will audit usage of hybrid use benefit.",
+    "recommendation_name": "Azure_Audit_Hybrid_Enabled",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "resource_type": "",
+    "service_resource": [
+      ""
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/8a454",
+    "category": "Authorization",
+    "createdBy": "7de373b9-42bc-49e8-b424-074f00bea8fb",
+    "createdOn": "2021-10-01T13:22:14.473423Z",
+    "updatedBy": null,
+    "updatedOn": null
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "in": [
+            "Microsoft.Compute/virtualMachines",
+            "Microsoft.Compute/VirtualMachineScaleSets"
+          ]
+        },
+        {
+          "field": "Microsoft.Compute/licenseType",
+          "notEquals": "Windows_Server"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "1891baca-b0d5-436e-bc3c-073b904987c6",
+  "systemData": {
+    "createdBy": "tridib.borah@agiliz.tech",
+    "createdByType": "User",
+    "createdAt": "2021-10-01T13:22:14.4063996Z",
+    "lastModifiedBy": "tridib.borah@agiliz.tech",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2021-10-01T13:22:14.4063996Z"
+  }
+}

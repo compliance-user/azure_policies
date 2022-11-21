@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_MariaDB_Configured_Network_ServiceEndPt",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/dfbd9a64-6114-48de-a47d-90574dc2e489",
+  "display_name": "Azure Audit MariaDB Configured Network ServiceEndPt",
+  "description": "This policy audits whether MariaDB is configured with Network Service EndPoint.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"Indexed\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/dfbd9a64-6114-48de-a47d-90574dc2e489\",\n \"policy_description\": \"This policy audits MariaDB servers not configured to use a virtual network service endpoint. For more details, visit https://aka.ms/mariadbvirtualnetwork.\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Data\",\n \"service_resource\": [\n \"Databases\"\n ],\n \"resource_type\": \"DBforMariaDB\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/LltIe\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.DBforMariaDB/servers\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.DBforMariaDB/servers/virtualNetworkRules\",\n \"existenceCondition\": {\n \"field\": \"Microsoft.DBforMariaDB/servers/virtualNetworkRules/virtualNetworkSubnetId\",\n \"exists\": \"true\"\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "Databases"
+  ],
+  "resource_type": "DBforMariaDB",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_MariaDB_Configured_Network_ServiceEndPt",
+    "description": "It is recommended to configure virtual network service endpoint for MariaDB server. Endpoints allow you to secure your critical Azure service resources to only your virtual networks. ",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/LltIe"
+}

@@ -1,0 +1,57 @@
+{
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Network/virtualNetworks"
+    },
+    "then": {
+      "effect": "auditIfNotExists",
+      "details": {
+        "type": "Microsoft.Network/networkWatchers",
+        "resourceGroupName": "NetworkWatcherRG",
+        "existenceCondition": {
+          "field": "location",
+          "equals": "[parameters('location')]"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Audit if Network Watcher is not enabled for region",
+        "description": "This policy audits if Network Watcher is not enabled for a selected region."
+      },
+      "allowedValues": [
+        "Australia East",
+        "Australia Southeast",
+        "Brazil South",
+        "Canada Central",
+        "Canada East",
+        "Central India",
+        "Central US",
+        "East Asia",
+        "East US",
+        "East US 2",
+        "Japan East",
+        "Japan West",
+        "Korea Central",
+        "Korea South",
+        "North Central US",
+        "North Europe",
+        "South Central US",
+        "South India",
+        "Southeast Asia",
+        "UK South",
+        "UK West",
+        "West Central US",
+        "West Europe",
+        "West India",
+        "West US",
+        "West US 2"
+      ]
+    }
+  }
+}

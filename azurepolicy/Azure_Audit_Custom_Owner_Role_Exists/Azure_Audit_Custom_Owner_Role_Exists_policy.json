@@ -1,0 +1,79 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/10ee2ea2-fb4d-45b8-a7e9-a2e770044cd9",
+    "policy_description": "This policy ensures that no custom subscription owner roles exist.",
+    "classification": "Access",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Subscription"
+    ],
+    "resource_type": "Subscription",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/BEaQN"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit",
+        "Disabled"
+      ],
+      "defaultValue": "Audit",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Authorization/roleDefinitions"
+        },
+        {
+          "field": "Microsoft.Authorization/roleDefinitions/type",
+          "equals": "CustomRole"
+        },
+        {
+          "anyOf": [
+            {
+              "not": {
+                "field": "Microsoft.Authorization/roleDefinitions/permissions[*].actions[*]",
+                "notEquals": "*"
+              }
+            },
+            {
+              "not": {
+                "field": "Microsoft.Authorization/roleDefinitions/permissions.actions[*]",
+                "notEquals": "*"
+              }
+            }
+          ]
+        },
+        {
+          "not": {
+            "field": "Microsoft.Authorization/roleDefinitions/assignableScopes[*]",
+            "notIn": [
+              "[concat(subscription().id,'/')]",
+              "[subscription().id]",
+              "/"
+            ]
+          }
+        },
+        {
+          "not": {
+            "field": "Microsoft.Authorization/roleDefinitions/assignableScopes[*]",
+            "notLike": "/providers/Microsoft.Management/*"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

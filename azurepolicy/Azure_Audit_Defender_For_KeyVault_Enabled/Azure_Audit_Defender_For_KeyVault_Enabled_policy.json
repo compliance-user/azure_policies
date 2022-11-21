@@ -1,0 +1,49 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/0e6763cc-5078-4e64-889d-ff4d9a839047",
+    "policy_description": "Azure Defender for Key Vault provides an additional layer of protection and security intelligence by detecting unusual and potentially harmful attempts to access or exploit key vault accounts.",
+    "recommendation_name": "Azure_Audit_Defender_For_KeyVault_Enabled",
+    "severity": "medium",
+    "classification": "Data",
+    "sub_classification": "Security",
+    "resource_type": "Key_Vault",
+    "service_resource": [
+      "Vaults"
+    ],
+    "uri": "policy/azure_policy/global/azure/compliance/others/6ef8f"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Resources/subscriptions"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/pricings",
+        "name": "KeyVaults",
+        "existenceScope": "subscription",
+        "existenceCondition": {
+          "field": "Microsoft.Security/pricings/pricingTier",
+          "equals": "Standard"
+        }
+      }
+    }
+  }
+}

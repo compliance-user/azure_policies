@@ -1,0 +1,49 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_description": "Azure Defender for container registries provides vulnerability scanning of any images pulled within the last 30 days, pushed to your registry, or imported, and exposes detailed findings per image.",
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/c25d9a16-bc35-4e15-a7e5-9db606bf9ed4",
+    "recommendation_name": "Azure_Audit_Defender_Set_On_Container_Registries",
+    "classification": "Access",
+    "sub_classification": "Security",
+    "severity": "medium",
+    "resource_type": "Azure_Kubernetes_Service",
+    "service_resource": [
+      "Cluster"
+    ],
+    "uri": "policy/azure_policy/global/azure/compliance/others/51a97"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Resources/subscriptions"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/pricings",
+        "name": "ContainerRegistry",
+        "existenceScope": "subscription",
+        "existenceCondition": {
+          "field": "Microsoft.Security/pricings/pricingTier",
+          "equals": "Standard"
+        }
+      }
+    }
+  }
+}

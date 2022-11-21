@@ -1,0 +1,33 @@
+{
+  "status": "active",
+  "description": "This policy audits whether the scalesets are being auto upgraded.",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Machine_Scale_Sets"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Monitor Automated Updates Critical System",
+  "name": "Azure_Monitor_Automated_Updates_Critical_System",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/tmmkf",
+  "content": "{\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"equals\": \"Microsoft.EventHub/namespaces/eventhubs\"\n    },\n    \"then\": {\n      \"effect\": \"AuditIfNotExists\",\n      \"details\": {\n        \"type\": \"Microsoft.EventHub/namespaces/eventHubs/authorizationRules\"\n      }\n    }\n  }\n}",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Monitor_Automated_Updates_Critical_System"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+  }
+}

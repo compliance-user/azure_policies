@@ -1,0 +1,55 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/c4d441f8-f9d9-4a9e-9cef-e82117cb3eef",
+    "policy_description": "Use a managed identity for enhanced authentication security",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "resource_type": "App_Services",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/iReKX"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Web/sites"
+        },
+        {
+          "field": "kind",
+          "like": "*api"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Web/sites/config",
+        "name": "web",
+        "existenceCondition": {
+          "field": "Microsoft.Web/sites/config/managedServiceIdentityId",
+          "exists": "true"
+        }
+      }
+    }
+  }
+}

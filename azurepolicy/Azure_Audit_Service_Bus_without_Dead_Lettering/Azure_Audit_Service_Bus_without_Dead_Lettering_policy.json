@@ -1,0 +1,47 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/02b3d1d2-6aeb-45fc-af63-147f6849d0c6",
+    "policy_description": "This policy Audits Service Bus without dead lettering",
+    "recommendation_name": "Azure_Audit_Service_Bus_without_Dead_Lettering",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "ServiceBus",
+    "service_resource": [
+      "ServiceBus"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/ba68b"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.ServiceBus/namespaces"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.ServiceBus/namespaces/queues",
+        "existenceCondition": {
+          "field": "Microsoft.ServiceBus/namespaces/queues/deadLetteringOnMessageExpiration",
+          "equals": false
+        }
+      }
+    }
+  }
+}

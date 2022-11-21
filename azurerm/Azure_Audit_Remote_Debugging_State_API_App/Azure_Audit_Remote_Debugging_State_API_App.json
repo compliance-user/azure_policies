@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether Remote debugging requires inbound ports to be opened on an API app. Remote debugging should be turned off.",
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Web_Apps"
+  ],
+  "resource_type": "App_Services",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Remote Debugging State API App",
+  "name": "Azure_Audit_Remote_Debugging_State_API_App",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/g2xte",
+  "content": "{\n  \"mode\": \"All\",\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"microsoft.Web/sites\"\n        },\n        {\n          \"anyOf\": [\n            {\n              \"field\": \"kind\",\n              \"equals\": \"api\"\n            },\n            {\n              \"field\": \"kind\",\n              \"equals\": \"apiApp\"\n            }\n          ]\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"AuditIfNotExists\",\n      \"details\": {\n        \"type\": \"Microsoft.Security/complianceResults\",\n        \"name\": \"RemoteDebuggingForApiApp\",\n        \"existenceCondition\": {\n          \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\n          \"in\": [\n            \"NotApplicable\",\n            \"OffByPolicy\",\n            \"Healthy\"\n          ]\n        }\n      }\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Audit_Remote_Debugging_State_For_An_API_App"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Remote_Debugging_State_API_App.json"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/2d7a58af16da7c637c432d7ef1466566",
+    "policy_description": "This policy audits for any presence of unrestricted network access in storage account firewall settings",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [
+      "Storage_Accounts"
+    ],
+    "resource_type": "Accounts",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/taom7"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Storage/storageAccounts"
+        },
+        {
+          "field": "Microsoft.Storage/storageAccounts/networkAcls.defaultAction",
+          "equals": "Allow"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

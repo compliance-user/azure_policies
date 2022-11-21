@@ -1,0 +1,41 @@
+{
+    "policyType": "BuiltIn",
+    "mode": "Indexed",
+    "metadata": {
+      "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/199d5677-e4d9-4264-9465-efe1839c06bd",
+      "version": "1.0.0",
+      "category": "Monitoring"
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Deny",
+          "Audit",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Insights/components"
+          },
+          {
+            "field": "Microsoft.Insights/components/DisableLocalAuth",
+            "notEquals": "true"
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+}

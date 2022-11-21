@@ -1,0 +1,22 @@
+{
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": [
+        "Microsoft.Compute/virtualMachines",
+        "Microsoft.ClassicCompute/virtualMachines"
+      ]
+    },
+    "then": {
+      "details": {
+        "existenceCondition": {
+          "field": "name",
+          "like": "ASR-Protect-*"
+        },
+        "type": "Microsoft.Resources/links"
+      },
+      "effect": "auditIfNotExists"
+    }
+  }
+}

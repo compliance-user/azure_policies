@@ -1,0 +1,55 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/568400d8919a1fd48333c613001f10a8",
+    "policy_description": "This policy audits VMs that do not use managed disks.",
+    "classification": "Operation",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "resource_type": "Virtual_Machines",
+    "severity": "low",
+    "uri": "policy/congress/global/azure/consumption/vm/ahnmr"
+  },
+  "policyRule": {
+    "if": {
+      "anyOf": [
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Compute/virtualMachines"
+            },
+            {
+              "field": "Microsoft.Compute/virtualMachines/osDisk.uri",
+              "exists": "True"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Compute/VirtualMachineScaleSets"
+            },
+            {
+              "anyOf": [
+                {
+                  "field": "Microsoft.Compute/VirtualMachineScaleSets/osDisk.vhdContainers",
+                  "exists": "True"
+                },
+                {
+                  "field": "Microsoft.Compute/VirtualMachineScaleSets/osdisk.imageUrl",
+                  "exists": "True"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "audit"
+    }
+  }
+}

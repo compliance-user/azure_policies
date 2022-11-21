@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Ensure_Storage_Logging_Enabled_For_Blob_Service_For_Read_Write_And_Delete_Requests",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/ec5e2406-3cf2-4ebb-81a0-54d18353fc0d",
+  "display_name": "Azure Audit Ensure Storage Logging Enabled For Blob Service For Read Write And Delete Requests",
+  "description": "Ensure Storage logging is enabled for Blob service for read, write, and delete requests",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/ec5e2406-3cf2-4ebb-81a0-54d18353fc0d\",\n \"policy_description\": \"Ensure Storage logging is enabled for Blob service for read, write, and delete requests\",\n \"recommendation_name\": \"Azure_Audit_Ensure_Storage_Logging_Enabled_For_Blob_Service_For_Read_Write_And_Delete_Requests\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Data\",\n \"resource_type\": \"Storage_Accounts\",\n \"service_resource\": [\n \"Storage_Accounts\"\n ],\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/6e422\",\n \"severity\": \"high\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"DeployIfNotExists\",\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"DeployIfNotExists\"\n },\n \"profileName\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Profile name\",\n \"description\": \"The diagnostic settings profile name\"\n },\n \"defaultValue\": \"setbypolicy_logAnalytics\"\n },\n \"logAnalytics\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Log Analytics workspace\",\n \"description\": \"Select Log Analytics workspace from dropdown list. If this workspace is outside of the scope of the assignment you must manually grant 'Log Analytics Contributor' permissions (or similar) to the policy assignment's principal ID.\",\n \"strongType\": \"omsWorkspace\",\n \"assignPermissions\": true\n }\n },\n \"metricsEnabled\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Enable metrics\",\n \"description\": \"Whether to enable metrics stream to the Log Analytics workspace - True or False\"\n },\n \"allowedValues\": [\n \"True\",\n \"False\"\n ],\n \"defaultValue\": \"False\"\n },\n \"logsEnabled\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Enable logs\",\n \"description\": \"Whether to enable logs stream to the Log Analytics workspace - True or False\"\n },\n \"allowedValues\": [\n \"True\",\n \"False\"\n ],\n \"defaultValue\": \"True\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Storage/storageAccounts/blobServices\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Insights/diagnosticSettings\",\n \"name\": \"[parameters('profileName')]\",\n \"existenceCondition\": {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/logs.enabled\",\n \"equals\": \"[parameters('logsEnabled')]\"\n },\n {\n \"count\": {\n \"field\": \"Microsoft.Insights/diagnosticSettings/metrics[*]\",\n \"where\": {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/metrics[*].category\",\n \"equals\": \"Transaction\"\n },\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/metrics[*].enabled\",\n \"equals\": true\n }\n ]\n }\n },\n \"equals\": 1\n },\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/workspaceId\",\n \"equals\": \"[parameters('logAnalytics')]\"\n }\n ]\n },\n \"roleDefinitionIds\": [\n \"/providers/microsoft.authorization/roleDefinitions/749f88d5-cbae-40b8-bcfc-e573ddc772fa\",\n \"/providers/microsoft.authorization/roleDefinitions/92aaf0da-9dab-42b6-94a3-d43ce8d16293\"\n ],\n \"deployment\": {\n \"properties\": {\n \"mode\": \"incremental\",\n \"template\": {\n \"$schema\": \"http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\n \"contentVersion\": \"1.0.0.0\",\n \"parameters\": {\n \"resourceName\": {\n \"type\": \"string\"\n },\n \"location\": {\n \"type\": \"string\"\n },\n \"logAnalytics\": {\n \"type\": \"string\"\n },\n \"metricsEnabled\": {\n \"type\": \"string\"\n },\n \"logsEnabled\": {\n \"type\": \"string\"\n },\n \"profileName\": {\n \"type\": \"string\"\n }\n },\n \"variables\": {},\n \"resources\": [\n {\n \"type\": \"Microsoft.Storage/storageAccounts/blobServices/providers/diagnosticSettings\",\n \"apiVersion\": \"2017-05-01-preview\",\n \"name\": \"[concat(parameters('resourceName'), '/', 'Microsoft.Insights/', parameters('profileName'))]\",\n \"location\": \"[parameters('location')]\",\n \"dependsOn\": [],\n \"properties\": {\n \"workspaceId\": \"[parameters('logAnalytics')]\",\n \"metrics\": [\n {\n \"category\": \"Transaction\",\n \"enabled\": \"[parameters('metricsEnabled')]\"\n }\n ],\n \"logs\": [\n {\n \"category\": \"StorageRead\",\n \"enabled\": \"[parameters('logsEnabled')]\"\n },\n {\n \"category\": \"StorageWrite\",\n \"enabled\": \"[parameters('logsEnabled')]\"\n },\n {\n \"category\": \"StorageDelete\",\n \"enabled\": \"[parameters('logsEnabled')]\"\n }\n ]\n }\n }\n ],\n \"outputs\": {}\n },\n \"parameters\": {\n \"location\": {\n \"value\": \"[field('location')]\"\n },\n \"resourceName\": {\n \"value\": \"[field('fullName')]\"\n },\n \"logAnalytics\": {\n \"value\": \"[parameters('logAnalytics')]\"\n },\n \"metricsEnabled\": {\n \"value\": \"[parameters('metricsEnabled')]\"\n },\n \"logsEnabled\": {\n \"value\": \"[parameters('logsEnabled')]\"\n },\n \"profileName\": {\n \"value\": \"[parameters('profileName')]\"\n }\n }\n }\n }\n }\n }\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "Storage_Accounts"
+  ],
+  "resource_type": "Storage_Accounts",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Ensure_Storage_Logging_Enabled_For_Blob_Service_For_Read_Write_And_Delete_Requests",
+    "description": "Ensure Storage logging is enabled for Blob service for read, write, and delete requests",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/6e422"
+}

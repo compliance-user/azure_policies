@@ -1,0 +1,47 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/5345bb39-67dc-4960-a1bf-427e16b9a0bd",
+    "policy_description": "This policy helps audit any PostgreSQL databases in your environment without Connection throttling enabled. This setting enables temporary connection throttling per IP for too many invalid password login failures.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Databases"
+    ],
+    "resource_type": "PGSQL",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/mKSUq"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.DBforPostgreSQL/servers"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.DBforPostgreSQL/servers/configurations",
+        "name": "connection_throttling",
+        "existenceCondition": {
+          "field": "Microsoft.DBforPostgreSQL/servers/configurations/value",
+          "equals": "ON"
+        }
+      }
+    }
+  }
+}

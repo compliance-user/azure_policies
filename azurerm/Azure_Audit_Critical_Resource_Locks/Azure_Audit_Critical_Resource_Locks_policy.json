@@ -1,0 +1,43 @@
+{
+  "mode": "All",
+  "parameters": {
+    "tagName": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag Name",
+        "description": "The Tag name to audit against (i.e. Type, OS etc.)"
+      }
+    },
+    "tagValue": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag Value",
+        "description": "Value of the tag to audit against ( i.e. Critical )"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName'), ']')]",
+          "match": "[parameters('tagValue')]"
+        }
+      ]
+    },
+    "then": {
+      "effect": "auditIfNotExists",
+      "details": {
+        "type": "Microsoft.Authorization/locks",
+        "existenceCondition": {
+          "field": "Microsoft.Authorization/locks/level",
+          "equals": "CanNotDelete"
+        }
+      }
+    }
+  }
+}

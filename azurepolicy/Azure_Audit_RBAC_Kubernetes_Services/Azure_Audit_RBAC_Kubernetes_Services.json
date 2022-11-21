@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_RBAC_Kubernetes_Services",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/ac4a19c2-fa67-49b4-8ae5-0b2e78c49457",
+  "display_name": "Azure Audit RBAC Kubernetes Services",
+  "description": "To provide granular filtering on the actions that users can perform, use Role-Based Access Control (RBAC) to manage permissions in Kubernetes Service Clusters and configure relevant authorization policies",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/ac4a19c2-fa67-49b4-8ae5-0b2e78c49457\",\n \"policy_description\": \"To provide granular filtering on the actions that users can perform, use Role-Based Access Control (RBAC) to manage permissions in Kubernetes Service Clusters and configure relevant authorization policies\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Application\",\n \"service_resource\": [\n \"Azure_Kubernetes_Service\"\n ],\n \"resource_type\": \"Cluster\",\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/pATnB\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"Audit\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Audit\",\n \"metadata\": {\n \"displayName\": \"[Preview]: Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.ContainerService/managedClusters\"\n },\n {\n \"anyOf\": [\n {\n \"field\": \"Microsoft.ContainerService/managedClusters/enableRBAC\",\n \"exists\": \"false\"\n },\n {\n \"field\": \"Microsoft.ContainerService/managedClusters/enableRBAC\",\n \"equals\": \"false\"\n }\n ]\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Azure_Kubernetes_Service"
+  ],
+  "resource_type": "Cluster",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_RBAC_Kubernetes_Services",
+    "description": "To provide granular filtering on the actions that users can perform, use Role-Based Access Control (RBAC) to manage permissions in Kubernetes Service Clusters and configure relevant authorization policies",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/pATnB"
+}

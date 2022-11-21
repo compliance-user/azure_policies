@@ -1,0 +1,67 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/fbb99e8e-e444-4da0-9ff1-75c92f5a85b2",
+    "policy_description": "This policy, audits if the Storage account containing the container with activity logs is encrypted with BYOK. The policy works only if the storage account lies on the same subscription as activity logs by design. More information on Azure Storage encryption at rest can be found here https://aka.ms/azurestoragebyok.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Storage_Accounts"
+    ],
+    "resource_type": "Accounts",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/rZqoi"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Insights/logProfiles"
+        },
+        {
+          "field": "Microsoft.Insights/logProfiles/storageAccountId",
+          "exists": "true"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Storage/storageAccounts",
+        "existenceScope": "subscription",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "value": "[contains(field('Microsoft.Insights/logProfiles/storageAccountId'), subscription().Id)]",
+              "equals": "true"
+            },
+            {
+              "field": "name",
+              "equals": "[last(split(field('Microsoft.Insights/logProfiles/storageAccountId'),'/'))]"
+            },
+            {
+              "field": "Microsoft.Storage/storageAccounts/encryption.keySource",
+              "equals": "Microsoft.Keyvault"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Azure_Allowed_VM_Image",
+  "display_name": "Azure Audit Virtual Machine Image",
+  "description": "This policy finds the set of virtual machine Image that are not allowed.",
+  "category": "service",
+  "status": "active",
+  "content": "instance(id, name, location, offer, sku) :- azure_compute_instance:instance(id=id, name=name, location=location, offer=offer, sku=sku), concat(offer, '/', x), concat(x, sku, y), nin(y, #Allowed_Images#);",
+  "parameters": {
+    "Allowed_Images": {
+      "type": "comma_delimited_list",
+      "description": "Names of the Virtual machine Image which we have to be considered as not violation.",
+      "source": "corestack.list_image"
+    }
+  },
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "resource_type": "Virtual_Machines",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+    "file": "Azure_Allowed_VM_Image.json"
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendations": [
+  ],
+  "uri": "policy/congress/global/azure/compliance/others/rRiql"
+}

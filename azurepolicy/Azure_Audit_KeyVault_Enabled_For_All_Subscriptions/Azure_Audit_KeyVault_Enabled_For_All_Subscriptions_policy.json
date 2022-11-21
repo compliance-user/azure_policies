@@ -1,0 +1,80 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/100495ee-a289-4ec4-b41f-b959c437dc1a",
+    "policy_description": "Azure key vault is enabled for a subscription",
+    "recommendation_name": "Azure_Audit_KeyVault_Enabled_For_All_Subscriptions",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [
+      "Vaults"
+    ],
+    "resource_type": "Key_Vault",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/df6e1",
+    "category": "Key Vault",
+    "createdBy": "7de373b9-42bc-49e8-b424-074f00bea8fb",
+    "createdOn": "2021-10-07T07:11:38.7909595Z",
+    "updatedBy": null,
+    "updatedOn": null
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    },
+    "sku name": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Sku (Pricing tier) of the key vault",
+        "description": "Sku (Pricing tier) of the key vault."
+      },
+      "allowedValues": [
+        "Standard",
+        "Premium"
+      ],
+      "defaultValue": [
+        "Standard"
+      ]
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.KeyVault/vaults"
+        },
+        {
+          "not": {
+            "field": "Microsoft.KeyVault/vaults/sku.name",
+            "in": "[parameters('sku name')]"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "100495ee-a289-4ec4-b41f-b959c437dc1a",
+  "systemData": {
+    "createdBy": "tridib.borah@agiliz.tech",
+    "createdByType": "User",
+    "createdAt": "2021-10-07T07:11:38.4925563Z",
+    "lastModifiedBy": "tridib.borah@agiliz.tech",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2021-10-07T07:11:38.4925563Z"
+  }
+}

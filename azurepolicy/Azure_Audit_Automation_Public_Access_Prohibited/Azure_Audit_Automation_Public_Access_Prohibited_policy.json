@@ -1,0 +1,49 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/4e242b01-a11d-40e9-aec8-4857b11d83a2",
+    "policy_description": "This policy Audits if Automation of public access in prohibited",
+    "recommendation_name": "Azure_Audit_Automation_Public_Access_Prohibited",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/434c0"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Automation/AutomationAccounts"
+        },
+        {
+          "field": "Microsoft.Automation/automationAccounts/publicNetworkAccess",
+          "notEquals": "False"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

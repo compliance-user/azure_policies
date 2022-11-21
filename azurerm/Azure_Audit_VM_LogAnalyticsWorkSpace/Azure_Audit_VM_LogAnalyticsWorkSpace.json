@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether VMs not logging to the LA workspace specified in the policy/initiative assignment.",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit VM LogAnalyticsWorkSpace",
+  "name": "Azure_Audit_VM_LogAnalyticsWorkSpace",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/3n3a3",
+  "content": "{\n  \"mode\": \"All\",\n  \"parameters\": {\n    \"logAnalyticsWorkspaceId\": {\n      \"metadata\": {\n        \"description\": \"This is the Id (GUID) of the Log Analytics Workspace that the VMs should be configured for.\",\n        \"displayName\": \"Log Analytics Workspace Id that VMs should be configured for\"\n      },\n      \"type\": \"String\",\n      \"source\": \"workspace.list_workspace\"\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"equals\": \"Microsoft.Compute/virtualMachines/extensions\",\n          \"field\": \"type\"\n        },\n        {\n          \"equals\": \"Microsoft.EnterpriseCloud.Monitoring\",\n          \"field\": \"Microsoft.Compute/virtualMachines/extensions/publisher\"\n        },\n        {\n          \"field\": \"Microsoft.Compute/virtualMachines/extensions/settings.workspaceId\",\n          \"notEquals\": \"[parameters('logAnalyticsWorkspaceId')]\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"audit\"\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_VM_LogAnalyticsWorkSpace"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_VM_LogAnalyticsWorkSpace.json"
+  }
+}

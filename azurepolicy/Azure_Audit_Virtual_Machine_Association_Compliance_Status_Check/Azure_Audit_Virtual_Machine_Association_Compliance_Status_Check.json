@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Virtual_Machine_Association_Compliance_Status_Check",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/0b8f5c06-9104-43dd-85c9-b7eb496440ae",
+  "display_name": "Azure Audit Virtual Machine Association Compliance Status Check",
+  "description": "This policy audits virtual machine association compliance status",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/0b8f5c06-9104-43dd-85c9-b7eb496440ae\",\n \"policy_description\": \"This policy audits virtual machine association compliance status\",\n \"recommendation_name\": \"Azure_Audit_Virtual_Machine_Association_Compliance_Status_Check\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Application\",\n \"resource_type\": \"Virtual_Machines\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/f82e0\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Compute/virtualMachines\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\n \"existenceCondition\": {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Compute/virtualMachines/extensions/type\",\n \"equals\": \"DependencyAgentLinux\"\n },\n {\n \"field\": \"Microsoft.Compute/virtualMachines/extensions/publisher\",\n \"equals\": \"Microsoft.Azure.Monitoring.DependencyAgent\"\n },\n {\n \"field\": \"Microsoft.Compute/virtualMachines/extensions/provisioningState\",\n \"equals\": \"Succeeded\"\n }\n ]\n }\n }\n }\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Virtual_Machine_Association_Compliance_Status_Check",
+    "description": "This policy audits virtual machine association compliance status",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/f82e0"
+}

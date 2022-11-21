@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_FunctionApp_using_Latest_HTTP",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/e2c1c086-2d84-4019-bff3-c44ccd95113c",
+  "display_name": "Azure Audit FunctionApp using Latest HTTP",
+  "description": "Periodically, newer versions are released for HTTP either due to security flaws or to include additional functionality. Using the latest HTTP version for web apps to take advantage of security fixes, if any, and/or new functionalities of the newer version.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"Indexed\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/e2c1c086-2d84-4019-bff3-c44ccd95113c\",\n \"policy_description\": \"Periodically, newer versions are released for HTTP either due to security flaws or to include additional functionality. Using the latest HTTP version for web apps to take advantage of security fixes, if any, and/or new functionalities of the newer version.\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Application\",\n \"service_resource\": [\n \"Web_Apps\"\n ],\n \"resource_type\": \"App_Services\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/VCSeW\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Web/sites\"\n },\n {\n \"field\": \"kind\",\n \"like\": \"functionapp*\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Web/sites/config\",\n \"name\": \"web\",\n \"existenceCondition\": {\n \"field\": \"Microsoft.Web/sites/config/web.http20Enabled\",\n \"equals\": \"true\"\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Web_Apps"
+  ],
+  "resource_type": "App_Services",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_FunctionApp_using_Latest_HTTP",
+    "description": "Periodically, newer versions are released for HTTP either due to security flaws or to include additional functionality. Using the latest HTTP version for web apps to take advantage of security fixes, if any, and/or new functionalities of the newer version.",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/VCSeW"
+}

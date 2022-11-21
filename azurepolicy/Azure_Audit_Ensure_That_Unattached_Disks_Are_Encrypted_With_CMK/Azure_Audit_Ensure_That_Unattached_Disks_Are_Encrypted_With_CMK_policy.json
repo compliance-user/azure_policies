@@ -1,0 +1,65 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/b8212054-a93f-49c4-b789-be198274b982",
+    "policy_description": "Ensure that 'Unattached disks' are encrypted with CMK",
+    "recommendation_name": "Azure_Audit_Ensure_That_Unattached_Disks_Are_Encrypted_With_CMK",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "resource_type": "Disks",
+    "service_resource": [
+      "Disks"
+    ],
+    "uri": "policy/azure_policy/global/azure/compliance/others/db32b",
+    "severity": "high"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    },
+    "type": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "encryption type",
+        "description": "The type of encryption of the disk."
+      },
+      "allowedValues": [
+        "EncryptionAtRestWithCustomerKey",
+        "EncryptionAtRestWithPlatformKey"
+      ],
+      "defaultValue": [
+        "EncryptionAtRestWithCustomerKey"
+      ]
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/disks"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Compute/disks/encryption.type",
+            "in": "[parameters('type')]"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

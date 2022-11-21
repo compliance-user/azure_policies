@@ -1,0 +1,32 @@
+{
+  "status": "active",
+  "description": "This policy audits whether SQL servers are configured with Advanced Data Security.",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "MSSQL"
+  ],
+  "resource_type": "Servers",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit SQL Servers without Advanced Data Security",
+  "name": "Azure_Audit_SQL_Server_without_ADS",
+  "uri": "policy/azure_policy/global/azure/compliance/others/rss4o",
+  "content": "{\n\"parameters\": {\n\"effect\": {\n\"type\": \"String\",\n\"metadata\": {\n\"displayName\": \"Effect\",\n\"description\": \"Enable or disable the execution of the policy\"\n},\n\"allowedValues\": [\n\"AuditIfNotExists\"\n]\n}\n},\n\"policyRule\": {\n\"if\":{\n\"field\": \"type\",\n\"equals\": \"Microsoft.Sql/servers\"\n},\n\"then\": {\n\"effect\": \"[parameters('effect')]\",\n\"details\": {\n\"type\": \"Microsoft.Sql/servers/securityAlertPolicies\",\n\"name\": \"Default\",\n\"existenceCondition\": {\n\"field\": \"Microsoft.Sql/securityAlertPolicies.state\",\n\"equals\": \"Enabled\"\n}\n}\n}\n}\n}\n",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_SQL_Servers_without_Advanced_Data_Security"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "audit_SQL_servers_without_Advanced_Data_Security.json"
+  }
+}

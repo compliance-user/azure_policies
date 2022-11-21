@@ -1,0 +1,69 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/d0a370c9-18aa-4a5e-aabb-0bfcbc4d7c2f",
+    "policy_description": "Azure storage account logging for tables is disabled",
+    "recommendation_name": "Azure_Audit_StorageAccount_Logging_For_Tables_Is_Disabled",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "resource_type": "Accounts",
+    "service_resource": [
+      "Storage_Accounts"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/5e9fc",
+    "category": "Storage"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    },
+    "logAnalytics": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Log Analytics workspace",
+        "description": "Select Log Analytics workspace from dropdown list. If this workspace is outside of the scope of the assignment you must manually grant 'Log Analytics Contributor' permissions (or similar) to the policy assignment's principal ID.",
+        "strongType": "omsWorkspace",
+        "assignPermissions": true
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Storage/storageAccounts/tableServices"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Insights/diagnosticSettings",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "count": {
+                "field": "Microsoft.Insights/diagnosticSettings/metrics[*]"
+              },
+              "equals": 2
+            },
+            {
+              "field": "Microsoft.Insights/diagnosticSettings/workspaceId",
+              "equals": "[parameters('logAnalytics')]"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "d0a370c9-18aa-4a5e-aabb-0bfcbc4d7c2f"
+}

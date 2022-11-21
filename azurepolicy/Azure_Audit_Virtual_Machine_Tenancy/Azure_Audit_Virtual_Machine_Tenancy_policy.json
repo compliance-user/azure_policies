@@ -1,0 +1,61 @@
+{
+    "policyType": "Custom",
+    "mode": "All",
+    "metadata": {
+      "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/f8f40fe8-3510-4dce-805e-6913db3f4826",
+      "category": "Compute",
+      "createdBy": "7de373b9-42bc-49e8-b424-074f00bea8fb",
+      "createdOn": "2022-01-05T16:31:55.6254231Z",
+      "updatedBy": null,
+      "updatedOn": null
+    },
+    "parameters": {
+      "id": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "id for the given host",
+          "description": "If the host id given in the parameter matches with the host id of the vm then it will be in compliant with this policy."
+        }
+      },
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy."
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Compute/virtualMachines"
+          },
+          {
+            "not": {
+              "field": "Microsoft.Compute/virtualMachines/host.id",
+              "in": "[parameters('id')]"
+            }
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    },
+  "systemData": {
+    "createdBy": "tridib.borah@agiliz.tech",
+    "createdByType": "User",
+    "createdAt": "2022-01-05T16:31:55.2858334Z",
+    "lastModifiedBy": "tridib.borah@agiliz.tech",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2022-01-05T16:31:55.2858334Z"
+  }
+}

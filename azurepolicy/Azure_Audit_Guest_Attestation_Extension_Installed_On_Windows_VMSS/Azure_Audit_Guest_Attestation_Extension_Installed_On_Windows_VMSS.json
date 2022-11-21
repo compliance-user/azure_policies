@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Guest_Attestation_Extension_Installed_On_Windows_VMSS",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/f655e522-adff-494d-95c2-52d4f6d56a42",
+  "display_name": "Azure Audit Guest Attestation Extension Installed On Windows VMSS",
+  "description": "Install Guest Attestation extension on supported virtual machines scale sets to allow Azure Security Center to proactively attest and monitor the boot integrity. Once installed, boot integrity will be attested via Remote Attestation. This assessment only applies to trusted launch enabled virtual machine scale sets.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n      \"displayName\": \"[Preview]: Guest Attestation extension should be installed on supported Windows virtual machines scale sets\",\n      \"policyType\": \"BuiltIn\",\n      \"mode\": \"Indexed\",\n      \"description\": \"Install Guest Attestation extension on supported virtual machines scale sets to allow Azure Security Center to proactively attest and monitor the boot integrity. Once installed, boot integrity will be attested via Remote Attestation. This assessment only applies to trusted launch enabled virtual machine scale sets.\",\n      \"metadata\": {\n        \"category\": \"Security Center\",\n        \"version\": \"2.0.0-preview\",\n        \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/f655e522-adff-494d-95c2-52d4f6d56a42\"\n      },\n      \"parameters\": {\n        \"effect\": {\n          \"type\": \"String\",\n          \"metadata\": {\n            \"displayName\": \"Effect\",\n            \"description\": \"Enable or disable the execution of the policy\"\n          },\n          \"allowedValues\": [\n            \"AuditIfNotExists\",\n            \"Disabled\"\n          ],\n          \"defaultValue\": \"AuditIfNotExists\"\n        }\n      },\n      \"policyRule\": {\n        \"if\": {\n          \"allOf\": [\n            {\n              \"field\": \"type\",\n              \"equals\": \"Microsoft.Compute/virtualMachineScaleSets\"\n            },\n            {\n              \"field\": \"Microsoft.Compute/virtualMachineScaleSets/virtualMachineProfile.storageProfile.imageReference.offer\",\n              \"like\": \"windows*\"\n            },\n            {\n              \"field\": \"Microsoft.Compute/virtualMachineScaleSets/virtualMachineProfile.securityProfile.securityType\",\n              \"equals\": \"TrustedLaunch\"\n            },\n            {\n              \"field\": \"Microsoft.Compute/virtualMachineScaleSets/virtualMachineProfile.securityProfile.uefiSettings\",\n              \"exists\": \"true\"\n            },\n            {\n              \"field\": \"Microsoft.Compute/virtualMachineScaleSets/virtualMachineProfile.securityProfile.uefiSettings.vTpmEnabled\",\n              \"equals\": \"true\"\n            },\n            {\n              \"field\": \"Microsoft.Compute/virtualMachineScaleSets/virtualMachineProfile.securityProfile.uefiSettings.secureBootEnabled\",\n              \"equals\": \"true\"\n            }\n          ]\n        },\n        \"then\": {\n          \"effect\": \"[parameters('effect')]\",\n          \"details\": {\n            \"type\": \"Microsoft.Compute/virtualMachineScaleSets/extensions\",\n            \"existenceCondition\": {\n              \"allOf\": [\n                {\n                  \"field\": \"Microsoft.Compute/virtualMachineScaleSets/extensions/publisher\",\n                  \"equals\": \"Microsoft.Azure.Security.WindowsAttestation\"\n                },\n                {\n                  \"field\": \"Microsoft.Compute/virtualMachineScaleSets/extensions/type\",\n                  \"equals\": \"GuestAttestation\"\n                },\n                {\n                  \"field\": \"Microsoft.Compute/virtualMachineScaleSets/extensions/provisioningState\",\n                  \"in\": [\n                    \"Succeeded\",\n                    \"Provisioning succeeded\"\n                  ]\n                }\n              ]\n            }\n          }\n        }\n      }\n  }\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Guest_Attestation_Extension_Installed_On_Windows_VMSS",
+    "description": "Install Guest Attestation extension on supported virtual machines scale sets to allow Azure Security Center to proactively attest and monitor the boot integrity. Once installed, boot integrity will be attested via Remote Attestation. This assessment only applies to trusted launch enabled virtual machine scale sets.",
+    "actions": []
+  },
+    "uri": "policy/azure_policy/global/azure/compliance/others/mlqpf"
+}

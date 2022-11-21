@@ -1,0 +1,42 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
+    "policy_description": " This policy enables you to restrict the locations your organization can specify when deploying resources. Use to enforce your geo-compliance requirements. Excludes resource groups, Microsoft.AzureActiveDirectory/b2cDirectories, and resources that use the 'global' region.",
+    "classification": "Operation",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Subscription"
+    ],
+    "resource_type": "Subscription",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/0576d"
+  },
+  "parameters": {
+    "listOfAllowedLocations": {
+      "type": "Array"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "location",
+          "notIn": "[parameters('listOfAllowedLocations')]"
+        },
+        {
+          "field": "location",
+          "notEquals": "global"
+        },
+        {
+          "field": "type",
+          "notEquals": "Microsoft.AzureActiveDirectory/b2cDirectories"
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+    "policyType": "Custom",
+    "mode": "All",
+    "metadata": {
+      "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/6c70544a-68cd-41e3-8cc8-c03d0ff460f1",
+      "category": "Compute",
+      "createdBy": "7de373b9-42bc-49e8-b424-074f00bea8fb",
+      "createdOn": "2022-01-03T14:15:21.4125307Z",
+      "updatedBy": null,
+      "updatedOn": null
+    },
+    "parameters": {
+      "diskEncryptionSet": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "diskEncryptionSet for the given image",
+          "description": "If the diskEncryptionSet given in the parameter matches with the diskEncryptionSet of the image then it will be in compliant with this policy."
+        }
+      },
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy."
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Compute/images"
+          },
+          {
+            "not": {
+              "field": "Microsoft.Compute/images/storageProfile.osDisk.diskEncryptionSet.id",
+              "in": "[parameters('diskEncryptionSet')]"
+            }
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    },
+  "systemData": {
+    "createdBy": "tridib.borah@agiliz.tech",
+    "createdByType": "User",
+    "createdAt": "2022-01-03T14:15:21.2473124Z",
+    "lastModifiedBy": "tridib.borah@agiliz.tech",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2022-01-03T14:15:21.2473124Z"
+  }
+}

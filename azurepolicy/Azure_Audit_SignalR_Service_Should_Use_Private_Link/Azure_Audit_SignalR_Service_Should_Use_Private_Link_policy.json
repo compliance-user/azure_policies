@@ -1,0 +1,50 @@
+{
+    "policyType": "Custom",
+    "mode": "All",
+    "metadata": {
+      "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/f749ce8a-36b8-45a9-9c26-b8d81ba0ce00",
+      "category": "SignalR",
+      "createdBy": "7de373b9-42bc-49e8-b424-074f00bea8fb",
+      "createdOn": "2022-05-10T17:41:25.1369173Z",
+      "updatedBy": null,
+      "updatedOn": null
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "AuditIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "AuditIfNotExists"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.SignalRService/SignalR"
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.SignalRService/SignalR/privateEndpointConnections",
+          "existenceCondition": {
+            "field": "Microsoft.SignalRService/SignalR/privateEndpointConnections/privateLinkServiceConnectionState.status",
+            "equals": "Approved"
+          }
+        }
+      }
+    },
+  "systemData": {
+    "createdBy": "tridib.borah@agiliz.tech",
+    "createdByType": "User",
+    "createdAt": "2022-05-10T17:41:25.0605794Z",
+    "lastModifiedBy": "tridib.borah@agiliz.tech",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2022-05-10T17:41:25.0605794Z"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/158a2dd0163de57cfb52f3a4bc974272",
+    "policy_description": "Azure security center has discovered that some of virtual machines are running web applications, and the NSGs associated to these virtual machines are overly permissive with regards to the web application ports.",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "resource_type": "App_Services",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/liwlj"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": [
+        "Microsoft.Compute/virtualMachines",
+        "Microsoft.ClassicCompute/virtualMachines"
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/complianceResults",
+        "name": "unprotectedWebApplication",
+        "existenceCondition": {
+          "field": "Microsoft.Security/complianceResults/resourceStatus",
+          "in": [
+            "NotApplicable",
+            "OffByPolicy",
+            "Healthy"
+          ]
+        }
+      }
+    }
+  }
+}

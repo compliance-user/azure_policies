@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether Custom RBAC Rules are created. Audit built-in roles such as Owner, Contributor, Reader instead of custom RBAC roles, which are error prone. Using custom roles is treated as an exception and requires a rigorous review and threat modeling.",
+  "classification": "Access",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Usage Custom RBAC Rules",
+  "name": "Azure_Audit_Usage_Custom_RBAC_Rules",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/mceg7",
+  "content": "{\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Authorization/roleDefinitions\"\n        },\n        {\n          \"field\": \"Microsoft.Authorization/roleDefinitions/type\",\n          \"equals\": \"CustomRole\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"Audit\"\n    }\n  }\n}",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Usage_Custom_RBAC_Rules"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Usage_Custom_RBAC_Rules.json"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether VM is enabled with DR option. Disaster recovery is needed to ensure that the environment will be available all the time.",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit VM DR",
+  "name": "Azure_Audit_VM_DR",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/rftfk",
+  "content": "{\n  \"mode\": \"All\",\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"in\": [\n        \"Microsoft.Compute/virtualMachines\",\n        \"Microsoft.ClassicCompute/virtualMachines\"\n      ]\n    },\n    \"then\": {\n      \"details\": {\n        \"existenceCondition\": {\n          \"field\": \"name\",\n          \"like\": \"ASR-Protect-*\"\n        },\n        \"type\": \"Microsoft.Resources/links\"\n      },\n      \"effect\": \"auditIfNotExists\"\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_VMs_Disaster_Recovery"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_VM_DR.json"
+  }
+}

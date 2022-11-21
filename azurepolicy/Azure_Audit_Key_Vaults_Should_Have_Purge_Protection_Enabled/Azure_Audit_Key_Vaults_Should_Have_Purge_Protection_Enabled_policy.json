@@ -1,0 +1,63 @@
+{
+    "policyType": "Custom",
+    "mode": "All",
+    "metadata": {
+      "category": "Key Vault"
+    },
+    "parameters": {
+      "name": {
+        "type": "String",
+        "metadata": {
+          "displayName": "sku name of the keyvault",
+          "description": "If the sku name given in the parameters is equal to the sku name of the keyvault then it will be compliant."
+        }
+      },
+      "enablePurgeProtection": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Whether to enablePurgeProtection of the keyvault",
+          "description": "If the value of purge protection given in the parameters is equal to the value of purge protection of the keyvault then it will be compliant."
+        }
+      },
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy."
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.KeyVault/vaults"
+          },
+          {
+            "not": {
+              "allOf": [
+                {
+                  "field": "Microsoft.KeyVault/vaults/sku.name",
+                  "equals": "[parameters('name')]"
+                },
+                {
+                  "field": "Microsoft.KeyVault/vaults/enablePurgeProtection",
+                  "equals": "[parameters('enablePurgeProtection')]"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+}

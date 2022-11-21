@@ -1,0 +1,80 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/110b2954-5610-44dd-a3dd-0d7afa583269",
+    "policy_description": "CDN is enabled in azure",
+    "recommendation_name": "Azure_Audit_CDN_Enabled",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "service_resource": [
+      ""
+    ],
+    "resource_type": "",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/00858",
+    "category": "CDN",
+    "createdBy": "7de373b9-42bc-49e8-b424-074f00bea8fb",
+    "createdOn": "2021-10-05T16:18:16.1069109Z",
+    "updatedBy": null,
+    "updatedOn": null
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    },
+    "resourceState": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "resourceState of the CDN profiles",
+        "description": "resourceState of the CDN profiles."
+      },
+      "allowedValues": [
+        "Active",
+        "Stopped"
+      ],
+      "defaultValue": [
+        "Active"
+      ]
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Cdn/profiles"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Cdn/profiles/resourceState",
+            "in": "[parameters('resourceState')]"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "110b2954-5610-44dd-a3dd-0d7afa583269",
+  "systemData": {
+    "createdBy": "tridib.borah@agiliz.tech",
+    "createdByType": "User",
+    "createdAt": "2021-10-05T16:18:15.6554731Z",
+    "lastModifiedBy": "tridib.borah@agiliz.tech",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2021-10-05T16:18:15.6554731Z"
+  }
+}

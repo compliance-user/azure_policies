@@ -1,0 +1,33 @@
+{
+  "name": "Azure_Audit_Key_Vault_Managed_HSM_Should_Use_Private_link",
+  "display_name": "Azure Audit Key Vault Managed HSM Should Use Private link",
+  "description": "This policy audits azure key vault should use HSM Private link",
+  "category": "service",
+  "status": "active",
+  "content": "{\n    \"policyType\": \"Custom\",\n    \"mode\": \"All\",\n    \"metadata\": {\n      \"category\": \"Key Vault\"\n    },\n    \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"Enable or disable the execution of the policy\"\n        },\n        \"allowedValues\": [\n          \"Audit\",\n          \"Disabled\"\n        ],\n        \"defaultValue\": \"Audit\"\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"allOf\": [\n          {\n            \"field\": \"type\",\n            \"equals\": \"Microsoft.KeyVault/vaults\"\n          },\n          {\n            \"field\": \"Microsoft.KeyVault/vaults/sku.name\",\n            \"notEquals\": \"Premium\"\n          },\n          {\n            \"anyOf\": [\n              {\n                \"field\": \"Microsoft.KeyVault/vaults/privateEndpointConnections\",\n                \"exists\": \"false\"\n              },\n              {\n                \"count\": {\n                  \"field\": \"Microsoft.KeyVault/vaults/privateEndpointConnections[*]\",\n                  \"where\": {\n                    \"field\": \"Microsoft.KeyVault/vaults/privateEndpointConnections[*].privateLinkServiceConnectionState.status\",\n                    \"equals\": \"Approved\"\n                  }\n                },\n                \"equals\": 0\n              }\n            ]\n          }\n        ]\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\"\n      }\n    }\n}",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "High",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Key_Vault_Managed_HSM_Should_Use_Private_link",
+    "description": "This policy audits azure key vault should use HSM Private link",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/rudos"
+}

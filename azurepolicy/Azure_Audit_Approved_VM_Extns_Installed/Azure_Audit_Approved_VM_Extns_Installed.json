@@ -1,0 +1,32 @@
+{
+  "name": "Azure_Audit_Approved_VM_Extns_Installed",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/c0e996f8-39cf-4af9-9f45-83fbde810432",
+  "display_name": "Azure Audit Approved VM Extns Installed",
+  "description": "This policy governs the virtual machine extensions that are not approved.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"Indexed\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/c0e996f8-39cf-4af9-9f45-83fbde810432\",\n \"policy_description\": \"This policy governs the virtual machine extensions that are not approved.\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Host\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"resource_type\": \"Virtual_Machines\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/VJLYh\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"Audit\",\n \"Deny\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Audit\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"The effect determines what happens when the policy rule is evaluated to match\"\n }\n },\n \"approvedExtensions\": {\n \"type\": \"Array\",\n \"metadata\": {\n \"description\": \"The list of approved extension types that can be installed. Example: AzureDiskEncryption\",\n \"displayName\": \"Approved extensions\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Compute/virtualMachines/extensions\"\n },\n {\n \"field\": \"Microsoft.Compute/virtualMachines/extensions/type\",\n \"notIn\": \"[parameters('approvedExtensions')]\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Host",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendations": [
+    "Azure_Audit_Approved_VM_Extns_Installed"
+  ],
+  "uri": "policy/azure_policy/global/azure/compliance/others/VJLYh"
+}

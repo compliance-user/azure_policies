@@ -1,0 +1,45 @@
+{
+    "policyType": "Custom",
+    "mode": "All",
+    "metadata": {
+      "category": "App Service"
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "AuditIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "AuditIfNotExists"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Web/sites"
+          },
+          {
+            "field": "kind",
+            "like": "app"
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.Web/sites/virtualNetworkConnections",
+          "existenceCondition": {
+            "field": "Microsoft.Web/sites/virtualnetworkconnections/vnetResourceId",
+            "exists": "true"
+          }
+        }
+      }
+    }
+}

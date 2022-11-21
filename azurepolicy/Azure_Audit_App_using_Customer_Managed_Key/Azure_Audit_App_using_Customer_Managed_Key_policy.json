@@ -1,0 +1,47 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/967a4b4b-2da9-43c1-b7d0-f98d0d74d0b1",
+    "policy_description": "This policy audits any App Configuration instance that does not use a customer managed key.",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "resource_type": "App_Services",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/boKXl"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit",
+        "Disabled"
+      ],
+      "defaultValue": "Audit",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.AppConfiguration/configurationStores"
+        },
+        {
+          "field": "Microsoft.AppConfiguration/configurationStores/encryption.keyVaultProperties.keyIdentifier",
+          "exists": "false"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

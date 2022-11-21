@@ -1,0 +1,73 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/fd93b394-93cb-4a3d-b354-1a3e22c2d0a2",
+    "policy_description": "This policy audits workspace operation",
+    "recommendation_name": "Azure_Audit_Workspace_in_Operation",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/368f2"
+  },
+  "parameters": {
+    "description": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Description of the workspace",
+        "description": "If the description given in the parameters is equal to the description of the workspace then it will be compliant."
+      }
+    },
+    "friendlyName": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Friendly name of the workspace",
+        "description": "If the friendly name given in the parameters is equal to the friendly name of the workspace then it will be compliant."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.DesktopVirtualization/workspaces"
+        },
+        {
+          "not": {
+            "allOf": [
+              {
+                "field": "Microsoft.DesktopVirtualization/workspaces/description",
+                "equals": "[parameters('description')]"
+              },
+              {
+                "field": "Microsoft.DesktopVirtualization/workspaces/friendlyName",
+                "equals": "[parameters('friendlyName')]"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

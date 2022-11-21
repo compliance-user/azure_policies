@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Monitor_Permissive_Network_Access_App-Svcs",
+  "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/9a9efa3482ef8cb829a5e5356ce5687e",
+  "display_name": "Azure Monitor Permissive Network Access App-Svcs",
+  "description": "This policy audits whether the Systems running web applications are using recommended ports",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"metadata\": {\n \"policy_id\": \"/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/9a9efa3482ef8cb829a5e5356ce5687e\",\n \"policy_description\": \"This policy checks if the Systems running web applications are using recommended ports.\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Network\",\n \"recommendation_name\": \"Azure_Monitor_Permissive_Network_Access_App-Svcs\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"resource_type\": \"Virtual_Machines\",\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/repbh\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Web/sites\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Security/complianceResults\",\n \"name\": \"restrictAccessToAppServices\",\n \"existenceCondition\": {\n \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\n \"in\": [\n \"Monitored\",\n \"NotApplicable\",\n \"OffByPolicy\",\n \"Healthy\"\n ]\n }\n }\n }\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Monitor_Permissive_Network_Access_App-Svcs",
+    "description": "It is recommended to change networking configuration of some of your App services are overly permissive and allow inbound traffic from ranges that are too broad. Manual steps:1) An App Service Environment must always be created within a subnet because a subnet provides a network boundary which can be used to lock down inbound traffic behind upstream devices and services such that HTTP and HTTPS traffic is only accepted from specific upstream IP addresses. 2) Controlling inbound traffic requires creating network security rules in a network security group, and then assigning the network security group the subnet containing the App Service Environment.",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/repbh"
+}

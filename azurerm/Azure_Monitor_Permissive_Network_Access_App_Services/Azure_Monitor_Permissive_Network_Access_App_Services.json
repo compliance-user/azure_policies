@@ -1,0 +1,33 @@
+{
+  "status": "active",
+  "description": "This policy audits whether the Systems running web applications are using recommended ports",
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Monitor Permissive Network Access App Services",
+  "name": "Azure_Monitor_Permissive_Network_Access_App_Services",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/repbh",
+  "content": "{\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"equals\": \"Microsoft.Web/sites\"\n    },\n    \"then\": {\n      \"effect\": \"AuditIfNotExists\",\n      \"details\": {\n        \"type\": \"Microsoft.Security/complianceResults\",\n        \"name\": \"restrictAccessToAppServices\",\n        \"existenceCondition\": {\n          \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\n          \"in\": [\n            \"Monitored\",\n            \"NotApplicable\",\n            \"OffByPolicy\",\n            \"Healthy\"\n          ]\n        }\n      }\n    }\n  }\n}",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Monitor_Permissive_Network_Access_App_Services"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+  }
+}

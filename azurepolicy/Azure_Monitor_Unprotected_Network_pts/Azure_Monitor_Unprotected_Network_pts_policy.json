@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/71e64dcb76f4619402bf85e7f90fe823",
+    "policy_description": "Network endpoints without a Next Generation Firewall's protection will be monitored by Azure Security Center as recommendations.",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [
+      "Public_IP_Address"
+    ],
+    "resource_type": "Virtual_Networks",
+    "severity": "high",
+    "uri": "policy/congress/global/azure/compliance/others/4ezeo"
+  },
+  "parameters": {
+    "effect": {
+      "type": "string",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": [
+        "Microsoft.Network/publicIPAddresses",
+        "Microsoft.ClassicCompute/domainNames"
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/complianceResults",
+        "name": "unprotectedNetworkEndpoint",
+        "existenceCondition": {
+          "field": "Microsoft.Security/complianceResults/resourceStatus",
+          "in": [
+            "Monitored",
+            "NotApplicable",
+            "OffByPolicy",
+            "Healthy"
+          ]
+        }
+      }
+    }
+  }
+}

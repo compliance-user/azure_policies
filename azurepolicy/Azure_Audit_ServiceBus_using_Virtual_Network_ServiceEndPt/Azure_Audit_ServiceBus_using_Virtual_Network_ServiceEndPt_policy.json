@@ -1,0 +1,47 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "policy_description": "This policy audits any Service Bus not configured to use a virtual network service endpoint.",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/235359c5-7c52-4b82-9055-01c75cf9f60e",
+    "policy_description": "This policy, audits any Service Bus not configured to use a virtual network service endpoint.",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [
+      "Namespaces"
+    ],
+    "resource_type": "Service_Bus",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/VtPEe"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.ServiceBus/namespaces"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.ServiceBus/namespaces/virtualNetworkRules",
+        "existenceCondition": {
+          "field": "Microsoft.ServiceBus/namespaces/virtualNetworkRules/virtualNetworkSubnetId",
+          "exists": "true"
+        }
+      }
+    }
+  }
+}

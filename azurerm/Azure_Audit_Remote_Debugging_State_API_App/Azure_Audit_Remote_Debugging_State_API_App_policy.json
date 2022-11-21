@@ -1,0 +1,40 @@
+{
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "microsoft.Web/sites"
+        },
+        {
+          "anyOf": [
+            {
+              "field": "kind",
+              "equals": "api"
+            },
+            {
+              "field": "kind",
+              "equals": "apiApp"
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "AuditIfNotExists",
+      "details": {
+        "type": "Microsoft.Security/complianceResults",
+        "name": "RemoteDebuggingForApiApp",
+        "existenceCondition": {
+          "field": "Microsoft.Security/complianceResults/resourceStatus",
+          "in": [
+            "NotApplicable",
+            "OffByPolicy",
+            "Healthy"
+          ]
+        }
+      }
+    }
+  }
+}

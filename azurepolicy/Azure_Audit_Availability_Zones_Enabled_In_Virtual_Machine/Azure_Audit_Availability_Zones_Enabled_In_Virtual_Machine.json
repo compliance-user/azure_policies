@@ -1,0 +1,35 @@
+{
+  "name": "Azure_Audit_Availability_Zones_Enabled_In_Virtual_Machine",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/48d18b7a-d4a2-425c-bedf-f460f7791c1a",
+  "display_name": "Azure Audit Availability Zones Enabled In Virtual Machine",
+  "description": "Azure Availability Zones enabled in virtual machine",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"description\": \"Azure Availability Zones enabled in virtual machine\",\n \"metadata\": {\n \"policy_description\": \"Azure Availability Zones enabled in virtual machine\",\n \"recommendation_name\": \"Azure_Audit_Availability_Zones_Enabled_In_Virtual_Machine\",\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/48d18b7a-d4a2-425c-bedf-f460f7791c1a\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Application\",\n \"service_resource\": [\n \"Virtual Machines\"\n ],\n \"resource_type\": \"Virtual Machines\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/ac726\",\n \"severity\": \"medium\",\n \"category\": \"Compute\",\n \"createdBy\": \"7de373b9-42bc-49e8-b424-074f00bea8fb\",\n \"createdOn\": \"2021-10-03T07:09:12.1304449Z\",\n \"updatedBy\": null,\n \"updatedOn\": null\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"Audit\",\n \"Deny\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Audit\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"count\": {\n \"field\": \"Microsoft.Compute/virtualMachines/zones[*]\"\n },\n \"equals\": 0\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n },\n \"type\": \"Microsoft.Authorization/policyDefinitions\",\n \"name\": \"48d18b7a-d4a2-425c-bedf-f460f7791c1a\",\n \"systemData\": {\n \"createdBy\": \"tridib.borah@agiliz.tech\",\n \"createdByType\": \"User\",\n \"createdAt\": \"2021-10-03T07:09:12.0882708Z\",\n \"lastModifiedBy\": \"tridib.borah@agiliz.tech\",\n \"lastModifiedByType\": \"User\",\n \"lastModifiedAt\": \"2021-10-03T07:09:12.0882708Z\"\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Virtual",
+    "Machines"
+  ],
+  "resource_type": "Virtual Machines",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Availability_Zones_Enabled_In_Virtual_Machine",
+    "description": "Azure Availability Zones enabled in virtual machine",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/ac726"
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_SCP_Restrict_Virtual_Network_Internet_Access",
+  "policy_id": "/subscriptions/c7427ec2-c7a2-43e0-8f50-29dc1531486d/providers/Microsoft.Authorization/policyDefinitions/633f569b-2910-450b-afba-c75b9d8612b0",
+  "display_name": "Azure Audit SCP Restrict Virtual Network Internet Access",
+  "description": " This policy denies the network interfaces which are configured with any public IP. Public IP addresses allow internet resources to communicate inbound to Azure resources, and Azure resources to communicate outbound to the internet. This should be reviewed by the network security team.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/c7427ec2-c7a2-43e0-8f50-29dc1531486d/providers/Microsoft.Authorization/policyDefinitions/633f569b-2910-450b-afba-c75b9d8612b0\",\n \"policy_description\": \" This policy denies the network interfaces which are configured with any public IP. Public IP addresses allow internet resources to communicate inbound to Azure resources, and Azure resources to communicate outbound to the internet. This should be reviewed by the network security team.\",\n \"classification\": \"Operation\",\n \"sub_classification\": \"Standards\",\n \"service_resource\": [\n \"Subscription\"\n ],\n \"resource_type\": \"Subscription\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/93bbd\"\n },\n \"parameters\": {},\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Network/networkInterfaces\"\n },\n {\n \"not\": {\n \"field\": \"Microsoft.Network/networkInterfaces/ipconfigurations[*].publicIpAddress.id\",\n \"notLike\": \"*\"\n }\n }\n ]\n },\n \"then\": {\n \"effect\": \"deny\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_SCP_Restrict_Virtual_Network_Internet_Access",
+    "description": " This policy denies the network interfaces which are configured with any public IP. Public IP addresses allow internet resources to communicate inbound to Azure resources, and Azure resources to communicate outbound to the internet. This should be reviewed by the network security team.",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/93bbd"
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Azure_Recovery_Vault_Backup_Disabled_VMs",
+  "display_name": "Azure Recovery Vault Backup Disabled VMs",
+  "description": "Policy to check Azure Virtual Machines having Backup (recovery vault) configuration disabled. Recovery Vault allows automated backup of Virtual Machine at regular intervals or on specific time of a day. This helps restoring VM from backup as needed.\n\nUse case(s): Can be used to identify business critical VMs having automated backup disabled as a disaster recovery measure.",
+  "category": "service",
+  "status": "active",
+  "content": "vm(id, name, vm_id, vm_size, status, locks_enabled, vm_backup_enabled, location, created_time, vm_backup_details, sku, publisher, version, offer, OS_disk_name, disk_size_GB, OS_type, vhd, network_interfaces) :- azure_compute_instance:instance(name=name, id=id, status=status, location=location, created_time=created_time, sku=sku, publisher=publisher, version=version, offer=offer, osDisk_name=OS_disk_name, diskSizeGB=disk_size_GB, osType=OS_type, vhd=vhd, vmId=vm_id, vmSize=vm_size, networkInterfaces=network_interfaces, locks_enabled=locks_enabled, vm_backup_enabled=vm_backup_enabled, vm_backup_details=vm_backup_details), equal(vm_backup_enabled, 'False');",
+  "parameters": {},
+  "classification": "Operation",
+  "sub_classification": "Availability",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+    "system_scheduled_details": [
+      {
+        "interval": 1440
+      }
+    ],
+    "onboarding_policy": true
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": true,
+  "uri": "policy/congress/global/azure/consumption/vm/zlm75",
+  "recommendations": [
+    "Azure_Virtual_Machine_Backup_Configuration"
+  ]
+}

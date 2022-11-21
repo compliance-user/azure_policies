@@ -1,0 +1,44 @@
+{
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "anyOf": [
+        {
+          "allOf": [
+            {
+              "equals": "Microsoft.Compute/virtualMachines",
+              "field": "type"
+            },
+            {
+              "exists": "True",
+              "field": "Microsoft.Compute/virtualMachines/osDisk.uri"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "equals": "Microsoft.Compute/VirtualMachineScaleSets",
+              "field": "type"
+            },
+            {
+              "anyOf": [
+                {
+                  "exists": "True",
+                  "field": "Microsoft.Compute/VirtualMachineScaleSets/osDisk.vhdContainers"
+                },
+                {
+                  "exists": "True",
+                  "field": "Microsoft.Compute/VirtualMachineScaleSets/osdisk.imageUrl"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "audit"
+    }
+  }
+}

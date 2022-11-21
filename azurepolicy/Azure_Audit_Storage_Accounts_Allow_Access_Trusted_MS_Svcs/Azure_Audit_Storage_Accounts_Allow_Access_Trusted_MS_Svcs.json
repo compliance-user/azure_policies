@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Storage_Accounts_Allow_Access_Trusted_MS_Svcs",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/c9d007d0-c057-4772-b18c-01e546713bcd",
+  "display_name": "Azure Audit Storage Accounts Allow Access Trusted MS Svcs",
+  "description": "Some, Microsoft services that interact with storage accounts operate from networks that can't be granted access through network rules. To help this type of service work as intended, allow the set of trusted Microsoft services to bypass the network rules. These services will then use strong authentication to access the storage account.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"Indexed\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/c9d007d0-c057-4772-b18c-01e546713bcd\",\n \"policy_description\": \"Some, Microsoft services that interact with storage accounts operate from networks that can't be granted access through network rules. To help this type of service work as intended, allow the set of trusted Microsoft services to bypass the network rules. These services will then use strong authentication to access the storage account.\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Data\",\n \"service_resource\": [\n \"Storage_Accounts\"\n ],\n \"resource_type\": \"Accounts\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/xrfMG\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"Audit\",\n \"Deny\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Audit\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"The effect determines what happens when the policy rule is evaluated to match\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Storage/storageAccounts\"\n },\n {\n \"field\": \"Microsoft.Storage/storageAccounts/networkAcls.bypass\",\n \"exists\": \"true\"\n },\n {\n \"field\": \"Microsoft.Storage/storageAccounts/networkAcls.bypass\",\n \"notContains\": \"AzureServices\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "Storage_Accounts"
+  ],
+  "resource_type": "Accounts",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Storage_Accounts_Allow_Access_Trusted_MS_Svcs",
+    "description": "Some, Microsoft services that interact with storage accounts operate from networks that can't be granted access through network rules. To help this type of service work as intended, allow the set of trusted Microsoft services to bypass the network rules. These services will then use strong authentication to access the storage account.",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/xrfMG"
+}

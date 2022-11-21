@@ -1,0 +1,55 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/c7f06dde-03e4-46dd-bf07-a6541ae5818d",
+    "policy_description": "This policy Audits the deprecated azure cloud account",
+    "recommendation_name": "Azure_Audit_Deprecated_Account",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Accounts",
+    "service_resource": [
+      "Accounts"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/8767c"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    },
+    "code": {
+      "type": "String",
+      "metadata": {
+        "displayName": "code for the given security assessment status",
+        "description": "If the code given in the parameter matches with the code of the security assessment then it will be in compliant with this policy."
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Resources/subscriptions"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/assessments",
+        "name": "00c6d40b-e990-6acf-d4f3-471e747a27c4",
+        "existenceCondition": {
+          "field": "Microsoft.Security/assessments/status.code",
+          "equals": "[parameters('code')]"
+        }
+      }
+    }
+  }
+}

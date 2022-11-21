@@ -1,0 +1,33 @@
+{
+    "name": "Azure_Audit_CDN_To_Be_Enabled_For_All_WebApp",
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/9ed01299-b8df-47eb-885e-5e220086ac35",
+    "display_name": "Azure Audit CDN To Be Enabled For All WebApp",
+    "description": "This policy identifies all those web app in which azure CDN is enabled ",
+    "category": "service",
+    "status": "active",
+    "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_description\": \"This policy identifies all those web app in which azure CDN is enabled \",\n \"recommendation_name\": \"Azure_Audit_CDN_To_Be_Enabled_For_All_WebApp\",\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/9ed01299-b8df-47eb-885e-5e220086ac35\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Application\",\n \"service_resource\": [\n \"\"\n ],\n \"resource_type\": \"\",\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/896c5\",\n \"category\": \"CDN\",\n \"createdBy\": \"7de373b9-42bc-49e8-b424-074f00bea8fb\",\n \"createdOn\": \"2021-10-06T08:12:20.4045601Z\",\n \"updatedBy\": null,\n \"updatedOn\": null\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n },\n \"resourceState\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"resourceState of the CDN profiles\",\n \"description\": \"resourceState of the CDN profiles.\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Web/sites\"\n },\n {\n \"field\": \"kind\",\n \"like\": \"app\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Cdn/profiles\",\n \"existenceCondition\": {\n \"field\": \"Microsoft.Cdn/profiles/resourceState\",\n \"equals\": \"[parameters('resourceState')]\"\n }\n }\n }\n },\n \"type\": \"Microsoft.Authorization/policyDefinitions\",\n \"name\": \"9ed01299-b8df-47eb-885e-5e220086ac35\",\n \"systemData\": {\n \"createdBy\": \"tridib.borah@agiliz.tech\",\n \"createdByType\": \"User\",\n \"createdAt\": \"2021-10-06T08:12:20.0997594Z\",\n \"lastModifiedBy\": \"tridib.borah@agiliz.tech\",\n \"lastModifiedByType\": \"User\",\n \"lastModifiedAt\": \"2021-10-06T08:12:20.0997594Z\"\n }\n}\n",
+    "parameters": "null",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "service_resource": [],
+    "resource_type": "",
+    "severity": "high",
+    "type": [
+      "Cloud"
+    ],
+    "services": [
+      "Azure"
+    ],
+    "scope": "global",
+    "metadata": {},
+    "resources": [],
+    "is_temp": false,
+    "is_system_policy": false,
+    "recommendation": {
+                  "name": "Azure_Audit_CDN_To_Be_Enabled_For_All_WebApp",
+                  "description": "This policy identifies all those web app in which azure CDN is enabled ",
+                  "actions": []
+                },
+    "uri": "policy/azure_policy/global/azure/compliance/others/896c5"
+  }
+  

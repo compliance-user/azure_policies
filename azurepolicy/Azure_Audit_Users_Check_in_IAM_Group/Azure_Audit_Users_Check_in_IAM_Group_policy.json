@@ -1,0 +1,66 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/71d1d512-cedc-4590-840e-b4e631867a0c",
+    "policy_description": "This policy audits users in IAM Group",
+    "recommendation_name": "Azure_Audit_Users_Check_in_IAM_Group",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/30808"
+  },
+  "parameters": {
+    "principalId": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Approved principal Id",
+        "description": "If the principal Id given in the parameters is equal to the principal Id of the role assignment then it will be compliant."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Authorization/roleAssignments"
+        },
+        {
+          "not": {
+            "allOf": [
+              {
+                "field": "Microsoft.Authorization/roleAssignments/principalType",
+                "equals": "Group"
+              },
+              {
+                "field": "Microsoft.Authorization/roleAssignments/principalId",
+                "equals": "[parameters('principalId')]"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

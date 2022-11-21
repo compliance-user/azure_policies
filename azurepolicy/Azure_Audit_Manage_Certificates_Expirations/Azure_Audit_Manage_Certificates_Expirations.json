@@ -1,0 +1,35 @@
+{
+  "name": "Azure_Audit_Manage_Certificates_Expirations",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/f772fb64-8e40-40ad-87bc-7706e1949427",
+  "display_name": "Azure Audit Manage Certificates Expirations",
+  "description": "Manage certificates, that will expire within a specified number of days to ensure your organization has sufficient time to rotate the certificate prior to expiration.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n  \"policyType\": \"BuiltIn\",\n  \"mode\": \"Microsoft.KeyVault.Data\",\n  \"metadata\": {\n    \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/f772fb64-8e40-40ad-87bc-7706e1949427\",\n    \"policy_description\": \"Manage certificates, that will expire within a specified number of days to ensure your organization has sufficient time to rotate the certificate prior to expiration.\",\n    \"classification\": \"Security\",\n    \"sub_classification\": \"Application\",\n    \"service_resource\": [\n      \"Vaults\"\n    ],\n    \"resource_type\": \"Recovery_Services\",\n    \"severity\": \"medium\",\n    \"uri\": \"policy/azure_policy/global/azure/compliance/others/5145e\"\n  },\n  \"parameters\": {\n    \"effect\": {\n      \"type\": \"String\",\n      \"allowedValues\": [\n        \"audit\",\n        \"deny\",\n        \"disabled\"\n      ],\n      \"defaultValue\": \"audit\"\n    },\n    \"daysToExpire\": {\n      \"type\": \"Integer\",\n      \"metadata\": {\n        \"displayName\": \"[Preview]: Days to expire\",\n        \"description\": \"The number of days for a certificate to expire.\"\n      }\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.KeyVault.Data/vaults/certificates\"\n        },\n        {\n          \"field\": \"Microsoft.KeyVault.Data/vaults/certificates/attributes.expiresOn\",\n          \"lessOrEquals\": \"[addDays(utcNow(), parameters('daysToExpire'))]\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"[parameters('effect')]\"\n    }\n  }\n}",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Recovery_Service_Vaults"
+  ],
+  "resource_type": "Recovery_Services",
+  "resources_category": "Storage",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Manage_Certificates_Expirations",
+    "description": "Manage certificates, that will expire within a specified number of days to ensure your organization has sufficient time to rotate the certificate prior to expiration.",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/5145e"
+}

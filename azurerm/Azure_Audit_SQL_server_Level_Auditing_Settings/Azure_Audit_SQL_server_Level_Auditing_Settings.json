@@ -1,0 +1,39 @@
+{
+  "status": "active",
+  "description": "This policy audits whether SQL server level audit setting is enabled.",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "MSSQL"
+  ],
+  "resource_type": "Servers",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure_Audit_SQL_server_Level_Auditing_Settings",
+  "name": "Azure_Audit_SQL_server_Level_Auditing_Settings",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/f3a7q",
+  "content": "{\"policyRule\": {\"then\": {\"effect\": \"AuditIfNotExists\", \"details\": {\"type\": \"Microsoft.Sql/servers/auditingSettings\", \"name\": \"default\", \"existenceCondition\": {\"field\": \"Microsoft.Sql/auditingSettings.state\", \"equals\": \"enabled\"}}}, \"if\": {\"field\": \"type\", \"equals\": \"Microsoft.Sql/servers\"}}}",
+  "is_system_policy": true,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Ensure_SQL_Server_Level_Auditing_Settings"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "system_scheduled_details": [
+      {
+        "interval": 1440
+      }
+    ],
+    "file": "Azure_Audit_SQL_server_Level_Auditing_Settings.json"
+  }
+}

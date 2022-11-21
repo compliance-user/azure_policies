@@ -1,0 +1,45 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/1a07d1f3170686434fabec14bc0b08ae",
+    "policy_description": "This policy enforces enabling automatic OS image patching on Virtual Machine Scale Sets to always keep Virtual Machines secure by safely applying latest security patches every month",
+    "classification": "Security",
+    "sub_classification": "Host",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "resource_type": "Virtual_Machines",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/23qyr"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "equals": "Microsoft.Compute/virtualMachineScaleSets",
+          "field": "type"
+        },
+        {
+          "field": "Microsoft.Compute/VirtualMachineScaleSets/upgradePolicy.automaticOSUpgradePolicy.enableAutomaticOSUpgrade",
+          "notEquals": "True"
+        },
+        {
+          "field": "Microsoft.Compute/VirtualMachineScaleSets/upgradePolicy.automaticOSUpgrade",
+          "notEquals": "True"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

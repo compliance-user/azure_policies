@@ -1,0 +1,40 @@
+{
+  "status": "active",
+  "description": "This policy audits whether SQL server Transparent Data encryption is enabled.",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "MSSQL"
+  ],
+  "resource_type": "Servers",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure_Audit_SQLServer_Transparent_Data_Encryption",
+  "automation_enabled": true,
+  "name": "Azure_Audit_SQLServer_Transparent_Data_Encryption",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/ew5gj",
+  "content": "{\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Sql/servers/databases\"\n        },\n        {\n          \"field\": \"name\",\n          \"notEquals\": \"master\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"AuditIfNotExists\",\n      \"details\": {\n        \"type\": \"Microsoft.Sql/servers/databases/transparentDataEncryption\",\n        \"name\": \"current\",\n        \"existenceCondition\": {\n          \"anyOf\": [\n            {\n              \"field\": \"Microsoft.Sql/transparentDataEncryption.status\",\n              \"equals\": \"enabled\"\n            },\n            {\n              \"field\": \"Microsoft.Sql/servers/databases/transparentDataEncryption/state\",\n              \"equals\": \"enabled\"\n            }\n          ]\n        }\n      }\n    }\n  }\n}",
+  "is_system_policy": true,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Ensure_Transparent_Data_Encryption_For_SQLServer"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "system_scheduled_details": [
+      {
+        "interval": 1440
+      }
+    ],
+    "file": "Azure_Audit_SQLServer_Transparent_Data_Encryption_Status.json"
+  }
+}

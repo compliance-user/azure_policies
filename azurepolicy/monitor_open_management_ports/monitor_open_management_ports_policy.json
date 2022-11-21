@@ -1,0 +1,49 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/22730e10-96f6-4aac-ad84-9383d35b5917",
+    "policy_description": "Open remote management ports are exposing your VM to a high level of risk from Internet-based attacks. These attacks attempt to brute force credentials to gain admin access to the machine",
+    "classification": "Security",
+    "sub_classification": "Host",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "resource_type": "Virtual_Machines",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/sisc6"
+  },
+  "parameters": {
+    "effect": {
+      "type": "string",
+      "allowedValues": [
+        "AuditIfNotExists"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": [
+        "Microsoft.Compute/virtualMachines",
+        "Microsoft.ClassicCompute/virtualMachines"
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/complianceResults",
+        "name": "restrictAccessToManagementPorts",
+        "existenceCondition": {
+          "field": "Microsoft.Security/complianceResults/resourceStatus",
+          "in": [
+            "Monitored",
+            "NotApplicable",
+            "OffByPolicy",
+            "Healthy"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/0a1302fb-a631-4106-9753-f3d494733990",
+    "policy_description": "This policy audits MariaDB servers not configured to use a private endpoint. For more details, visit https://aka.ms/mariadbprivatelink.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Servers"
+    ],
+    "resource_type": "DBforMariaDB",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/XeJCm"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.DBforMariaDB/servers"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.DBforMariaDB/servers/privateEndpointConnections",
+        "existenceCondition": {
+          "field": "Microsoft.DBforMariaDB/servers/privateEndpointConnections/privateLinkServiceConnectionState.status",
+          "equals": "Approved"
+        }
+      }
+    }
+  }
+}

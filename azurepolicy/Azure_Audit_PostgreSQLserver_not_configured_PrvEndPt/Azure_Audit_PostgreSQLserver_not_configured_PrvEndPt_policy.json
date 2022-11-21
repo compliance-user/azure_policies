@@ -1,0 +1,46 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/0564d078-92f5-4f97-8398-b9f58a51f70b",
+    "policy_description": "This policy audits PostgreSQL servers not configured to use a private endpoint. For more details, visit https://aka.ms/pgprivatelink.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Databases"
+    ],
+    "resource_type": "PGSQL",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/TnBzR"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.DBforPostgreSQL/servers"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections",
+        "existenceCondition": {
+          "field": "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections/privateLinkServiceConnectionState.status",
+          "equals": "Approved"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/32a9d87e-a8ac-4b61-8c33-a1bca20950b2",
+    "policy_description": "This policy audits log analytics workspace enabled status",
+    "recommendation_name": "Azure_Audit_Log_Analytics_Workspace_Enabled",
+    "classification": "Operation",
+    "sub_classification": "Logging",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/3ea7f"
+  },
+  "parameters": {
+    "name": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Approved sku name",
+        "description": "If the sku name given in the parameters is equal to the sku name of the workspace then it will be compliant."
+      }
+    },
+    "provisioningState": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Provisioning state of the workspace",
+        "description": "If the provisioning state given in the parameters is equal to the provisioning state of the workspace then it will be compliant."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.OperationalInsights/workspaces"
+        },
+        {
+          "not": {
+            "allOf": [
+              {
+                "field": "Microsoft.OperationalInsights/workspaces/sku.name",
+                "equals": "[parameters('name')]"
+              },
+              {
+                "field": "Microsoft.OperationalInsights/workspaces/provisioningState",
+                "equals": "[parameters('provisioningState')]"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/1acfb3f3-9d26-4977-aefe-a0ab90e1109e",
+    "policy_description": "This policy audits locking storage account",
+    "recommendation_name": "Azure_Audit_Enable_Locking_Storage_Account",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Storage_Accounts",
+    "service_resource": [
+      "Storage_Accounts"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/c43e3"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Storage/storageAccounts"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Authorization/locks",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Authorization/locks/level",
+              "equals": "CanNotDelete"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

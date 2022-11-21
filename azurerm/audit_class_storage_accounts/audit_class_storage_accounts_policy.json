@@ -1,0 +1,23 @@
+{
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit"
+      ]
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.classicStorage/storageAccounts"
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

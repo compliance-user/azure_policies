@@ -1,0 +1,33 @@
+{
+  "status": "active",
+  "description": "This policy audits whether any disks that are not encrypted and being attached to VMs.",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "Disks"
+  ],
+  "resource_type": "Storage_Disks",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Monitor Unencrypted VM Disks",
+  "name": "Azure_Monitor_Unencrypted_VM_Disks",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/ikuz4",
+  "content": "{\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"in\": [\n        \"Microsoft.Compute/virtualMachines\",\n        \"Microsoft.ClassicCompute/virtualMachines\"\n      ]\n    },\n    \"then\": {\n      \"effect\": \"AuditIfNotExists\",\n      \"details\": {\n        \"type\": \"Microsoft.Security/complianceResults\",\n        \"name\": \"encryption\",\n        \"existenceCondition\": {\n          \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\n          \"in\": [\n            \"Monitored\",\n            \"NotApplicable\",\n            \"OffByPolicy\",\n            \"Healthy\"\n          ]\n        }\n      }\n    }\n  }\n}",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Monitor_Unencrypted_VM_Disks"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+  }
+}

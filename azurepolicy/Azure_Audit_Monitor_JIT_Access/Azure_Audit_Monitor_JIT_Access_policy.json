@@ -1,0 +1,44 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/5afac3ef639bbc31be52fa41cd478d50",
+    "policy_description": "This policy checks if there is JustInTime available. JIT Helps access mappings to respective VMs",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "resource_type": "Virtual_Machines",
+    "uri": "policy/azure_policy/global/azure/compliance/others/n2nad"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "equals": "Microsoft.Compute/virtualMachines",
+      "field": "type"
+    },
+    "then": {
+      "details": {
+        "existenceCondition": {
+          "field": "Microsoft.Security/complianceResults/resourceStatus",
+          "in": [
+            "NotApplicable",
+            "OffByPolicy",
+            "Healthy"
+          ]
+        },
+        "name": "jitNetworkAccess",
+        "type": "Microsoft.Security/complianceResults"
+      },
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

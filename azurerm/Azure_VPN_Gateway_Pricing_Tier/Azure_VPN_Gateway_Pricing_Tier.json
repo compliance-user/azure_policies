@@ -1,0 +1,39 @@
+{
+  "name": "Azure_VPN_Gateway_Pricing_Tier",
+  "display_name": "Azure VPN Gateway Pricing Tier Opted",
+  "description": "Azure offers VPN Gateway to enable Site-to-Site & Point-to-Site VPN connections.Policy to retrieve VPN Gateways in a Azure subscription with pricing tier other than 'Basic' (free). Basic should be ideal for Dev, Test & PoCs while the remaining pricing tiers 'Standard (VpnGw1)', 'High Performance (VpnGw2)' & 'Ultra High Performance (VpnGw3)' are ideal for Production & Business Critical Workloads.",
+  "category": "service",
+  "status": "active",
+  "content": "vpn(network_gateway_id, name, tier, vpn_type) :- azure_virtual_network_gateway:virtual_network_gateway(name=name, id=network_gateway_id), azure_virtual_network_gateway:virtual_network_gateway_properties(id=network_gateway_id, vpnType=vpn_type, gatewayType=gateway_type),  azure_virtual_network_gateway:virtual_network_gateway_sku(id=network_gateway_id, tier=tier), equal('Vpn', gateway_type), ne(#VPN_Gateway_Pricing_Tier_Name#, tier);",
+  "parameters": {
+    "VPN_Gateway_Pricing_Tier_Name": {
+      "type": "string",
+      "description": "VPN Gateway tiers other than the specified 'Preferred VPN Gateway pricing tier' will be considered as violation.",
+      "label": "VPN_Gateway_Pricing_Tier_Name",
+      "default": "Standard"
+    }
+  },
+  "classification": "Cost",
+  "sub_classification": "Config",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "medium",
+  "type": [
+    "Cost"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "dependent_rules": {},
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "uri": "policy/congress/global/azure/cost/network/ng7wd",
+  "recommendations": [
+    "Azure_VPN_Gateway_Pricing_Tier"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "Monitor_Orphaned_NetWork_Interfaces",
+  "display_name": "Monitor Unassociated Network interfaces of subscription",
+  "description": "This policy audits whether any Unassociated Network interfaces is in the subscription.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Network/networkInterfaces\"\n        },\n        {\n          \"field\": \"Microsoft.Network/networkInterfaces/virtualMachine.id\",\n          \"exists\": false\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"audit\"\n    }\n  }\n}",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Network_Interface"
+  ],
+  "resource_type": "Virtual_Networks",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendations": [
+    "Azure_Orphaned_Network_Interfaces"
+  ],
+  "uri": "policy/azure_policy/global/azure/compliance/others/rNo8q"
+}

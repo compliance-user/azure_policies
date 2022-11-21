@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether Gateway Subnet has NSG rules. Gateway subnets should not be configured with a network security group. Assigning a network security group to a gateway subnet will cause the gateway to stop functioning.",
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Subnet"
+  ],
+  "resource_type": "Virtual_Networks",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Gateway Subnet NoNSG",
+  "name": "Azure_Audit_Gateway_Subnet_NoNSG",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/eso7u",
+  "content": "{\n  \"mode\": \"All\",\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"equals\": \"Microsoft.Network/virtualNetworks/subnets\",\n          \"field\": \"type\"\n        },\n        {\n          \"equals\": \"GatewaySubnet\",\n          \"field\": \"name\"\n        },\n        {\n          \"exists\": \"true\",\n          \"field\": \"Microsoft.Network/virtualNetworks/subnets/networkSecurityGroup.id\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"Audit\"\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Gateway_Subnet_NoNSG"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Gateway_Subnet_NoNSG.json"
+  }
+}

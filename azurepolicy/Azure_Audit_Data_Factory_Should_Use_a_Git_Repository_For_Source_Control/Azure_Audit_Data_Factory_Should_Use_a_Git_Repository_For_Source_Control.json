@@ -1,0 +1,34 @@
+{
+"name": "Azure_Audit_Data_Factory_Should_Use_a_Git_Repository_For_Source_Control",
+"policy_id": "/providers/Microsoft.Authorization/policyDefinitions/77d40665-3120-4348-b539-3192ec808307",
+"display_name": "Azure Audit Data Factory Should Use a Git Repository For Source Control",
+"description": "Enable source control on data factories, to gain capabilities such as change tracking, collaboration, continuous integration, and deployment.",
+"category": "service",
+"status": "active",
+"content": "{\n    \"policyType\": \"BuiltIn\",\n    \"mode\": \"Indexed\",\n    \"metadata\": {\n      \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/77d40665-3120-4348-b539-3192ec808307\",\n      \"version\": \"1.0.0-preview\",\n      \"category\": \"Data Factory\",\n      \"preview\": true\n    },\n    \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"Enable or disable the execution of the policy\"\n        },\n        \"allowedValues\": [\n          \"Audit\",\n          \"Deny\",\n          \"Disabled\"\n        ],\n        \"defaultValue\": \"Audit\"\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"allOf\": [\n          {\n            \"field\": \"type\",\n            \"equals\": \"Microsoft.DataFactory/factories\"\n          },\n          {\n            \"anyOf\": [\n              {\n                \"field\": \"Microsoft.DataFactory/factories/repoConfiguration.repositoryName\",\n                \"exists\": \"false\"\n              },\n              {\n                \"field\": \"Microsoft.DataFactory/factories/repoConfiguration.repositoryName\",\n                \"equals\": \"\"\n              }\n            ]\n          }\n        ]\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\"\n      }\n    }\n}",
+"parameters": {},
+"classification": "Security",
+"sub_classification": "Application",
+"service_resource": [
+"Subscription"
+],
+"resource_type": "Subscription",
+"severity": "high",
+"type": [
+"Cloud"
+],
+"services": [
+"Azure"
+],
+"scope": "global",
+"metadata": {},
+"resources": [],
+"is_temp": false,
+"is_system_policy": false,
+"recommendation": {
+"name": "Azure_Audit_Data_Factory_Should_Use_a_Git_Repository_For_Source_Control",
+"description": "Enable source control on data factories, to gain capabilities such as change tracking, collaboration, continuous integration, and deployment.",
+"actions": []
+},
+"uri": "policy/azure_policy/global/azure/security/application/ha9g1"
+}

@@ -1,0 +1,73 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/cea4ee1a-d4ed-489b-bdef-a8a90bdef0c9",
+    "policy_description": "This policy audits blob uri",
+    "recommendation_name": "Azure_Audit_Image_By_BlobUri",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "Storage_Accounts",
+    "service_resource": [
+      "Storage_Accounts"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/1d7d8"
+  },
+  "parameters": {
+    "osType": {
+      "type": "String",
+      "metadata": {
+        "displayName": "osType of the image",
+        "description": "If the osType given in the parameters is equal to the osType of the image then it will be compliant."
+      }
+    },
+    "blobUri": {
+      "type": "String",
+      "metadata": {
+        "displayName": "blobUri of the image",
+        "description": "If the blobUri given in the parameters is equal to the blobUri of the image then it will be compliant."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/images"
+        },
+        {
+          "not": {
+            "allOf": [
+              {
+                "field": "Microsoft.Compute/images/storageProfile.osDisk.osType",
+                "equals": "[parameters('osType')]"
+              },
+              {
+                "field": "Microsoft.Compute/images/storageProfile.osDisk.blobUri",
+                "equals": "[parameters('blobUri')]"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "status": "active",
+  "description": "This policy audits whether SQL auditing is configured to capture certain Action-Groups and Actions. The AuditActionsAndGroups property should contain at least SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP FAILED_DATABASE_AUTHENTICATION_GROUP, BATCH_COMPLETED_GROUP to ensure a thorough audit logging",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "MSSQL"
+  ],
+  "resource_type": "Servers",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit SQL Server with Audit Settings Actions Groups and Actions",
+  "name": "Azure_SQL_Auditing_Settings_Actions_Groups_Actions",
+  "uri": "policy/azure_policy/global/azure/compliance/others/ubqhz",
+  "content": "{\n\n      \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"Enable or disable the execution of the policy\"\n        },\n        \"allowedValues\": [\n          \"AuditIfNotExists\"\n\n        ]\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"field\": \"type\",\n        \"equals\": \"Microsoft.Sql/servers\"\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\",\n        \"details\": {\n          \"type\": \"Microsoft.Sql/servers/auditingSettings\",\n          \"name\": \"default\",\n          \"existenceCondition\": {\n            \"allOf\": [\n              {\n                \"not\": {\n                  \"field\": \"Microsoft.Sql/servers/auditingSettings/auditActionsAndGroups[*]\",\n                  \"notEquals\": \"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP\"\n                }\n              },\n              {\n                \"not\": {\n                  \"field\": \"Microsoft.Sql/servers/auditingSettings/auditActionsAndGroups[*]\",\n                  \"notEquals\": \"FAILED_DATABASE_AUTHENTICATION_GROUP\"\n                }\n              },\n              {\n                \"not\": {\n                  \"field\": \"Microsoft.Sql/servers/auditingSettings/auditActionsAndGroups[*]\",\n                  \"notEquals\": \"BATCH_COMPLETED_GROUP\"\n                }\n              }\n            ]\n          }\n        }\n      }\n    }\n  }\n",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Enable_for_SQLserver_Actions_Groups_Actions"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "azure_SQL_auditing_settings_Actions_Groups_Actions.json"
+  }
+}
+

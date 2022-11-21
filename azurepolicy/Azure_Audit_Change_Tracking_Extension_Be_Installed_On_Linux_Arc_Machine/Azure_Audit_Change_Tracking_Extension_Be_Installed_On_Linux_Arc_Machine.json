@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Change_Tracking_Extension_Be_Installed_On_Linux_Arc_Machine",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/fc47609f-4d9b-4aed-806b-446816cc63a3",
+  "display_name": "Azure Audit Change Tracking Extension Be Installed On Linux Arc Machine",
+  "description": "Install ChangeTracking Extension on Linux Arc machines to enable File Integrity Monitoring(FIM) in Azure Security Center. FIM examines operating system files, Windows registries, application software, Linux system files, and more, for changes that might indicate an attack. The extension can be installed in virtual machines and locations supported by Azure Monitoring Agent.",
+  "category": "service",
+  "status": "active",
+  "content": "{\r\n    \"displayName\": \"[Preview]: ChangeTracking extension should be installed on your Linux Arc machine\",\r\n    \"policyType\": \"BuiltIn\",\r\n    \"mode\": \"Indexed\",\r\n    \"description\": \"Install ChangeTracking Extension on Linux Arc machines to enable File Integrity Monitoring(FIM) in Azure Security Center. FIM examines operating system files, Windows registries, application software, Linux system files, and more, for changes that might indicate an attack. The extension can be installed in virtual machines and locations supported by Azure Monitoring Agent.\",\r\n    \"metadata\": {\r\n      \"version\": \"1.0.0-preview\",\r\n      \"category\": \"Security Center\",\r\n      \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/fc47609f-4d9b-4aed-806b-446816cc63a3\"\r\n    },\r\n    \"parameters\": {\r\n      \"effect\": {\r\n        \"type\": \"String\",\r\n        \"metadata\": {\r\n          \"displayName\": \"Effect\",\r\n          \"description\": \"Enable or disable the execution of the policy\"\r\n        },\r\n        \"allowedValues\": [\r\n          \"AuditIfNotExists\",\r\n          \"Disabled\"\r\n        ],\r\n        \"defaultValue\": \"AuditIfNotExists\"\r\n      },\r\n      \"listOfApplicableLocations\": {\r\n        \"type\": \"Array\",\r\n        \"metadata\": {\r\n          \"displayName\": \"Applicable Locations\",\r\n          \"description\": \"The list of locations where the policy should be applied.\",\r\n          \"strongType\": \"location\"\r\n        },\r\n        \"allowedValues\": [\r\n          \"australiasoutheast\",\r\n          \"australiaeast\",\r\n          \"brazilsouth\",\r\n          \"canadacentral\",\r\n          \"centralindia\",\r\n          \"centralus\",\r\n          \"eastasia\",\r\n          \"eastus2euap\",\r\n          \"eastus\",\r\n          \"eastus2\",\r\n          \"francecentral\",\r\n          \"japaneast\",\r\n          \"koreacentral\",\r\n          \"northcentralus\",\r\n          \"northeurope\",\r\n          \"norwayeast\",\r\n          \"southcentralus\",\r\n          \"southeastasia\",\r\n          \"switzerlandnorth\",\r\n          \"uaenorth\",\r\n          \"uksouth\",\r\n          \"westcentralus\",\r\n          \"westeurope\",\r\n          \"westus\",\r\n          \"westus2\"\r\n        ],\r\n        \"defaultValue\": [\r\n          \"australiasoutheast\",\r\n          \"australiaeast\",\r\n          \"brazilsouth\",\r\n          \"canadacentral\",\r\n          \"centralindia\",\r\n          \"centralus\",\r\n          \"eastasia\",\r\n          \"eastus2euap\",\r\n          \"eastus\",\r\n          \"eastus2\",\r\n          \"francecentral\",\r\n          \"japaneast\",\r\n          \"koreacentral\",\r\n          \"northcentralus\",\r\n          \"northeurope\",\r\n          \"norwayeast\",\r\n          \"southcentralus\",\r\n          \"southeastasia\",\r\n          \"switzerlandnorth\",\r\n          \"uaenorth\",\r\n          \"uksouth\",\r\n          \"westcentralus\",\r\n          \"westeurope\",\r\n          \"westus\",\r\n          \"westus2\"\r\n        ]\r\n      }\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"allOf\": [\r\n          {\r\n            \"field\": \"type\",\r\n            \"equals\": \"Microsoft.HybridCompute/machines\"\r\n          },\r\n          {\r\n            \"field\": \"location\",\r\n            \"in\": \"[parameters('listOfApplicableLocations')]\"\r\n          },\r\n          {\r\n            \"field\": \"Microsoft.HybridCompute/imageOffer\",\r\n            \"like\": \"linux*\"\r\n          }\r\n        ]\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"[parameters('effect')]\",\r\n        \"details\": {\r\n          \"type\": \"Microsoft.HybridCompute/machines/extensions\",\r\n          \"existenceCondition\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"Microsoft.HybridCompute/machines/extensions/type\",\r\n                \"equals\": \"ChangeTracking-Linux\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.HybridCompute/machines/extensions/Publisher\",\r\n                \"equals\": \"Microsoft.Azure.ChangeTrackingAndInventory\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.HybridCompute/machines/extensions/provisioningState\",\r\n                \"equals\": \"Succeeded\"\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    }\r\n}",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Change_Tracking_Extension_Be_Installed_On_Linux_Arc_Machine",
+    "description": "Install ChangeTracking Extension on Linux Arc machines to enable File Integrity Monitoring(FIM) in Azure Security Center. FIM examines operating system files, Windows registries, application software, Linux system files, and more, for changes that might indicate an attack. The extension can be installed in virtual machines and locations supported by Azure Monitoring Agent.",
+    "actions": []
+  },
+    "uri": "policy/azure_policy/global/azure/compliance/others/mweso"
+}

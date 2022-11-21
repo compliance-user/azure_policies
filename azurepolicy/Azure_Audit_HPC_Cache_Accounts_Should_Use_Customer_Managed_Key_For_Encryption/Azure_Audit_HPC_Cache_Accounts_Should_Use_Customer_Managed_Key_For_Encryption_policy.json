@@ -1,0 +1,53 @@
+{
+    "policyType": "BuiltIn",
+    "mode": "Indexed",
+    "metadata": {
+      "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/970f84d8-71b6-4091-9979-ace7e3fb6dbb",
+      "version": "2.0.0",
+      "category": "Storage"
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Disabled",
+          "Deny"
+        ],
+        "defaultValue": "Audit"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.StorageCache/caches"
+          },
+          {
+            "anyOf": [
+              {
+                "field": "identity.type",
+                "exists": false
+              },
+              {
+                "field": "Microsoft.StorageCache/caches/encryptionSettings.keyEncryptionKey.keyUrl",
+                "exists": false
+              },
+              {
+                "field": "Microsoft.StorageCache/caches/encryptionSettings.keyEncryptionKey.sourceVault.Id",
+                "exists": false
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+}

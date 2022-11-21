@@ -1,0 +1,33 @@
+{
+  "name": "Azure_Audit_AppService_Should_Use_VirtualNetwork_ServiceEndpoint",
+  "display_name": "Azure Audit AppService Should Use VirtualNetwork ServiceEndpoint",
+  "description": "This policy audits app service should use virtual network service endpoint to connect to the outside world",
+  "category": "service",
+  "status": "active",
+  "content": "{\n    \"policyType\": \"Custom\",\n    \"mode\": \"All\",\n    \"metadata\": {\n      \"category\": \"App Service\"\n    },\n    \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"Enable or disable the execution of the policy\"\n        },\n        \"allowedValues\": [\n          \"AuditIfNotExists\",\n          \"Disabled\"\n        ],\n        \"defaultValue\": \"AuditIfNotExists\"\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"allOf\": [\n          {\n            \"field\": \"type\",\n            \"equals\": \"Microsoft.Web/sites\"\n          },\n          {\n            \"field\": \"kind\",\n            \"like\": \"app\"\n          }\n        ]\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\",\n        \"details\": {\n          \"type\": \"Microsoft.Web/sites/virtualNetworkConnections\",\n          \"existenceCondition\": {\n            \"field\": \"Microsoft.Web/sites/virtualnetworkconnections/vnetResourceId\",\n            \"exists\": \"true\"\n          }\n        }\n      }\n    }\n}",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Networks"
+  ],
+  "resource_type": "Virtual_Networks",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_AppService_Should_Use_VirtualNetwork_ServiceEndpoint",
+    "description": "This policy audits app service should use virtual network service endpoint to connect to the outside world",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/qpzdr"
+}

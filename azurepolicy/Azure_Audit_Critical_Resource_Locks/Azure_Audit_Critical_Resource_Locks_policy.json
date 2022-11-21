@@ -1,0 +1,59 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/bfee637d90df749bfd02c3211d197d0b",
+    "policy_description": "This policy checks to see if the critical resources are protected by Resource Locks or not",
+    "classification": "Operation",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Subscription"
+    ],
+    "resource_type": "Subscription",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/o4nzz"
+  },
+  "parameters": {
+    "tagName": {
+      "type": "String",
+      "allowedValues": [
+        "auditIfNotExists"
+      ],
+      "defaultValue": "auditIfNotExists",
+      "metadata": {
+        "displayName": "Tag Name",
+        "description": "The Tag name to audit against (i.e. Type, OS etc.)"
+      }
+    },
+    "tagValue": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag Value",
+        "description": "Value of the tag to audit against ( i.e. Critical )"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName'), ']')]",
+          "match": "[parameters('tagValue')]"
+        }
+      ]
+    },
+    "then": {
+      "effect": "auditIfNotExists",
+      "details": {
+        "type": "Microsoft.Authorization/locks",
+        "existenceCondition": {
+          "field": "Microsoft.Authorization/locks/level",
+          "equals": "CanNotDelete"
+        }
+      }
+    }
+  }
+}

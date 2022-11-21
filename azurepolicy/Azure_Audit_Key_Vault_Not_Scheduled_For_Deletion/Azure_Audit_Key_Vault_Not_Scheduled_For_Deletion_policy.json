@@ -1,0 +1,51 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/fb2c8c1b-7e7e-4ded-9053-84d9058950ae",
+    "policy_description": "This policy if key vault is not scheduled for deletion",
+    "recommendation_name": "Azure_Audit_Key_Vault_Not_Scheduled_For_Deletion",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Key_Vault",
+    "service_resource": [
+      "Vaults"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/9931f"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.KeyVault/vaults"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Authorization/locks",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Authorization/locks/level",
+              "notEquals": "CanNotDelete"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

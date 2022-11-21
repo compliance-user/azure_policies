@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Unrestricted_Network_Access_Storage_Account",
+  "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/2d7a58af16da7c637c432d7ef1466566",
+  "display_name": "Azure Audit Unrestricted Network Access Storage Account",
+  "description": "This policy audits whether unrestricted Network Access is provided for Storage Account firewall settings. It should be reviewed and corrected.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"metadata\": {\n \"policy_id\": \"/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/2d7a58af16da7c637c432d7ef1466566\",\n \"policy_description\": \"This policy audits for any presence of unrestricted network access in storage account firewall settings\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Network\",\n \"service_resource\": [\n \"Storage_Accounts\"\n ],\n \"resource_type\": \"Accounts\",\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/taom7\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"Audit\"\n ],\n \"defaultValue\": \"Audit\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Storage/storageAccounts\"\n },\n {\n \"field\": \"Microsoft.Storage/storageAccounts/networkAcls.defaultAction\",\n \"equals\": \"Allow\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Storage_Accounts"
+  ],
+  "resource_type": "Accounts",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Unrestricted_Network_Access_Storage_Account",
+    "description": "It is recommended to configure network rules so only applications from allowed networks can access the Storage Account. To allow connections from specific internet or on-premise clients, access can be granted to traffic from specific Azure virtual networks or to public internet IP address ranges. Manual Steps: 1. In your storage account, go to 'Firewalls and virtual networks'.2. Under 'Allow access from', choose 'Selected networks'.3. Configure the relevant virtual networks and IP ranges that should be allowed to access your storage account.4. Configure Allow trusted Microsoft services to access your storage account",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/taom7"
+}

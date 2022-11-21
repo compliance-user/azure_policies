@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/0e73da8ed8bb78fa1f526bc545e03216",
+    "policy_description": "This policy checks to see if the scalesets are being auto upgraded",
+    "classification": "Operation",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Virtual_Machine_Scale_Sets"
+    ],
+    "resource_type": "Virtual_Machines",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/tmmkf"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "audit"
+      ],
+      "defaultValue": "audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "tags.systemtype",
+          "match": "critical"
+        },
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/virtualMachineScaleSets"
+        },
+        {
+          "field": "Microsoft.Compute/VirtualMachineScaleSets/upgradePolicy.automaticOSUpgrade",
+          "notEquals": "false"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

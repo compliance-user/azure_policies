@@ -1,0 +1,51 @@
+{
+
+      "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "AuditIfNotExists"
+
+        ]
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.Sql/servers"
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.Sql/servers/auditingSettings",
+          "name": "default",
+          "existenceCondition": {
+            "allOf": [
+              {
+                "not": {
+                  "field": "Microsoft.Sql/servers/auditingSettings/auditActionsAndGroups[*]",
+                  "notEquals": "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP"
+                }
+              },
+              {
+                "not": {
+                  "field": "Microsoft.Sql/servers/auditingSettings/auditActionsAndGroups[*]",
+                  "notEquals": "FAILED_DATABASE_AUTHENTICATION_GROUP"
+                }
+              },
+              {
+                "not": {
+                  "field": "Microsoft.Sql/servers/auditingSettings/auditActionsAndGroups[*]",
+                  "notEquals": "BATCH_COMPLETED_GROUP"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }

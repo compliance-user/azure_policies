@@ -1,0 +1,46 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/3375856c-3824-4e0e-ae6a-79e011dd4c47",
+    "policy_description": "This policy audits MySQL servers not configured to use a virtual network service endpoint. For more details, visit https://aka.ms/mysqlvnet.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Databases"
+    ],
+    "resource_type": "MySQL",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/pBIgi"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.DBforMySQL/servers"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.DBforMySQL/servers/virtualNetworkRules",
+        "existenceCondition": {
+          "field": "Microsoft.DBforMySQL/servers/virtualNetworkRules/virtualNetworkSubnetId",
+          "exists": "true"
+        }
+      }
+    }
+  }
+}

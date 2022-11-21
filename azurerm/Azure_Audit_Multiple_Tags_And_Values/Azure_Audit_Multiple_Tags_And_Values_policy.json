@@ -1,0 +1,153 @@
+{
+  "parameters": {
+    "tag1Name": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag1 Name",
+        "description": "Name of the tag, such as 'environment'"
+      },
+      "defaultValue": "env"
+    },
+    "tag1Value": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Tag1 Value",
+        "description": "Value of the tag, such as 'production'"
+      },
+      "defaultValue": [
+        "dev"
+      ]
+    },
+    "tag2Name": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag2 Name",
+        "description": "Name of the tag, such as 'environment'"
+      },
+      "defaultValue": "owner"
+    },
+    "tag2Value": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Tag2 Value",
+        "description": "Value of the tag, such as 'production'"
+      },
+      "defaultValue": [
+        "self"
+      ]
+    },
+    "tag3Name": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag3 Name",
+        "description": "Name of the tag, such as 'environment'"
+      },
+      "defaultValue": "team"
+    },
+    "tag3Value": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Tag3 Value",
+        "description": "Value of the tag, such as 'production'"
+      },
+      "defaultValue": [
+        "self"
+      ]
+    },
+    "tag4Name": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag4 Name",
+        "description": "Name of the tag, such as 'environment'"
+      },
+      "defaultValue": "version"
+    },
+    "tag4Value": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Tag4 Value",
+        "description": "Value of the tag, such as 'production'"
+      },
+      "defaultValue": [
+        "1"
+      ]
+    },
+    "tag5Name": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag5 Name",
+        "description": "Name of the tag, such as 'environment'"
+      },
+      "defaultValue": "organiztion"
+    },
+    "tag5Value": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Tag5 Value",
+        "description": "Value of the tag, such as 'production'"
+      },
+      "defaultValue": [
+        "CS"
+      ]
+    }
+  },
+  "policyRule": {
+    "if": {
+      "anyOf": [
+        {
+          "field": "[concat('tags[', parameters('tag1Name'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tag2Name'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tag3Name'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tag4Name'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tag5Name'), ']')]",
+          "exists": "false"
+        },
+        {
+          "not": {
+            "field": "[concat('tags[', parameters('tag1Name'), ']')]",
+            "in": "[parameters('tag1Value')]"
+          }
+        },
+        {
+          "not": {
+            "field": "[concat('tags[', parameters('tag2Name'), ']')]",
+            "in": "[parameters('tag2Value')]"
+          }
+        },
+        {
+          "not": {
+            "field": "[concat('tags[', parameters('tag3Name'), ']')]",
+            "in": "[parameters('tag3Value')]"
+          }
+        },
+        {
+          "not": {
+            "field": "[concat('tags[', parameters('tag4Name'), ']')]",
+            "in": "[parameters('tag4Value')]"
+          }
+        },
+        {
+          "not": {
+            "field": "[concat('tags[', parameters('tag5Name'), ']')]",
+            "in": "[parameters('tag5Value')]"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "audit"
+    }
+  }
+}

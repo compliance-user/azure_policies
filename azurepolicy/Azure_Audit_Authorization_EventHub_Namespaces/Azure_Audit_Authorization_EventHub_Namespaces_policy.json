@@ -1,0 +1,41 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/8dbd3821fd3b11f7d3f2a7050fb10918",
+    "policy_description": "Event Hub clients should not use a namespace level access policy that provides access to all queues and topics in a nam\\nespace. To align with the least previlege security model, you should create access policies at the entity level for queues and topics to provided access to only the specific entity.",
+    "classification": "Access",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Namespaces"
+    ],
+    "resource_type": "Event_Hubs",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/zblyj"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "name",
+          "notEquals": "RootManageSharedAccessKey"
+        },
+        {
+          "field": "type",
+          "equals": "Microsoft.EventHub/namespaces/authorizationRules"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

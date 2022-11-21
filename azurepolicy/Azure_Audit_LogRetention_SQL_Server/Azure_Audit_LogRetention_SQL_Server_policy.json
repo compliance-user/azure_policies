@@ -1,0 +1,46 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/44002ae245805925045a9f2a12670aec",
+    "policy_description": "SQL servers should be configured with auditing retention days greater than 90 days.,Audit SQL servers configured with an auditing retention period of less than 90 days.",
+    "classification": "Operation",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "MSSQL"
+    ],
+    "resource_type": "Servers",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/lkdcs"
+  },
+  "parameters": {
+    "effect": {
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "description": "Enable or disable the execution of the policy",
+        "displayName": "Effect"
+      },
+      "type": "String"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "equals": "Microsoft.Sql/servers",
+      "field": "type"
+    },
+    "then": {
+      "details": {
+        "existenceCondition": {
+          "field": "Microsoft.Sql/servers/auditingSettings/retentionDays",
+          "greater": 90
+        },
+        "name": "default",
+        "type": "Microsoft.Sql/servers/auditingSettings"
+      },
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

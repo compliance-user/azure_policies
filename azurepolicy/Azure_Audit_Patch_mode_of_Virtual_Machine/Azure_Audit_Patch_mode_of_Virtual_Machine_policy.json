@@ -1,0 +1,73 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/6bf109f0-1847-41c0-93f7-50c1832a10a0",
+    "policy_description": "This policy Audits if patch mode enabled in virtual machines",
+    "recommendation_name": "Azure_Audit_Patch_mode_of_Virtual_Machine",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/63f29"
+  },
+  "parameters": {
+    "publisher": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Approved image publisher name",
+        "description": "If the image publisher name given in the parameters is equal to the publisher name of the vm then it will be compliant."
+      }
+    },
+    "patchMode": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Mode of patch of the vm",
+        "description": "If the patch mode given in the parameters is equal to the patch mode of the vm then it will be compliant."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/virtualMachines"
+        },
+        {
+          "not": {
+            "allOf": [
+              {
+                "field": "Microsoft.Compute/virtualMachines/storageProfile.imageReference.publisher",
+                "equals": "[parameters('publisher')]"
+              },
+              {
+                "field": "Microsoft.Compute/virtualMachines/osProfile.windowsConfiguration.patchSettings.patchMode",
+                "equals": "[parameters('patchMode')]"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

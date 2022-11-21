@@ -1,0 +1,40 @@
+{
+  "name": "Azure_VM_Size_Violation",
+  "display_name": "Azure VM Size Violation",
+  "description": "Policy to check for Azure Virtual Machines configured with VM Size other the recommended ones. Recommended VM Size(s) can be specified when executing the policy.\nUse case(s): \nCan be used to identify Virtual Machines that can down sized to lower VM Sizes if higher than the recommended",
+  "category": "service",
+  "status": "active",
+  "content": "vm(name, id, vm_id, vm_size, status, location, last_start_date, sku, publisher, version, offer, OS_disk_name, disk_size_GB, OS_type, vhd, network_interfaces) :- azure_compute_instance:instance(name=name, id=id, status=status, location=location, created_time=created_time, sku=sku, publisher=publisher, version=version, offer=offer, osDisk_name=OS_disk_name, diskSizeGB=disk_size_GB, osType=OS_type, vhd=vhd, vmId=vm_id, vmSize=vm_size, networkInterfaces=network_interfaces), extract_date(created_time, last_start_date), nin(vm_size, #VM_Size#), equal(status, 'running');",
+  "parameters": {
+    "VM_Size": {
+      "type": "string",
+      "description": "Virtual Machines configured with the VM Size other than the ones specified will be considered as violations. \n Note: Multiple VM Sizes can be specified by separating them with commas",
+      "label": "VM_Size",
+      "default": "Basic_A0,Basic_A1,Basic_A2"
+    }
+  },
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+    "resources": "Virtual_Machines"
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "uri": "policy/congress/global/azure/consumption/vm/577xf",
+  "recommendations": [
+    "Azure_Manage_VMs_With_Inappropriate_Configuration"
+  ]
+}

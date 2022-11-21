@@ -1,0 +1,33 @@
+{
+  "status": "active",
+  "description": "This policy audits whether diagnostic logs is enabled for Logic apps. This enables you to recreate activity trails to use for investigation purposes; when a security incident occurs or when your network is compromised.",
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Workflows"
+  ],
+  "resource_type": "Logic_Apps",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Diagnostic Logs in Logic apps",
+  "name": "Azure_Audit_Diagnostic_Logs_Logic_Apps",
+  "uri": "policy/azure_policy/global/azure/compliance/others/jto23",
+  "content": "{\n  \"parameters\": {\n    \"effect\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Effect\",\n        \"description\": \"Enable or disable the execution of the policy\"\n      },\n      \"allowedValues\": [\n        \"AuditIfNotExists\"\n      ],\n      \"defaultValue\": \"AuditIfNotExists\"\n    },\n    \"requiredRetentionDays\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Required retention (days)\",\n        \"description\": \"The required diagnostic logs retention in days\"\n      }\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"equals\": \"Microsoft.Logic/workflows\"\n    },\n    \"then\": {\n      \"effect\": \"[parameters('effect')]\",\n      \"details\": {\n        \"type\": \"Microsoft.Insights/diagnosticSettings\",\n        \"existenceCondition\": {\n          \"anyOf\": [\n            {\n              \"allOf\": [\n                {\n                  \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled\",\n                  \"equals\": \"true\"\n                },\n                {\n                  \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.days\",\n                  \"equals\": \"[parameters('requiredRetentionDays')]\"\n                },\n                {\n                  \"field\": \"Microsoft.Insights/diagnosticSettings/logs.enabled\",\n                  \"equals\": \"true\"\n                }\n              ]\n            },\n            {\n              \"allOf\": [\n                {\n                  \"not\": {\n                    \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled\",\n                    \"equals\": \"true\"\n                  }\n                },\n                {\n                  \"field\": \"Microsoft.Insights/diagnosticSettings/logs.enabled\",\n                  \"equals\": \"true\"\n                }\n              ]\n            }\n          ]\n        }\n      }\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Enable_Diagnostic_logs_in_Logic_Apps"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Diagnostic_logs_Logic_Apps.json"
+  }
+}
+

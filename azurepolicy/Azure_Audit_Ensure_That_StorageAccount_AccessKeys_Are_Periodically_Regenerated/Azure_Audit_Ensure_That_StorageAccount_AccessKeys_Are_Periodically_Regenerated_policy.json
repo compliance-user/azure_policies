@@ -1,0 +1,58 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/f63dc312-a1f9-4cd2-bf8c-0f3c655dcc26",
+    "policy_description": "Ensure that storage account access keys are periodically regenerated.",
+    "recommendation_name": "Azure_Audit_Ensure_That_StorageAccount_AccessKeys_Are_Periodically_Regenerated",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "resource_type": "Storage_Accounts",
+    "service_resource": [
+      "Storage_Accounts"
+    ],
+    "uri": "policy/azure_policy/global/azure/compliance/others/5cbc8",
+    "severity": "high"
+  },
+  "parameters": {
+    "keyExpirationPeriodInDays": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "key Expiration Period In Days",
+        "description": "key Expiration Period In Days."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Storage/storageAccounts"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Storage/storageAccounts/keyPolicy.keyExpirationPeriodInDays",
+            "in": "[parameters('keyExpirationPeriodInDays')]"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

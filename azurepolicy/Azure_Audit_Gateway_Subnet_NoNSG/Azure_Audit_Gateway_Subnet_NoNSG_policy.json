@@ -1,0 +1,45 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/a688b9a75621f972a47a07f47308c367",
+    "policy_description": "Gateway subnets should not be configured with a network security group,This policy checks if a gateway subnet is configured with a network security group. Assigning a network security group to a gateway subnet will cause the gateway to stop functioning.",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [
+      "Subnet"
+    ],
+    "resource_type": "Virtual_Networks",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/eso7u"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "equals": "Microsoft.Network/virtualNetworks/subnets",
+          "field": "type"
+        },
+        {
+          "equals": "GatewaySubnet",
+          "field": "name"
+        },
+        {
+          "exists": "true",
+          "field": "Microsoft.Network/virtualNetworks/subnets/networkSecurityGroup.id"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

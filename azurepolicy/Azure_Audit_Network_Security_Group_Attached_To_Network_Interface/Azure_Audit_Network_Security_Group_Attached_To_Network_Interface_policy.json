@@ -1,0 +1,49 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/c1256907-f8a0-415a-8111-a749927af0fa",
+    "policy_description": "This policy audits if network security group attached to network interface",
+    "recommendation_name": "Azure_Audit_Network_Security_Group_Attached_To_Network_Interface",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/f105c"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Network/networkSecurityGroups"
+        },
+        {
+          "value": "[less(length(field('Microsoft.Network/networkSecurityGroups/networkInterfaces[*].id')), 1)]",
+          "equals": "true"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

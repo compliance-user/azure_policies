@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy checks to see if the access is via https instead of http for the web app",
+  "classification": "Security",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Web_Apps"
+  ],
+  "resource_type": "App_Services",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit WebApp HTTPS Only",
+  "name": "Azure_Audit_WebApp_HTTPS_Only",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/ujb6l",
+  "content": "{\n  \"mode\": \"All\",\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Web/sites\"\n        },\n        {\n          \"field\": \"Microsoft.Web/sites/httpsOnly\",\n          \"notEquals\": \"true\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"Audit\"\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_WebApp_HTTPS_Only"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_WebApp_HTTPS_Only.json"
+  }
+}

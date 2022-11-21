@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Advanced_ThreatProtection_StorageAccounts",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/361c2074-3595-4e5d-8cab-4f21dffc835c",
+  "display_name": "Azure Audit Advanced ThreatProtection StorageAccounts",
+  "description": "This policy enables Advanced Threat Protection on Storage Accounts",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/361c2074-3595-4e5d-8cab-4f21dffc835c\",\n \"policy_description\": \"This policy enables Advanced Threat Protection on Storage Accounts\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Data\",\n \"resource_type\": \"Accounts\",\n \"service_resource\": [\n \"Storage_Accounts\"\n ],\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/e93b5\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"DeployIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"DeployIfNotExists\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Storage/storageAccounts\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Security/advancedThreatProtectionSettings\",\n \"name\": \"current\",\n \"existenceCondition\": {\n \"field\": \"Microsoft.Security/advancedThreatProtectionSettings/isEnabled\",\n \"equals\": \"true\"\n },\n \"roleDefinitionIds\": [\n \"/providers/Microsoft.Authorization/roleDefinitions/fb1c8493-542b-48eb-b624-b4c8fea62acd\"\n ],\n \"deployment\": {\n \"properties\": {\n \"mode\": \"incremental\",\n \"template\": {\n \"$schema\": \"http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\n \"contentVersion\": \"1.0.0.0\",\n \"parameters\": {\n \"storageAccountName\": {\n \"type\": \"string\"\n }\n },\n \"resources\": [\n {\n \"apiVersion\": \"2019-01-01\",\n \"type\": \"Microsoft.Storage/storageAccounts/providers/advancedThreatProtectionSettings\",\n \"name\": \"[concat(parameters('storageAccountName'), '/Microsoft.Security/current')]\",\n \"properties\": {\n \"isEnabled\": true\n }\n }\n ]\n },\n \"parameters\": {\n \"storageAccountName\": {\n \"value\": \"[field('name')]\"\n }\n }\n }\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "Storage_Accounts"
+  ],
+  "resource_type": "Accounts",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Advanced_ThreatProtection_StorageAccounts",
+    "description": "This policy enables Advanced Threat Protection on Storage Accounts",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/e93b5"
+}

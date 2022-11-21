@@ -1,0 +1,55 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/d0793b48-0edc-4296-a390-4c75d1bdfd71",
+    "policy_description": "Audit, Container Registries that do not have any Network (IP or VNET) Rules configured and allow all network access by default. Container Registries with at least one IP / Firewall rule or configured virtual network will be deemed compliant. For more information on Container Registry Network rules, please visit: https://aka.ms/acr/vnet.",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [
+      "Registry"
+    ],
+    "resource_type": "Container_Registry",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/SsLPi"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit",
+        "Disabled"
+      ],
+      "defaultValue": "Audit",
+      "metadata": {
+        "displayName": "[Preview]: Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.ContainerRegistry/registries"
+        },
+        {
+          "anyof": [
+            {
+              "field": "Microsoft.ContainerRegistry/registries/networkRuleSet.defaultAction",
+              "exists": "false"
+            },
+            {
+              "field": "Microsoft.ContainerRegistry/registries/networkRuleSet.defaultAction",
+              "equals": "Allow"
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

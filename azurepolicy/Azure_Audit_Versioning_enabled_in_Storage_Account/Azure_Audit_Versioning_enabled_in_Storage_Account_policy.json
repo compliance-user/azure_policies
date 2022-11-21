@@ -1,0 +1,47 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/0c0c19ab-4309-4c90-b02c-0b2612c9f0a2",
+    "policy_description": "This policy audits versioning enabled in storage account",
+    "recommendation_name": "Azure_Audit_Versioning_enabled_in_Storage_Account",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/06c3d"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Storage/storageAccounts"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Storage/storageAccounts/blobServices",
+        "existenceCondition": {
+          "field": "Microsoft.Storage/storageAccounts/blobServices/default.isVersioningEnabled",
+          "equals": true
+        }
+      }
+    }
+  }
+}

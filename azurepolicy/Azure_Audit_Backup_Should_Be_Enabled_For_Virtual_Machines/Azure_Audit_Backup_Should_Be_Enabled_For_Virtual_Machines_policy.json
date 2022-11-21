@@ -1,0 +1,42 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/013e242c-8828-4970-87b3-ab247555486d",
+    "policy_description": "Ensure protection of your Azure Virtual Machines by enabling  Azure Backup. Azure Backup is a secure and cost effective data protection solution for Azure.",
+    "classification": "Security",
+    "sub_classification": "Host",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "resource_type": "Virtual_Machines",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/49d4c"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Compute/virtualMachines"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.RecoveryServices/backupprotecteditems"
+      }
+    }
+  }
+}

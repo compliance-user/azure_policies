@@ -1,0 +1,41 @@
+{
+  "name": "Ensure_HTTPS_Traffic_Only_Web_Apps",
+  "display_name": "Azure Ensure https only traffic  for Web Apps",
+  "description": "This policy audits whether https only traffic is enabled for Web Apps.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n    \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"Enable or disable the execution of the policy\"\n        },\n        \"allowedValues\": [\n          \"AuditIfNotExists\",\n          \"Disabled\",\n          \"Audit\"\n        ]\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"allOf\": [\n          {\n            \"field\": \"type\",\n            \"equals\": \"microsoft.Web/sites\"\n          },\n          {\n            \"anyOf\": [\n              {\n                \"field\": \"kind\",\n                \"equals\": \"app\"\n              },\n              {\n                \"field\": \"kind\",\n                \"equals\": \"WebApp\"\n              },\n              {\n                \"field\": \"kind\",\n                \"equals\": \"app,linux\"\n              },\n              {\n                \"field\": \"kind\",\n                \"equals\": \"app,linux,container\"\n              }\n            ]\n          }\n        ]\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\",\n        \"details\": {\n          \"type\": \"Microsoft.Security/complianceResults\",\n          \"name\": \"OnlyHttpsForWebApplication\",\n          \"existenceCondition\": {\n            \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\n            \"in\": [\n              \"NotApplicable\",\n              \"OffByPolicy\",\n              \"Healthy\"\n            ]\n          }\n        }\n      }\n    }\n}\n",
+  "parameters": {},
+  "automation_enabled": true,
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Web_Apps"
+  ],
+  "resource_type": "App_Services",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+    "system_scheduled_details": [
+      {
+        "interval": 1440,
+        "args": {
+          "effect": "AuditIfNotExists"
+        }
+      }
+    ]
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": true,
+  "recommendations": [
+    "Azure_Web_Apps_Ensure_Https_Only"
+  ],
+  "uri": "policy/azure_policy/global/azure/compliance/others/j25xe"
+}

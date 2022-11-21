@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Automated_Image_Patching",
+  "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/1a07d1f3170686434fabec14bc0b08ae",
+  "display_name": "Azure Audit Automated Image Patching",
+  "description": "This policy enforces enabling automatic OS image patching on Virtual Machine Scale Sets to always keep Virtual Machines secure by safely applying latest security patches every month",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/1a07d1f3170686434fabec14bc0b08ae\",\n \"policy_description\": \"This policy enforces enabling automatic OS image patching on Virtual Machine Scale Sets to always keep Virtual Machines secure by safely applying latest security patches every month\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Host\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"resource_type\": \"Virtual_Machines\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/23qyr\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"Audit\"\n ],\n \"defaultValue\": \"Audit\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"equals\": \"Microsoft.Compute/virtualMachineScaleSets\",\n \"field\": \"type\"\n },\n {\n \"field\": \"Microsoft.Compute/VirtualMachineScaleSets/upgradePolicy.automaticOSUpgradePolicy.enableAutomaticOSUpgrade\",\n \"notEquals\": \"True\"\n },\n {\n \"field\": \"Microsoft.Compute/VirtualMachineScaleSets/upgradePolicy.automaticOSUpgrade\",\n \"notEquals\": \"True\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Host",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Automated_Image_Patching",
+    "description": "This policy enforces enabling automatic OS image patching on Virtual Machine Scale Sets to always keep Virtual Machines secure by safely applying latest security patches every month",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/23qyr"
+}

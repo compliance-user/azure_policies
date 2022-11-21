@@ -1,0 +1,58 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9",
+    "policy_description": "Auditing on your SQL Server should be enabled to track database activities across all databases on the server and save them in an audit log.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "MySQL"
+    ],
+    "resource_type": "Databases",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/68cfe"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    },
+    "setting": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Desired Auditing setting"
+      },
+      "allowedValues": [
+        "enabled",
+        "disabled"
+      ],
+      "defaultValue": "enabled"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Sql/servers"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Sql/servers/auditingSettings",
+        "name": "default",
+        "existenceCondition": {
+          "field": "Microsoft.Sql/auditingSettings.state",
+          "equals": "[parameters('setting')]"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+    "name": "Azure_Audit_Hybrid_Enabled",
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/1891baca-b0d5-436e-bc3c-073b904987c6",
+    "display_name": "Azure Audit Hybrid Enabled",
+    "description": "This policy will audit usage of hybrid use benefit.",
+    "category": "service",
+    "status": "active",
+    "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/1891baca-b0d5-436e-bc3c-073b904987c6\",\n \"policy_description\": \"This policy will audit usage of hybrid use benefit.\",\n \"recommendation_name\": \"Azure_Audit_Hybrid_Enabled\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Network\",\n \"resource_type\": \"\",\n \"service_resource\": [\n \"\"\n ],\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/8a454\",\n \"category\": \"Authorization\",\n \"createdBy\": \"7de373b9-42bc-49e8-b424-074f00bea8fb\",\n \"createdOn\": \"2021-10-01T13:22:14.473423Z\",\n \"updatedBy\": null,\n \"updatedOn\": null\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy.\"\n },\n \"allowedValues\": [\n \"Audit\",\n \"Deny\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Audit\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"in\": [\n \"Microsoft.Compute/virtualMachines\",\n \"Microsoft.Compute/VirtualMachineScaleSets\"\n ]\n },\n {\n \"field\": \"Microsoft.Compute/licenseType\",\n \"notEquals\": \"Windows_Server\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n },\n \"type\": \"Microsoft.Authorization/policyDefinitions\",\n \"name\": \"1891baca-b0d5-436e-bc3c-073b904987c6\",\n \"systemData\": {\n \"createdBy\": \"tridib.borah@agiliz.tech\",\n \"createdByType\": \"User\",\n \"createdAt\": \"2021-10-01T13:22:14.4063996Z\",\n \"lastModifiedBy\": \"tridib.borah@agiliz.tech\",\n \"lastModifiedByType\": \"User\",\n \"lastModifiedAt\": \"2021-10-01T13:22:14.4063996Z\"\n }\n}\n",
+    "parameters": "null",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [],
+    "resource_type": "",
+    "severity": "medium",
+    "type": [
+      "Cloud"
+    ],
+    "services": [
+      "Azure"
+    ],
+    "scope": "global",
+    "metadata": {},
+    "resources": [],
+    "is_temp": false,
+    "is_system_policy": false,
+    "recommendation": {
+                  "name": "Azure_Audit_Hybrid_Enabled",
+                  "description": "This policy will audit usage of hybrid use benefit.",
+                  "actions": []
+                },
+    "uri": "policy/azure_policy/global/azure/compliance/others/8a454"
+  }
+  

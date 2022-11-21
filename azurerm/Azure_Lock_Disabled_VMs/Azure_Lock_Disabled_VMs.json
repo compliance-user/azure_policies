@@ -1,0 +1,33 @@
+{
+  "name": "Azure_Lock_Disabled_VMs",
+  "display_name": "Azure Lock Disabled Virtual Machines",
+  "description": "Policy to check Azure Virtual Machines having locks disabled. Locks help prevent Virtual Machines from being deleted or modified accidentally.\n\nUse case(s): Can be used to identify business critical Virtual Machines that are not lock enabled in Azure. Locks can be enabled as required.",
+  "category": "service",
+  "status": "active",
+  "content": "vm(id, name, vm_id, vm_size, status, locks_enabled, location, last_updated_time, sku, publisher, version, offer, OS_disk_name, disk_size_GB, OS_type, vhd, network_interfaces) :- azure_compute_instance:instance(name=name, id=id, status=status, location=location, created_time=last_updated_time, sku=sku, publisher=publisher, version=version, offer=offer, osDisk_name=OS_disk_name, diskSizeGB=disk_size_GB, osType=OS_type, vhd=vhd, vmId=vm_id, vmSize=vm_size, networkInterfaces=network_interfaces, locks_enabled=locks_enabled), equal(locks_enabled, 'False');",
+  "parameters": {},
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+    "onboarding_policy": true
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "uri": "policy/congress/global/azure/consumption/vm/a2z7w",
+  "recommendations": [
+    "Azure_Manage_Lock_Disabled_VMs"
+  ]
+}

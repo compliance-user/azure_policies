@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_RPC_Port_Unrestricted",
+  "policy_id": "null",
+  "display_name": "Azure Audit RPC Port Unrestricted",
+  "description": " RPC port unrestricted",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_description\": \" RPC port unrestricted\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Host\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"resource_type\": \"Virtual_Machines\",\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/529a8\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"Audit\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Audit\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"anyOf\": [\n {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Network/networkSecurityGroups/securityRules\"\n },\n {\n \"not\": {\n \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefix\",\n \"notEquals\": \"*\"\n }\n },\n {\n \"anyOf\": [\n {\n \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange\",\n \"equals\": \"22\"\n },\n {\n \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange\",\n \"equals\": \"135\"\n }\n ]\n }\n ]\n },\n {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Network/networkSecurityGroups\"\n },\n {\n \"count\": {\n \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules[*]\",\n \"where\": {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules[*].sourceAddressPrefix\",\n \"equals\": \"*\"\n },\n {\n \"anyOf\": [\n {\n \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules[*].destinationPortRange\",\n \"equals\": \"22\"\n },\n {\n \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules[*].destinationPortRange\",\n \"equals\": \"135\"\n }\n ]\n }\n ]\n }\n },\n \"greater\": 0\n }\n ]\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Host",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_RPC_Port_Unrestricted",
+    "description": " RPC port unrestricted",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/529a8"
+}

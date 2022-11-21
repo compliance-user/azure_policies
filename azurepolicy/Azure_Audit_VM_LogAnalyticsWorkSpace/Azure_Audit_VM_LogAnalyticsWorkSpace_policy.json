@@ -1,0 +1,53 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/157274b783889688bdc57f76bd8a4d99",
+    "policy_description": "Report Mismatch Reports VMs as non-compliant if they not logging to the LA workspace specified in the policy/initiative assignment",
+    "classification": "Operation",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "resource_type": "Virtual_Machines",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/3n3a3"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit",
+        "AuditIfNotExists"
+      ],
+      "defaultValues": "Audit"
+    },
+    "logAnalyticsWorkspaceId": {
+      "metadata": {
+        "description": "This is the Id (GUID) of the Log Analytics Workspace that the VMs should be configured for.",
+        "displayName": "Log Analytics Workspace Id that VMs should be configured for"
+      },
+      "type": "String"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "equals": "Microsoft.Compute/virtualMachines/extensions",
+          "field": "type"
+        },
+        {
+          "equals": "Microsoft.EnterpriseCloud.Monitoring",
+          "field": "Microsoft.Compute/virtualMachines/extensions/publisher"
+        },
+        {
+          "field": "Microsoft.Compute/virtualMachines/extensions/settings.workspaceId",
+          "notEquals": "[parameters('logAnalyticsWorkspaceId')]"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Azure_Audit_UnUsed_Public_IP",
+  "display_name": "Azure Audit UnUsed Public IP",
+  "description": "This policy is used to identify the unused Public IP address in a Azure Subscription",
+  "category": "service",
+  "status": "active",
+  "content": "public_ip_address(id, name, type, location, association_status) :- azure_public_ip_address:public_ip_address(id=id, name=name, type=type, location=location, association_status=association_status), equal(association_status,'False');",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Public_IP_Address"
+  ],
+  "resource_type": "Virtual_Networks",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+    "file": "Azure_Audit_UnUsed_Public_IP.json"
+  },
+  "resources": [],
+  "is_system_policy": false,
+  "recommendations": [
+    "Azure_Delete_UnUsed_Public_IP"
+  ]
+}

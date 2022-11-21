@@ -1,0 +1,77 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_description": "This policy identifies all those web app in which azure CDN is enabled ",
+    "recommendation_name": "Azure_Audit_CDN_To_Be_Enabled_For_All_WebApp",
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/9ed01299-b8df-47eb-885e-5e220086ac35",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "service_resource": [
+      ""
+    ],
+    "resource_type": "",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/896c5",
+    "category": "CDN",
+    "createdBy": "7de373b9-42bc-49e8-b424-074f00bea8fb",
+    "createdOn": "2021-10-06T08:12:20.4045601Z",
+    "updatedBy": null,
+    "updatedOn": null
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    },
+    "resourceState": {
+      "type": "String",
+      "metadata": {
+        "displayName": "resourceState of the CDN profiles",
+        "description": "resourceState of the CDN profiles."
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Web/sites"
+        },
+        {
+          "field": "kind",
+          "like": "app"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Cdn/profiles",
+        "existenceCondition": {
+          "field": "Microsoft.Cdn/profiles/resourceState",
+          "equals": "[parameters('resourceState')]"
+        }
+      }
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "9ed01299-b8df-47eb-885e-5e220086ac35",
+  "systemData": {
+    "createdBy": "tridib.borah@agiliz.tech",
+    "createdByType": "User",
+    "createdAt": "2021-10-06T08:12:20.0997594Z",
+    "lastModifiedBy": "tridib.borah@agiliz.tech",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2021-10-06T08:12:20.0997594Z"
+  }
+}

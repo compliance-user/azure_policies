@@ -1,0 +1,62 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/666e68f8-16c4-4524-a193-e8bda06f10a6",
+    "policy_description": "This policy audits virtual machine cpu credit consumed",
+    "recommendation_name": "Azure_Audit_Virtual_Machine_CPU_Credit_Consumed",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/fd796"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Compute/virtualMachines"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Insights/metricalerts",
+        "existenceScope": "Subscription",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "count": {
+                "field": "Microsoft.Insights/metricAlerts/criteria.Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria.allOf[*]",
+                "where": {
+                  "field": "Microsoft.Insights/metricAlerts/criteria.Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria.allOf[*].metricName",
+                  "equals": "CPU Credits Consumed"
+                }
+              },
+              "equals": 1
+            },
+            {
+              "field": "Microsoft.Insights/metricalerts/targetResourceType",
+              "equals": "Microsoft.Compute/virtualMachines"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

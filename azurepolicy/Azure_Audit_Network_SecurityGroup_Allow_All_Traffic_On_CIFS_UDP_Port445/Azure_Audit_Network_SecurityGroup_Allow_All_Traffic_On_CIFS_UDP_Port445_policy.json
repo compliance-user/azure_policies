@@ -1,0 +1,62 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_description": "Azure Network Security Group allows all traffic on CIFS (UDP Port 445)",
+    "recommendation_name": "Azure_Audit_Network_SecurityGroup_Allow_All_Traffic_On_CIFS_UDP_Port445",
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/035b7991-be99-4c34-82de-6efcb9227c17",
+    "classification": "Security",
+    "sub_classification": "Host",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/e33fb",
+    "category": "Network security"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Network/networkSecurityGroups"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Network/networkSecurityGroups/securityRules/protocol",
+              "equals": "UDP"
+            },
+            {
+              "field": "Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefix",
+              "equals": "*"
+            },
+            {
+              "field": "Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange",
+              "equals": "445"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "035b7991-be99-4c34-82de-6efcb9227c17"
+}

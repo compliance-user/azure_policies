@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Network_SecurityGroup_Allow_All_Traffic_On_FTP_TCP_Port21",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/d2831fe5-20d6-4a05-b6b2-6a16593095ac",
+  "display_name": "Azure Audit Network SecurityGroup Allow All Traffic On FTP TCP Port21",
+  "description": "Azure Network Security Group allows all traffic on FTP (TCP Port 21)",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_description\": \"Azure Network Security Group allows all traffic on FTP (TCP Port 21)\",\n \"recommendation_name\": \"Azure_Audit_Network_SecurityGroup_Allow_All_Traffic_On_FTP_TCP_Port21\",\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/d2831fe5-20d6-4a05-b6b2-6a16593095ac\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Host\",\n \"resource_type\": \"Virtual_Machines\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/f8847\",\n \"category\": \"Network security\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Network/networkSecurityGroups\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Network/networkSecurityGroups/securityRules\",\n \"existenceCondition\": {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules/protocol\",\n \"equals\": \"TCP\"\n },\n {\n \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefix\",\n \"equals\": \"*\"\n },\n {\n \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange\",\n \"equals\": \"21\"\n }\n ]\n }\n }\n }\n },\n \"type\": \"Microsoft.Authorization/policyDefinitions\",\n \"name\": \"d2831fe5-20d6-4a05-b6b2-6a16593095ac\"\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Host",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Network_SecurityGroup_Allow_All_Traffic_On_FTP_TCP_Port21",
+    "description": "Azure Network Security Group allows all traffic on FTP (TCP Port 21)",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/f8847"
+}

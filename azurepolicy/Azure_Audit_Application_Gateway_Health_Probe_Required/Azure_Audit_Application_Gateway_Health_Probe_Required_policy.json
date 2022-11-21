@@ -1,0 +1,75 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/da11750c-82f0-4f72-a713-37a61748f2f7",
+    "policy_description": "This policy audits application gateway has required health probe",
+    "recommendation_name": "Azure_Audit_Application_Gateway_Health_Probe_Required",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "App_Services",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/1359a"
+  },
+  "parameters": {
+    "minCapacity": {
+      "type": "Integer",
+      "metadata": {
+        "displayName": "minCapacity of the autoscale configuration",
+        "description": "If the minCapacity given in the parameter is equal to the minCapacity of the application gateway then it will be compliant."
+      }
+    },
+    "maxCapacity": {
+      "type": "Integer",
+      "metadata": {
+        "displayName": "maxCapacity of the autoscale configuration",
+        "description": "If the maxCapacity given in the parameter is equal to the maxCapacity of the application gateway then it will be compliant."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Network/applicationGateways"
+        },
+        {
+          "field": "Microsoft.Network/applicationGateways/autoscaleConfiguration.minCapacity",
+          "equals": "[parameters('minCapacity')]"
+        },
+        {
+          "field": "Microsoft.Network/applicationGateways/autoscaleConfiguration.maxCapacity",
+          "equals": "[parameters('maxCapacity')]"
+        },
+        {
+          "not": {
+            "count": {
+              "field": "Microsoft.Network/applicationGateways/probes[*]"
+            },
+            "equals": 1
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

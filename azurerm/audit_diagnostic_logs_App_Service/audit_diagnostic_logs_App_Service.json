@@ -1,0 +1,32 @@
+{
+  "status": "active",
+  "description": "This policy audits whether Diagnostic Logs enabled in App Service. This enables you to recreate activity trails for investigation purposes if a security incident occurs or your network is compromised",
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Web_Apps"
+  ],
+  "resource_type": "App_Services",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Diagnostic Logs in App Service",
+  "name": "Azure_Audit_Diagnostic_Logs_App_Service",
+  "uri": "policy/azure_policy/global/azure/compliance/others/udxse",
+  "content": "{\n\"parameters\": {\n\"effect\": {\n\"type\": \"String\",\n\"metadata\": {\n\"displayName\": \"Effect\",\n\"description\": \"Enable or disable the execution of the policy\"\n},\n\"allowedValues\": [\n\"AuditIfNotExists\"\n]\n}\n},\n\"policyRule\": {\n\"if\": {\n\"allOf\": [\n{\n\"field\": \"type\",\n\"equals\": \"Microsoft.Web/sites\"\n},\n{\n\"field\": \"kind\",\n\"notContains\": \"functionapp\"\n}\n]\n},\n\"then\": {\n\"effect\": \"[parameters('effect')]\",\n\"details\": {\n\"type\": \"Microsoft.Web/sites/config\",\n\"existenceCondition\": {\n\"allOf\": [\n{\n\"field\": \"Microsoft.Web/sites/config/detailedErrorLoggingEnabled\",\n\"equals\": \"true\"\n},\n{\n\"field\": \"Microsoft.Web/sites/config/httpLoggingEnabled\",\n\"equals\": \"true\"\n},\n{\n\"field\": \"Microsoft.Web/sites/config/requestTracingEnabled\",\n\"equals\": \"true\"\n}\n]\n}\n}\n}\n}\n}\n",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Enable_Diagnostic_logs_in_App_Service"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "audit_diagnostic_logs_App_Service.json"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/c60fa9abaa455288b98a10e54018c063",
+    "policy_description": "Audit diagnostic setting for selected resource types. We can specify the resource type as an argument and then the policy will check if the diagnostic setting is present for the resource type",
+    "classification": "Operation",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Virtual_Network"
+    ],
+    "resource_type": "Virtual_Networks",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/igjo7"
+  },
+  "parameters": {
+    "listOfResourceTypes": {
+      "allowedValues": [
+        "Microsoft.AnalysisServices/servers",
+        "Microsoft.ApiManagement/service",
+        "Microsoft.Automation/automationAccounts",
+        "Microsoft.Batch/batchAccounts",
+        "Microsoft.Cdn/profiles/endpoints",
+        "Microsoft.ClassicNetwork/networksecuritygroups",
+        "Microsoft.CognitiveServices/accounts",
+        "Microsoft.ContainerService/managedClusters",
+        "Microsoft.CustomerInsights/hubs",
+        "Microsoft.DataFactory/factories",
+        "Microsoft.DataLakeAnalytics/accounts",
+        "Microsoft.DataLakeStore/accounts",
+        "Microsoft.DBforMySQL/servers",
+        "Microsoft.DBforPostgreSQL/servers",
+        "Microsoft.Devices/IotHubs",
+        "Microsoft.Devices/provisioningServices",
+        "Microsoft.DocumentDB/databaseAccounts",
+        "Microsoft.EventHub/namespaces",
+        "Microsoft.Insights/AutoscaleSettings",
+        "Microsoft.IoTSpaces/Graph",
+        "Microsoft.KeyVault/vaults",
+        "Microsoft.Logic/workflows",
+        "Microsoft.Logic/integrationAccounts",
+        "Microsoft.Network/networksecuritygroups",
+        "Microsoft.Network/loadBalancers",
+        "Microsoft.Network/publicIPAddresses",
+        "Microsoft.Network/virtualNetworks",
+        "Microsoft.Network/applicationGateways",
+        "Microsoft.Network/securegateways",
+        "Microsoft.Network/azurefirewalls",
+        "Microsoft.Network/virtualNetworkGateways",
+        "Microsoft.Network/trafficManagerProfiles",
+        "Microsoft.Network/expressRouteCircuits",
+        "Microsoft.Network/frontdoors",
+        "Microsoft.PowerBIDedicated/capacities",
+        "Microsoft.RecoveryServices/Vaults",
+        "Microsoft.Search/searchServices",
+        "Microsoft.ServiceBus/namespaces",
+        "Microsoft.Sql/servers/databases",
+        "Microsoft.Sql/managedInstances",
+        "Microsoft.Sql/managedInstances/databases",
+        "Microsoft.StreamAnalytics/streamingjobs",
+        "microsoft.web/sites",
+        "microsoft.web/sites/slots"
+      ],
+      "metadata": {
+        "displayName": "Resource Types",
+        "description": "Enter the Resource Type that has to be checked for the diagnostic logs and metrics 'Eg: Microsoft.Logic/workflows' or 'Eg: Microsoft.Devices/IotHubs'"
+      },
+      "type": "Array"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": "[parameters('listOfResourceTypes')]"
+    },
+    "then": {
+      "details": {
+        "existenceCondition": {
+          "allOf": [
+            {
+              "equals": "true",
+              "field": "Microsoft.Insights/diagnosticSettings/logs.enabled"
+            },
+            {
+              "equals": "true",
+              "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled"
+            }
+          ]
+        },
+        "type": "Microsoft.Insights/diagnosticSettings"
+      },
+      "effect": "AuditIfNotExists"
+    }
+  }
+}

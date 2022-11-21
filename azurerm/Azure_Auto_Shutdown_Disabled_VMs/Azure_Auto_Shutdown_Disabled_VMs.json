@@ -1,0 +1,45 @@
+{
+  "name": "Azure_Auto_Shutdown_Disabled_VMs",
+  "display_name": "Azure Auto Shutdown Disabled Virtual Machines",
+  "description": "Policy to check Azure Virtual Machines having auto shutdown option disabled. Auto shutdown helps specify the non-business hours to turn off the Virtual Machine. This helps reduce usage cost of VMs.\n\nNote: VMs with specific tag will only be retrieved. For example, VMs with tag 'Environment: Production' will only be considered as violations. Custom tag name and value can be specified.\n\nUse case(s): Can be used to auto shutdown VMs during weekends or in the evening.",
+  "category": "service",
+  "status": "active",
+  "content": "vm(id, name, vm_id, vm_size, status, auto_shutdown_enabled, locks_enabled, location, last_updated_time, sku, publisher, version, offer, OS_disk_name, disk_size_GB, OS_type, vhd, network_interfaces) :- azure_compute_instance:instance(name=name, id=id, status=status, location=location, created_time=last_updated_time, sku=sku, publisher=publisher, version=version, offer=offer, osDisk_name=OS_disk_name, diskSizeGB=disk_size_GB, osType=OS_type, vhd=vhd, vmId=vm_id, vmSize=vm_size, networkInterfaces=network_interfaces, locks_enabled=locks_enabled, auto_shutdown_enabled=auto_shutdown_enabled), azure_compute_instance:instance_tags(vm_id=id, key=key, value=value), equal(auto_shutdown_enabled, 'False'), equal(key, #Tag_Name#), equal(value, #Tag_Value#);",
+  "parameters": {
+    "Tag_Name": {
+      "type": "string",
+      "description": "Name of the tag which we have to considered as violation",
+      "label": "Tag_Name",
+      "default": "Environment"
+    },
+    "Tag_Value": {
+      "type": "string",
+      "description": "Value of the tag which we have to considered as violation",
+      "label": "Tag_Value",
+      "default": "Production"
+    }
+  },
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "uri": "policy/congress/global/azure/consumption/vm/seuk4",
+  "recommendations": [
+    "Azure_Manage_Auto_Shutdown_Disabled_VMs"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+    "policyType": "BuiltIn",
+    "mode": "Indexed",
+    "metadata": {
+      "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/6fc8115b-2008-441f-8c61-9b722c1e537f",
+      "version": "1.1.0",
+      "category": "Monitoring"
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Audit, Deny, or Disable the execution of this policy"
+        },
+        "allowedValues": [
+          "deny",
+          "Deny",
+          "audit",
+          "Audit",
+          "disabled",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "microsoft.insights/workbooks"
+          },
+          {
+            "field": "microsoft.insights/workbooks/storageUri",
+            "exists": "false"
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+}

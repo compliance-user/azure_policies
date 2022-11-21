@@ -1,0 +1,32 @@
+{
+  "name": "Azure_Audit_Network_Data_Collection_Linux",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/04c4380f-3fae-46e8-96c9-30193528f602",
+  "display_name": "Azure Audit Network Data Collection Linux",
+  "description": "Security Center uses the Microsoft Monitoring Dependency Agent to collect network traffic data from your Azure virtual machines to enable advanced network protection features such as traffic visualization on the network map, network hardening recommendations and specific network threats.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"Indexed\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/04c4380f-3fae-46e8-96c9-30193528f602\",\n \"policy_description\": \"Security Center uses the Microsoft Monitoring Dependency Agent to collect network traffic data from your Azure virtual machines to enable advanced network protection features such as traffic visualization on the network map, network hardening recommendations and specific network threats.\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Network\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"resource_type\": \"Virtual_Machines\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/qTqPp\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\",\n \"metadata\": {\n \"displayName\": \"[Preview]: Effect\",\n \"description\": \"Enable or disable Dependency Agent for Linux VMs monitoring\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Compute/virtualMachines\"\n },\n {\n \"anyOf\": [\n {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Compute/imagePublisher\",\n \"equals\": \"Canonical\"\n },\n {\n \"field\": \"Microsoft.Compute/imageOffer\",\n \"equals\": \"UbuntuServer\"\n },\n {\n \"anyOf\": [\n {\n \"field\": \"Microsoft.Compute/imageSKU\",\n \"in\": [\n \"14.04.0-LTS\",\n \"14.04.1-LTS\",\n \"14.04.5-LTS\"\n ]\n },\n {\n \"field\": \"Microsoft.Compute/imageSKU\",\n \"in\": [\n \"16.04-LTS\",\n \"16.04.0-LTS\"\n ]\n },\n {\n \"field\": \"Microsoft.Compute/imageSKU\",\n \"in\": [\n \"18.04-LTS\"\n ]\n }\n ]\n }\n ]\n },\n {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Compute/imagePublisher\",\n \"equals\": \"RedHat\"\n },\n {\n \"field\": \"Microsoft.Compute/imageOffer\",\n \"in\": [\n \"RHEL\",\n \"RHEL-SAP-HANA\"\n ]\n },\n {\n \"anyOf\": [\n {\n \"field\": \"Microsoft.Compute/imageSKU\",\n \"like\": \"6.*\"\n },\n {\n \"field\": \"Microsoft.Compute/imageSKU\",\n \"like\": \"7*\"\n }\n ]\n }\n ]\n },\n {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Compute/imagePublisher\",\n \"equals\": \"SUSE\"\n },\n {\n \"field\": \"Microsoft.Compute/imageOffer\",\n \"in\": [\n \"SLES\",\n \"SLES-HPC\",\n \"SLES-HPC-Priority\",\n \"SLES-SAP\",\n \"SLES-SAP-BYOS\",\n \"SLES-Priority\",\n \"SLES-BYOS\",\n \"SLES-SAPCAL\",\n \"SLES-Standard\"\n ]\n },\n {\n \"anyOf\": [\n {\n \"field\": \"Microsoft.Compute/imageSKU\",\n \"in\": [\n \"12-SP2\",\n \"12-SP3\",\n \"12-SP4\"\n ]\n }\n ]\n }\n ]\n },\n {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Compute/imagePublisher\",\n \"equals\": \"OpenLogic\"\n },\n {\n \"field\": \"Microsoft.Compute/imageOffer\",\n \"in\": [\n \"CentOS\",\n \"Centos-LVM\",\n \"CentOS-SRIOV\"\n ]\n },\n {\n \"anyOf\": [\n {\n \"field\": \"Microsoft.Compute/imageSKU\",\n \"like\": \"6.*\"\n },\n {\n \"field\": \"Microsoft.Compute/imageSKU\",\n \"like\": \"7*\"\n }\n ]\n }\n ]\n },\n {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Compute/imagePublisher\",\n \"equals\": \"cloudera\"\n },\n {\n \"field\": \"Microsoft.Compute/imageOffer\",\n \"equals\": \"cloudera-centos-os\"\n },\n {\n \"field\": \"Microsoft.Compute/imageSKU\",\n \"like\": \"7*\"\n }\n ]\n }\n ]\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\n \"existenceCondition\": {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Compute/virtualMachines/extensions/type\",\n \"equals\": \"DependencyAgentLinux\"\n },\n {\n \"field\": \"Microsoft.Compute/virtualMachines/extensions/publisher\",\n \"equals\": \"Microsoft.Azure.Monitoring.DependencyAgent\"\n },\n {\n \"field\": \"Microsoft.Compute/virtualMachines/extensions/provisioningState\",\n \"equals\": \"Succeeded\"\n }\n ]\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendations": [
+    "Azure_Audit_Network_Data_Collection_Linux"
+  ],
+  "uri": "policy/azure_policy/global/azure/compliance/others/qTqPp"
+}

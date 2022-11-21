@@ -1,0 +1,53 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/20832509-11a8-4508-a965-a13c80cfd0fd",
+    "policy_description": "This policy audits virtual machines application required",
+    "recommendation_name": "Azure_Audit_Virtual_Machine_Applications_Required",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "severity": "high",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "uri": "policy/azure_policy/global/azure/compliance/others/972f6"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/virtualMachines"
+        },
+        {
+          "not": {
+            "count": {
+              "field": "Microsoft.Compute/virtualMachines/applicationProfile.galleryApplications[*]"
+            },
+            "equals": 1
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

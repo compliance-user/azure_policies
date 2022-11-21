@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether locks are enabled for Critical Resource. First all the resources should be tagged with Critical as metadata and then resource lock option would be checked. ",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Critical Resource Locks",
+  "name": "Azure_Audit_Critical_Resource_Locks",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/o4nzz",
+  "content": "{\n  \"mode\": \"All\",\n  \"parameters\": {\n    \"tagName\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Tag Name\",\n        \"description\": \"The Tag name to audit against (i.e. Type, OS etc.)\"\n      }\n    },\n    \"tagValue\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Tag Value\",\n        \"description\": \"Value of the tag to audit against ( i.e. Critical )\"\n      }\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Resources/subscriptions/resourceGroups\"\n        },\n        {\n          \"field\": \"[concat('tags[', parameters('tagName'), ']')]\",\n          \"match\": \"[parameters('tagValue')]\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"auditIfNotExists\",\n      \"details\": {\n        \"type\": \"Microsoft.Authorization/locks\",\n        \"existenceCondition\": {\n          \"field\": \"Microsoft.Authorization/locks/level\",\n          \"equals\": \"CanNotDelete\"\n        }\n      }\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Critical_Resource_Locks"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Critical_Resource_Locks.json"
+  }
+}

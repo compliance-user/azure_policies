@@ -1,0 +1,33 @@
+{
+  "name": "Azure_Audit_MySQL_Servers_Should_Use_Customer_Managed_Keys_To_Encrypt_Data_At_Rest",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/83cef61d-dbd1-4b20-a4fc-5fbc7da10833",
+  "display_name": "Azure Audit MySQL Servers Should Use Customer Managed Keys To Encrypt Data At Rest",
+  "description": "Use customer-managed keys to manage the encryption at rest of your MySQL servers. By default, the data is encrypted at rest with service-managed keys, but customer-managed keys are commonly required to meet regulatory compliance standards. Customer-managed keys enable the data to be encrypted with an Azure Key Vault key created and owned by you. You have full control and responsibility for the key lifecycle, including rotation and management",
+  "category": "service",
+  "status": "active",
+  "content": "{\n    \"policyType\": \"BuiltIn\",\n    \"mode\": \"Indexed\",\n    \"description\": \"Use customer-managed keys to manage the encryption at rest of your MySQL servers. By default, the data is encrypted at rest with service-managed keys, but customer-managed keys are commonly required to meet regulatory compliance standards. Customer-managed keys enable the data to be encrypted with an Azure Key Vault key created and owned by you. You have full control and responsibility for the key lifecycle, including rotation and management.\",\n    \"metadata\": {\n      \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/83cef61d-dbd1-4b20-a4fc-5fbc7da10833\",\n      \"version\": \"1.0.4\",\n      \"category\": \"SQL\"\n    },\n    \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"Enable or disable the execution of the policy\"\n        },\n        \"allowedValues\": [\n          \"AuditIfNotExists\",\n          \"Disabled\"\n        ],\n        \"defaultValue\": \"AuditIfNotExists\"\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"field\": \"type\",\n        \"equals\": \"Microsoft.DBforMySQL/servers\"\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\",\n        \"details\": {\n          \"type\": \"Microsoft.DBforMySQL/servers/keys\",\n          \"existenceCondition\": {\n            \"allOf\": [\n              {\n                \"field\": \"Microsoft.DBforMySQL/servers/keys/serverKeyType\",\n                \"equals\": \"AzureKeyVault\"\n              },\n              {\n                \"field\": \"Microsoft.DBforMySQL/servers/keys/uri\",\n                \"notEquals\": \"\"\n              },\n              {\n                \"field\": \"Microsoft.DBforMySQL/servers/keys/uri\",\n                \"exists\": \"true\"\n              }\n            ]\n          }\n        }\n      }\n    }\n  }\n\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "High",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_MySQL_Servers_Should_Use_Customer_Managed_Keys_To_Encrypt_Data_At_Rest",
+    "description": "Use customer-managed keys to manage the encryption at rest of your MySQL servers. By default, the data is encrypted at rest with service-managed keys, but customer-managed keys are commonly required to meet regulatory compliance standards. Customer-managed keys enable the data to be encrypted with an Azure Key Vault key created and owned by you. You have full control and responsibility for the key lifecycle, including rotation and management."
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/mvnsl"
+}

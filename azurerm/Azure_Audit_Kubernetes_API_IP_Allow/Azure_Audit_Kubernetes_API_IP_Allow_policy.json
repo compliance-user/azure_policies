@@ -1,0 +1,34 @@
+{
+  "mode": "All",
+  "parameters": {
+    "effect": {
+      "allowedValues": [
+        "Audit",
+        "Disabled"
+      ],
+      "defaultValue": "Audit",
+      "metadata": {
+        "description": "Enable or disable the execution of the policy",
+        "displayName": "Effect"
+      },
+      "type": "String"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "equals": "Microsoft.ContainerService/managedClusters",
+          "field": "type"
+        },
+        {
+          "exists": "false",
+          "field": "Microsoft.ContainerService/managedClusters/apiServerAuthorizedIPRanges"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

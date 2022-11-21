@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Untagged_Automation",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/1b4accb8-e26b-4bd8-8caa-ee001d52d098",
+  "display_name": "Azure Audit Untagged Automation",
+  "description": "This policy audits untagged automation",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/1b4accb8-e26b-4bd8-8caa-ee001d52d098\",\n \"policy_description\": \"This policy audits untagged automation\",\n \"recommendation_name\": \"Azure_Audit_Untagged_Automation\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Standards\",\n \"resource_type\": \"Virtual_Machines\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/d022a\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy.\"\n },\n \"allowedValues\": [\n \"Audit\",\n \"Deny\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Audit\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Automation/AutomationAccounts\"\n },\n {\n \"value\": \"[less(length(field('tags')), 1)]\",\n \"notEquals\": \"true\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Untagged_Automation",
+    "description": "This policy audits untagged automation",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/d022a"
+}

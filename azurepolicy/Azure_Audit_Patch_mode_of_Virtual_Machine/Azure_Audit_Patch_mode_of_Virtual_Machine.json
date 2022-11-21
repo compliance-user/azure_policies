@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Patch_mode_of_Virtual_Machine",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/6bf109f0-1847-41c0-93f7-50c1832a10a0",
+  "display_name": "Azure Audit Patch mode of Virtual Machine",
+  "description": "This policy Audits if patch mode enabled in virtual machines",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/6bf109f0-1847-41c0-93f7-50c1832a10a0\",\n \"policy_description\": \"This policy Audits if patch mode enabled in virtual machines\",\n \"recommendation_name\": \"Azure_Audit_Patch_mode_of_Virtual_Machine\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Standards\",\n \"resource_type\": \"Virtual_Machines\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/63f29\"\n },\n \"parameters\": {\n \"publisher\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Approved image publisher name\",\n \"description\": \"If the image publisher name given in the parameters is equal to the publisher name of the vm then it will be compliant.\"\n }\n },\n \"patchMode\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Mode of patch of the vm\",\n \"description\": \"If the patch mode given in the parameters is equal to the patch mode of the vm then it will be compliant.\"\n }\n },\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy.\"\n },\n \"allowedValues\": [\n \"Audit\",\n \"Deny\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Deny\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Compute/virtualMachines\"\n },\n {\n \"not\": {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Compute/virtualMachines/storageProfile.imageReference.publisher\",\n \"equals\": \"[parameters('publisher')]\"\n },\n {\n \"field\": \"Microsoft.Compute/virtualMachines/osProfile.windowsConfiguration.patchSettings.patchMode\",\n \"equals\": \"[parameters('patchMode')]\"\n }\n ]\n }\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Patch_mode_of_Virtual_Machine",
+    "description": "This policy Audits if patch mode enabled in virtual machines",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/63f29"
+}

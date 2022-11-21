@@ -1,0 +1,33 @@
+{
+  "name": "Azure_Audit_Allowlist_Rules_In_Your_Adaptive_Application_Control_Policy_Should_Be_Updated",
+  "display_name": "Azure Audit Allowlist Rules In Your Adaptive Application Control Policy Should Be Updated",
+  "description": "This policy audits allowed list rules in your adaptive application control should be updated",
+  "category": "service",
+  "status": "active",
+  "content": "{\n    \"policyType\": \"Custom\",\n    \"mode\": \"All\",\n    \"metadata\": {\n      \"category\": \"Security Center\"\n    },\n    \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"Enable or disable the execution of the policy\"\n        },\n        \"allowedValues\": [\n          \"AuditIfNotExists\",\n          \"Disabled\"\n        ],\n        \"defaultValue\": \"AuditIfNotExists\"\n      },\n      \"code\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"code for the given security assessment status\",\n          \"description\": \"If the code given in the parameter matches with the code of the security assessment then it will be in compliant with this policy.\"\n        }\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"field\": \"type\",\n        \"in\": [\n          \"Microsoft.Compute/virtualMachines\",\n          \"Microsoft.ClassicCompute/virtualMachines\"\n        ]\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\",\n        \"details\": {\n          \"type\": \"Microsoft.Security/assessments\",\n          \"name\": \"1234abcd-1b53-4fd4-9835-2c2fa3935313\",\n          \"existenceCondition\": {\n            \"field\": \"Microsoft.Security/assessments/status.code\",\n            \"equals\": \"[parameters('code')]\"\n          }\n        }\n      }\n    }\n}",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "low",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Allowlist_Rules_In_Your_Adaptive_Application_Control_Policy_Should_Be_Updated",
+    "description": "This policy audits allowed list rules in your adaptive application control should be updated",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/lqzlv"
+}

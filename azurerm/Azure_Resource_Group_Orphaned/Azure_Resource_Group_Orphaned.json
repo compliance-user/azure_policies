@@ -1,0 +1,35 @@
+{
+  "name": "Monitor_Orphaned_Resource_Group",
+  "display_name": "Azure Monitor Empty Resource Group",
+  "description": "Monitor Resource group contain no resources",
+  "category": "service",
+  "status": "active",
+  "content": "resource_group(id, name, type, location) :- azure_resources:resource_group(id=id, name=name, type=type, location=location), not has_resources(id);",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Host",
+  "service_resource": [
+    "Resource_Groups"
+  ],
+  "resource_type": "Others",
+  "severity": "low",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "dependent_rules": {
+    "has_resources": "has_resources(x) :- azure_resources:resources(x, id, name, type, location);"
+  },
+  "scope": "global",
+  "metadata": {
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendations": [
+    "Azure_Unused_Resource_Groups"
+  ],
+  "uri": "policy/congress/global/azure/compliance/others/rRo9a"
+}

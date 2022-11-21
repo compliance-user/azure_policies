@@ -1,0 +1,40 @@
+{
+  "name": "Monitor_Missing_Endpoint_Protection",
+  "display_name": "Azure Monitor Missing Endpoint Protection On VM",
+  "description": "This policy audits whether Endpoint Protection is On VM.",
+  "category": "service",
+  "status": "active",
+  "content": "{\"policyRule\": {\"then\": {\"effect\": \"[parameters('effect')]\", \"details\": {\"type\": \"Microsoft.Security/complianceResults\", \"name\": \"endpointProtection\", \"existenceCondition\": {\"field\": \"Microsoft.Security/complianceResults/resourceStatus\", \"in\": [\"Monitored\", \"NotApplicable\", \"OffByPolicy\", \"Healthy\"]}}}, \"if\": {\"field\": \"type\", \"in\": [\"Microsoft.Compute/virtualMachines\", \"Microsoft.ClassicCompute/virtualMachines\"]}}, \"parameters\": {\"effect\": {\"type\": \"string\", \"allowedValues\": [\"AuditIfNotExists\", \"Disabled\"]}}}",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "End Point protection",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+    "system_scheduled_details": [
+      {
+        "interval": 1440,
+        "args": {
+          "effect": "AuditIfNotExists"
+        }
+      }
+    ]
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": true,
+  "recommendations": [
+    "Azure_Enable_VM_for_endpoint_protection"
+  ],
+  "uri": "policy/azure_policy/global/azure/compliance/others/wuqd2"
+}

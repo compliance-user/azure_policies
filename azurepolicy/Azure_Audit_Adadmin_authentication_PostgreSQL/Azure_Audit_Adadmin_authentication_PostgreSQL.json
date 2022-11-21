@@ -1,0 +1,32 @@
+{
+  "name": "Azure_Audit_Adadmin_authentication_PostgreSQL",
+  "policy_id": "null",
+  "display_name": "Azure Audit Adadmin authentication PostgreSQL",
+  "description": "Audit provisioning of an Azure Active Directory administrator for your PostgreSQL server to enable Azure AD authentication. Azure AD authentication enables simplified permission management and centralized identity management of database users and other Microsoft services",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_description\": \"Audit provisioning of an Azure Active Directory administrator for your PostgreSQL server to enable Azure AD authentication. Azure AD authentication enables simplified permission management and centralized identity management of database users and other Microsoft services\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Data\",\n \"service_resource\": [\n \"PGSQL\"\n ],\n \"resource_type\": \"Databases\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/91352\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.DBforPostgreSQL/servers\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.DBforPostgreSQL/servers/administrators\"\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "PGSQL"
+  ],
+  "resource_type": "Databases",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendations": [
+    "Azure_Audit_Adadmin_authentication_PostgreSQL"
+  ],
+  "uri": "policy/azure_policy/global/azure/compliance/others/91352"
+}

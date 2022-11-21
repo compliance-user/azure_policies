@@ -1,0 +1,41 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/1966972ca6e0b593925216fcdd4c194c",
+    "policy_description": "This policy checks to see if the access is via https instead of http for the web app",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "resource_type": "App_Services",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/ujb6l"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Web/sites"
+        },
+        {
+          "field": "Microsoft.Web/sites/httpsOnly",
+          "notEquals": "true"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

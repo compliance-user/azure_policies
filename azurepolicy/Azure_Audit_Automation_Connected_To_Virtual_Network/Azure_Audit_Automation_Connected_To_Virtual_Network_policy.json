@@ -1,0 +1,69 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/7344e9e3-023e-45ae-9f53-0b48df293365",
+    "policy_description": "This policy audits automation connected to virtual network",
+    "recommendation_name": "Azure_Audit_Automation_Connected_To_Virtual_Network",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "Virtual_Networks",
+    "service_resource": [
+      "Virtual_Networks"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/cf750"
+  },
+  "parameters": {
+    "status": {
+      "type": "String",
+      "metadata": {
+        "displayName": "status of the privateLinkServiceConnection",
+        "description": "If the status given in the parameter is equal to the status of the privateLinkServiceConnection then it will be compliant."
+      }
+    },
+    "id": {
+      "type": "String",
+      "metadata": {
+        "displayName": "id of the private endpoint connection",
+        "description": "If the id given in the parameter is equal to the id of the private endpoint then it will be compliant."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Automation/AutomationAccounts"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Automation/AutomationAccounts/privateEndpointConnections",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Automation/AutomationAccounts/privateEndpointConnections/privateEndpoint.id",
+              "equals": "[parameters('id')]"
+            },
+            {
+              "field": "Microsoft.Automation/AutomationAccounts/privateEndpointConnections/privateLinkServiceConnectionState.status",
+              "equals": "[parameters('status')]"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

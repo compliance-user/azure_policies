@@ -1,0 +1,49 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/2d9dbfa3-927b-4cf0-9d0f-08747f971650",
+    "policy_description": "Enabling a managed workspace virtual network ensures that your workspace is network isolated from other workspaces. Data integration and Spark resources deployed in this virtual network also provides user level isolation for Spark activities.",
+    "recommendation_name": "Azure_Audit_Managed_Workspace_Virtual_Network_On_Azure_Synapse_Workspaces_Should_Be_Enabled",
+    "classification": "Operation",
+    "sub_classification": "Logging",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/05233"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Synapse/workspaces"
+        },
+        {
+          "field": "Microsoft.Synapse/workspaces/managedVirtualNetwork",
+          "notEquals": "default"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

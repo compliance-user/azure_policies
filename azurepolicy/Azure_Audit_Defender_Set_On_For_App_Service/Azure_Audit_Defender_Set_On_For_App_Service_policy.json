@@ -1,0 +1,49 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/2913021d-f2fd-4f3d-b958-22354e2bdbcb",
+    "policy_description": "Azure Defender for App Service leverages the scale of the cloud, and the visibility that Azure has as a cloud provider, to monitor for common web app attacks.",
+    "recommendation_name": "Azure_Audit_Defender_Set_On_For_App_Service",
+    "classification": "Data",
+    "sub_classification": "Security",
+    "severity": "high",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "uri": "policy/azure_policy/global/azure/compliance/others/8fd52"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Resources/subscriptions"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/pricings",
+        "name": "AppServices",
+        "existenceScope": "subscription",
+        "existenceCondition": {
+          "field": "Microsoft.Security/pricings/pricingTier",
+          "equals": "Standard"
+        }
+      }
+    }
+  }
+}

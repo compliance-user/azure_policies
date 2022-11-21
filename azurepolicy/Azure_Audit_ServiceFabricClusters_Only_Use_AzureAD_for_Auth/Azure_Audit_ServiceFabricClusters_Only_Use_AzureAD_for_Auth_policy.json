@@ -1,0 +1,56 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/b54ed75b-3e1a-44ac-a333-05ba39b99ff0",
+    "policy_description": "Audit usage of client authentication only via Azure Active Directory in Service Fabric",
+    "classification": "Access",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Cluster"
+    ],
+    "resource_type": "Service_Fabric",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/CkxBV"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "The effect determines what happens when the policy rule is evaluated to match"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.ServiceFabric/clusters"
+        },
+        {
+          "anyOf": [
+            {
+              "field": "Microsoft.ServiceFabric/clusters/azureActiveDirectory.tenantId",
+              "exists": "false"
+            },
+            {
+              "field": "Microsoft.ServiceFabric/clusters/azureActiveDirectory.tenantId",
+              "equals": ""
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

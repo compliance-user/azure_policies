@@ -1,0 +1,35 @@
+{
+  "name": "Azure_Audit_Automation_Connected_To_Virtual_Network",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/7344e9e3-023e-45ae-9f53-0b48df293365",
+  "display_name": "Azure Audit Automation Connected To Virtual Network",
+  "description": "This policy audits automation connected to virtual network",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/7344e9e3-023e-45ae-9f53-0b48df293365\",\n \"policy_description\": \"This policy audits automation connected to virtual network\",\n \"recommendation_name\": \"Azure_Audit_Automation_Connected_To_Virtual_Network\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Application\",\n \"resource_type\": \"Virtual_Networks\",\n \"service_resource\": [\n \"Virtual_Networks\"\n ],\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/cf750\"\n },\n \"parameters\": {\n \"status\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"status of the privateLinkServiceConnection\",\n \"description\": \"If the status given in the parameter is equal to the status of the privateLinkServiceConnection then it will be compliant.\"\n }\n },\n \"id\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"id of the private endpoint connection\",\n \"description\": \"If the id given in the parameter is equal to the id of the private endpoint then it will be compliant.\"\n }\n },\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Automation/AutomationAccounts\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Automation/AutomationAccounts/privateEndpointConnections\",\n \"existenceCondition\": {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Automation/AutomationAccounts/privateEndpointConnections/privateEndpoint.id\",\n \"equals\": \"[parameters('id')]\"\n },\n {\n \"field\": \"Microsoft.Automation/AutomationAccounts/privateEndpointConnections/privateLinkServiceConnectionState.status\",\n \"equals\": \"[parameters('status')]\"\n }\n ]\n }\n }\n }\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Virtual_Network"
+  ],
+  "resource_type": "Virtual_Networks",
+  "resource_category": "Network",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Automation_Connected_To_Virtual_Network",
+    "description": "This policy audits automation connected to virtual network",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/cf750"
+}

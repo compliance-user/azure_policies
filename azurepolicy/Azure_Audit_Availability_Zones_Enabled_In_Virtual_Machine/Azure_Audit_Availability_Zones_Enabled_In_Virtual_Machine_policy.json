@@ -1,0 +1,59 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Azure Availability Zones enabled in virtual machine",
+  "metadata": {
+    "policy_description": "Azure Availability Zones enabled in virtual machine",
+    "recommendation_name": "Azure_Audit_Availability_Zones_Enabled_In_Virtual_Machine",
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/48d18b7a-d4a2-425c-bedf-f460f7791c1a",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "service_resource": [
+      "Virtual Machines"
+    ],
+    "resource_type": "Virtual Machines",
+    "uri": "policy/azure_policy/global/azure/compliance/others/ac726",
+    "severity": "medium",
+    "category": "Compute",
+    "createdBy": "7de373b9-42bc-49e8-b424-074f00bea8fb",
+    "createdOn": "2021-10-03T07:09:12.1304449Z",
+    "updatedBy": null,
+    "updatedOn": null
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "count": {
+        "field": "Microsoft.Compute/virtualMachines/zones[*]"
+      },
+      "equals": 0
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "48d18b7a-d4a2-425c-bedf-f460f7791c1a",
+  "systemData": {
+    "createdBy": "tridib.borah@agiliz.tech",
+    "createdByType": "User",
+    "createdAt": "2021-10-03T07:09:12.0882708Z",
+    "lastModifiedBy": "tridib.borah@agiliz.tech",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2021-10-03T07:09:12.0882708Z"
+  }
+}

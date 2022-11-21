@@ -1,0 +1,46 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/d63edb4a-c612-454d-b47d-191a724fcbf0",
+    "policy_description": "This policy, audits any Event Hub not configured to use a virtual network service endpoint",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [
+      "Namespaces"
+    ],
+    "resource_type": "Event_Hubs",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/XaRFO"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.EventHub/namespaces"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.EventHub/namespaces/virtualNetworkRules",
+        "existenceCondition": {
+          "field": "Microsoft.EventHub/namespaces/virtualNetworkRules/virtualNetworkSubnetId",
+          "exists": "true"
+        }
+      }
+    }
+  }
+}

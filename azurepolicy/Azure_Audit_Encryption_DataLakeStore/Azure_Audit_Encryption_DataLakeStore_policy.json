@@ -1,0 +1,41 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/825afcfe64c5a66e249a260a88c80ca0",
+    "policy_description": "This policy checks encryption is enabled on all Data Lake Store accounts",
+    "classification": "Access",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Data_lake_Storage_Gen1_Accounts"
+    ],
+    "resource_type": "Data_lake_Storage_Gen1",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/iwpln"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "equals": "Microsoft.DataLakeStore/accounts",
+          "field": "type"
+        },
+        {
+          "equals": "Disabled",
+          "field": "Microsoft.DataLakeStore/accounts/encryptionState"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

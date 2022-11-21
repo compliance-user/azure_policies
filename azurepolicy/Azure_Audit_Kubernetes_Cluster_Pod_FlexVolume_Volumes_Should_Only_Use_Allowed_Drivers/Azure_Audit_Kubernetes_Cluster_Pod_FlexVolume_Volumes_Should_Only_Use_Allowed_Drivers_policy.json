@@ -1,0 +1,95 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Microsoft.Kubernetes.Data",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/22bee202-a82f-4305-9a2a-6d7f44d4dedb",
+    "policy_description": " This policy ensures pod FlexVolume volumes only use allowed drivers in a Kubernetes cluster. This policy is generally available for Kubernetes Service (AKS), and preview for AKS Engine and Azure Arc enabled Kubernetes. For instructions on using this policy, visit https://aka.ms/kubepolicydoc.",
+    "classification": "Access",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Cluster"
+    ],
+    "resource_type": "Azure_Kubernetes_Service",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/e1505"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "audit",
+        "deny",
+        "disabled"
+      ],
+      "defaultValue": "audit",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy."
+      }
+    }
+  },
+  "schema": {
+    "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.",
+    "type": "object",
+    "properties": {
+      "matchLabels": {
+        "description": "matchLabels is a map of {key,value} pairs.",
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "minProperties": 1
+      },
+      "matchExpressions": {
+        "description": "matchExpressions is a list of values, a key, and an operator.",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "key": {
+              "description": "key is the label key that the selector applies to.",
+              "type": "string"
+            },
+            "operator": {
+              "description": "operator represents a key's relationship to a set of values.",
+              "type": "string",
+              "enum": [
+                "In",
+                "NotIn",
+                "Exists",
+                "DoesNotExist"
+              ]
+            },
+            "values": {
+              "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "key",
+            "operator"
+          ],
+          "additionalProperties": false
+        },
+        "minItems": 1
+      }
+    },
+    "additionalProperties": false
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": [
+        "AKS Engine",
+        "Microsoft.Kubernetes/connectedClusters",
+        "Microsoft.ContainerService/managedClusters"
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_FrontDoor_Or_AppGateway_Enabled_For_WebApp",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/5700ae6f-97dd-4694-93db-4777e33a4c31",
+  "display_name": "Azure Audit FrontDoor Or AppGateway Enabled For WebApp",
+  "description": "Front door or app gateway is enabled for webapp",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"displayName\": \"Front door or app gateway enabled for webapp\",\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/5700ae6f-97dd-4694-93db-4777e33a4c31\",\n \"policy_description\": \"Front door or app gateway is enabled for webapp\",\n \"recommendation_name\": \"Azure_Audit_FrontDoor_Or_AppGateway_Enabled_For_WebApp\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Application\",\n \"service_resource\": [\n \"Web_Apps\"\n ],\n \"resource_type\": \"App_Services\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/1a3fb\",\n \"category\": \"App Service\",\n \"createdBy\": \"7de373b9-42bc-49e8-b424-074f00bea8fb\",\n \"createdOn\": \"2021-10-07T08:01:07.719159Z\",\n \"updatedBy\": null,\n \"updatedOn\": null\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n },\n \"resourceState\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"resourceState of the azure front door\",\n \"description\": \"resourceState of the azure front door.\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Web/sites\"\n },\n {\n \"field\": \"kind\",\n \"like\": \"app\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Network/frontdoors\",\n \"existenceCondition\": {\n \"field\": \"Microsoft.Network/frontdoors/resourceState\",\n \"equals\": \"[parameters('resourceState')]\"\n }\n }\n }\n },\n \"type\": \"Microsoft.Authorization/policyDefinitions\",\n \"name\": \"5700ae6f-97dd-4694-93db-4777e33a4c31\",\n \"systemData\": {\n \"createdBy\": \"tridib.borah@agiliz.tech\",\n \"createdByType\": \"User\",\n \"createdAt\": \"2021-10-07T08:01:07.6718809Z\",\n \"lastModifiedBy\": \"tridib.borah@agiliz.tech\",\n \"lastModifiedByType\": \"User\",\n \"lastModifiedAt\": \"2021-10-07T08:01:07.6718809Z\"\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Web_Apps"
+  ],
+  "resource_type": "App_Services",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_FrontDoor_Or_AppGateway_Enabled_For_WebApp",
+    "description": "Front door or app gateway is enabled for webapp",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/1a3fb"
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Ensure_That_Unattached_Disks_Are_Encrypted_With_CMK",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/b8212054-a93f-49c4-b789-be198274b982",
+  "display_name": "Azure Audit Ensure That Unattached Disks Are Encrypted With CMK",
+  "description": "Ensure that 'Unattached disks' are encrypted with CMK",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/b8212054-a93f-49c4-b789-be198274b982\",\n \"policy_description\": \"Ensure that 'Unattached disks' are encrypted with CMK\",\n \"recommendation_name\": \"Azure_Audit_Ensure_That_Unattached_Disks_Are_Encrypted_With_CMK\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Data\",\n \"resource_type\": \"Disks\",\n \"service_resource\": [\n \"Disks\"\n ],\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/db32b\",\n \"severity\": \"high\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"Audit\",\n \"Deny\",\n \"Disabled\"\n ],\n \"defaultValue\": \"Audit\"\n },\n \"type\": {\n \"type\": \"Array\",\n \"metadata\": {\n \"displayName\": \"encryption type\",\n \"description\": \"The type of encryption of the disk.\"\n },\n \"allowedValues\": [\n \"EncryptionAtRestWithCustomerKey\",\n \"EncryptionAtRestWithPlatformKey\"\n ],\n \"defaultValue\": [\n \"EncryptionAtRestWithCustomerKey\"\n ]\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Compute/disks\"\n },\n {\n \"not\": {\n \"field\": \"Microsoft.Compute/disks/encryption.type\",\n \"in\": \"[parameters('type')]\"\n }\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "Disks"
+  ],
+  "resource_type": "Disks",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Ensure_That_Unattached_Disks_Are_Encrypted_With_CMK",
+    "description": "Ensure that 'Unattached disks' are encrypted with CMK",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/db32b"
+}

@@ -1,0 +1,69 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/1c6e92c9-99f0-4e55-9cf2-0c234dc48f99",
+    "policy_description": "Kubernetes clusters  should not allow container privilege escalation",
+    "classification": "Security",
+    "sub_classification": "Access",
+    "service_resource": [
+      "Cluster"
+    ],
+    "resource_type": "Azure_Kubernetes_Service",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/89b63"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "audit",
+        "deny",
+        "disabled"
+      ],
+      "defaultValue": "audit"
+    },
+    "excludedNamespaces": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Namespace exclusions",
+        "description": "List of Kubernetes namespaces to exclude from policy evaluation."
+      },
+      "defaultValue": [
+        "kube-system",
+        "gatekeeper-system",
+        "azure-arc"
+      ]
+    },
+    "namespaces": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Namespace inclusions",
+        "description": "List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces."
+      },
+      "defaultValue": []
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "in": [
+        "AKS Engine",
+        "Microsoft.Kubernetes/connectedClusters",
+        "Microsoft.ContainerService/managedClusters"
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "constraintTemplate": "https://raw.githubusercontent.com/Azure/azure-policy/master/built-in-references/Kubernetes/container-no-privilege-escalation/template.yaml",
+        "constraint": "https://raw.githubusercontent.com/Azure/azure-policy/master/built-in-references/Kubernetes/container-no-privilege-escalation/constraint.yaml",
+        "excludedNamespaces": "[parameters('excludedNamespaces')]",
+        "namespaces": "[parameters('namespaces')]",
+        "values": {
+          "excludedNamespaces": "[parameters('excludedNamespaces')]"
+        }
+      }
+    }
+  }
+}

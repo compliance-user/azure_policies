@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_LogAnalytics_WorkSpace_VM",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/f47b5582-33ec-4c5c-87c0-b010a6b2e917",
+  "display_name": "Azure Audit LogAnalytics WorkSpace VM",
+  "description": "Reports VMs as non-compliant if they aren't logging to the Log Analytics workspace specified in the policy/initiative assignment",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/f47b5582-33ec-4c5c-87c0-b010a6b2e917\",\n \"policy_description\": \"Reports VMs as non-compliant if they aren't logging to the Log Analytics workspace specified in the policy/initiative assignment\",\n \"classification\": \"Operation\",\n \"sub_classification\": \"Logging\",\n \"resource_type\": \"Virtual_Machines\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/f482c\"\n },\n \"parameters\": {\n \"logAnalyticsWorkspaceId\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Log Analytics Workspace Id that VMs should be configured for\",\n \"description\": \"This is the Id (GUID) of the Log Analytics Workspace that the VMs should be configured for.\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Compute/virtualMachines/extensions\"\n },\n {\n \"field\": \"Microsoft.Compute/virtualMachines/extensions/publisher\",\n \"equals\": \"Microsoft.EnterpriseCloud.Monitoring\"\n },\n {\n \"field\": \"Microsoft.Compute/virtualMachines/extensions/settings.workspaceId\",\n \"notEquals\": \"[parameters('logAnalyticsWorkspaceId')]\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"audit\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Operation",
+  "sub_classification": "Logging",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_LogAnalytics_WorkSpace_VM",
+    "description": "Reports VMs as non-compliant if they aren't logging to the Log Analytics workspace specified in the policy/initiative assignment",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/f482c"
+}

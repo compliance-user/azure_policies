@@ -1,0 +1,34 @@
+{
+"name": "Azure_Audit_Storage_Accounts_Should_Prevent_Cross_Tenant_Object_Replication",
+"policy_id": "/providers/Microsoft.Authorization/policyDefinitions/92a89a79-6c52-4a7e-a03f-61306fc49312",
+"display_name": "Azure Audit Storage Accounts Should Prevent Cross Tenant Object Replication",
+"description": "Audit restriction of object replication for your storage account. By default, users can configure object replication with a source storage account in one Azure AD tenant and a destination account in a different tenant. It is a security concern because customer's data can be replicated to a storage account that is owned by the customer.",
+"category": "service",
+"status": "active",
+"content": "{\n    \"policyType\": \"BuiltIn\",\n    \"mode\": \"Indexed\",\n    \"metadata\": {\n      \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/92a89a79-6c52-4a7e-a03f-61306fc49312\",\n      \"version\": \"1.0.0\",\n      \"category\": \"Storage\"\n    },\n    \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"The effect determines what happens when the policy rule is evaluated to match\"\n        },\n        \"allowedValues\": [\n          \"Audit\",\n          \"Deny\",\n          \"Disabled\"\n        ],\n        \"defaultValue\": \"Audit\"\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"allOf\": [\n          {\n            \"field\": \"type\",\n            \"equals\": \"Microsoft.Storage/storageAccounts\"\n          },\n          {\n            \"field\": \"Microsoft.Storage/storageAccounts/allowCrossTenantReplication\",\n            \"notEquals\": \"false\"\n          }\n        ]\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\"\n      }\n    }\n}",
+"parameters": {},
+"classification": "Security",
+"sub_classification": "Application",
+"service_resource": [
+"Subscription"
+],
+"resource_type": "Subscription",
+"severity": "high",
+"type": [
+"Cloud"
+],
+"services": [
+"Azure"
+],
+"scope": "global",
+"metadata": {},
+"resources": [],
+"is_temp": false,
+"is_system_policy": false,
+"recommendation": {
+"name": "Azure_Audit_Storage_Accounts_Should_Prevent_Cross_Tenant_Object_Replication",
+"description": "Audit restriction of object replication for your storage account. By default, users can configure object replication with a source storage account in one Azure AD tenant and a destination account in a different tenant. It is a security concern because customer's data can be replicated to a storage account that is owned by the customer.",
+"actions": []
+},
+"uri": "policy/azure_policy/global/azure/security/application/xe9iq"
+}

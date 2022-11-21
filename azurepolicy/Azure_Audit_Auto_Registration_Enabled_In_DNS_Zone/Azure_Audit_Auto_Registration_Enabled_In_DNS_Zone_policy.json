@@ -1,0 +1,51 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/3974c5d6-b7cb-46ca-abf8-d919b832b0aa",
+    "policy_description": "This policy audits auto registration enabled in dns zone",
+    "recommendation_name": "Azure_Audit_Auto_Registration_Enabled_In_DNS_Zone",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "Subscription",
+    "service_resource": [
+      "Subscription"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/a43cf"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Network/privateDnsZones"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Network/privateDnsZones/virtualNetworkLinks/registrationEnabled",
+              "equals": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

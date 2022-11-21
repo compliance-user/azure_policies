@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_WebApp_using_ManagedIdentity",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/2b9ad585-36bc-4615-b300-fd4435808332",
+  "display_name": "Azure Audit WebApp using ManagedIdentity",
+  "description": "This policy audits whether WebApp is using ManagedIdentity.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"Indexed\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/2b9ad585-36bc-4615-b300-fd4435808332\",\n \"policy_description\": \"Use a managed identity for enhanced authentication security\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Application\",\n \"service_resource\": [\n \"Web_Apps\"\n ],\n \"resource_type\": \"App_Services\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/NPtzo\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Web/sites\"\n },\n {\n \"field\": \"kind\",\n \"like\": \"app*\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Web/sites/config\",\n \"name\": \"web\",\n \"existenceCondition\": {\n \"field\": \"Microsoft.Web/sites/config/managedServiceIdentityId\",\n \"exists\": \"true\"\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Web_Apps"
+  ],
+  "resource_type": "App_Services",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_WebApp_using_ManagedIdentity",
+    "description": "It is recommended to use a managed identity for enhanced authentication security.",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/NPtzo"
+}

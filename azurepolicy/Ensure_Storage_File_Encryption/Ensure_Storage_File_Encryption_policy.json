@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/5f4d21d79d037a470fb146be5378b042",
+    "policy_description": "Ensures file encryption for storage accounts.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Storage_Accounts"
+    ],
+    "resource_type": "Accounts",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/storage/g7jr6"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "audit"
+      ],
+      "defaultValue": "audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Storage/storageAccounts"
+        },
+        {
+          "field": "Microsoft.Storage/storageAccounts/enableFileEncryption",
+          "equals": "false"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

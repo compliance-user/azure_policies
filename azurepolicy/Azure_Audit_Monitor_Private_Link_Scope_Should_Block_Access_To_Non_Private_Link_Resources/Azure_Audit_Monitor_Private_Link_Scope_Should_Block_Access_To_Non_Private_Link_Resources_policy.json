@@ -1,0 +1,49 @@
+{
+    "policyType": "BuiltIn",
+    "mode": "Indexed",
+    "metadata": {
+      "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/a499fed8-bcc8-4195-b154-641f14743757",
+      "version": "1.0.0",
+      "category": "Monitoring"
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "The effect determines what happens when the policy rule is evaluated to match"
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Insights/privateLinkScopes"
+          },
+          {
+            "anyOf": [
+              {
+                "field": "Microsoft.Insights/privateLinkScopes/accessModeSettings.ingestionAccessMode",
+                "notEquals": "PrivateOnly"
+              },
+              {
+                "field": "Microsoft.Insights/privateLinkScopes/accessModeSettings.queryAccessMode",
+                "notEquals": "PrivateOnly"
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+}

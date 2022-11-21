@@ -1,0 +1,57 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/d416745a-506c-48b6-8ab1-83cb814bcaa3",
+    "policy_description": "This policy audits any virtual machine connected to a virtual network that is not approved.",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [
+      "Virtual_Network"
+    ],
+    "resource_type": "Virtual_Networks",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/WIFiA"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "The effect determines what happens when the policy rule is evaluated to match"
+      }
+    },
+    "virtualNetworkId": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Virtual network Id",
+        "description": "Resource Id of the virtual network. Example: /subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Network/virtualNetworks/Name"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Network/networkInterfaces"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Network/networkInterfaces/ipconfigurations[*].subnet.id",
+            "like": "[concat(parameters('virtualNetworkId'),'/*')]"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

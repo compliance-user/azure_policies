@@ -1,0 +1,40 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/363f0c159f4d1ef477ac4dadaf0a07f0",
+    "policy_description": "This policy checks to see if auto provisioning settings are being set for subscription or not",
+    "classification": "Security",
+    "sub_classification": "Host",
+    "service_resource": [
+      "Subscription"
+    ],
+    "resource_type": "Subscription",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/7lu26"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "auditIfNotExists"
+      ],
+      "defaultValue": "auditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Resources/subscriptions"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Security/autoProvisioningSettings",
+        "existenceCondition": {
+          "field": "Microsoft.Security/autoProvisioningSettings/autoProvision",
+          "Equals": "On"
+        }
+      }
+    }
+  }
+}

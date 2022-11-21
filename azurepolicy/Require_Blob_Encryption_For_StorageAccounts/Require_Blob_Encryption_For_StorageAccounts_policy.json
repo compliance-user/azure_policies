@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/01b18ccb275ba5a1011ec3ee83ede4d6",
+    "policy_description": "This policy ensures blob encryption for storage accounts is turned on. It only applies to Microsoft.Storage resource types, not other storage providers",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Storage_Accounts"
+    ],
+    "resource_type": "Accounts",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/storage/xg5cm"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValue": [
+        "audit"
+      ],
+      "defaultValue": "audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Storage/storageAccounts"
+        },
+        {
+          "field": "Microsoft.Storage/storageAccounts/enableBlobEncryption",
+          "equals": "false"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

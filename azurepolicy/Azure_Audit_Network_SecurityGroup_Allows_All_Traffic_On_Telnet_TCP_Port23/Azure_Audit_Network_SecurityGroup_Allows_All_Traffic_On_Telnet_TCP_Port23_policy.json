@@ -1,0 +1,62 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_description": "Azure Network Security Group allows all traffic on Telnet (TCP Port 23)",
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/1b57fbb0-0034-4090-877c-87f9a8cc7c17",
+    "recommendation_name": "Azure_Audit_Network_SecurityGroup_Allows_All_Traffic_On_Telnet_TCP_Port23",
+    "classification": "Security",
+    "sub_classification": "Host",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/0c18d",
+    "category": "Network security"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Network/networkSecurityGroups"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Network/networkSecurityGroups/securityRules/protocol",
+              "equals": "TCP"
+            },
+            {
+              "field": "Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefix",
+              "equals": "*"
+            },
+            {
+              "field": "Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange",
+              "equals": "23"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "1b57fbb0-0034-4090-877c-87f9a8cc7c17"
+}

@@ -1,0 +1,73 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/a4e02305-894c-4b23-8ca8-9dc8753750a8",
+    "policy_description": "This policy audits app service environment should be provisioned with latest versions",
+    "recommendation_name": "Azure_Audit_AppService_Environment_Should_Be_Provisioned_With_Latest_Versions",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "App_Services",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/a10f3"
+  },
+  "parameters": {
+    "kind": {
+      "type": "String",
+      "metadata": {
+        "displayName": "kind of the app service environment",
+        "description": "If the kind given in the parameters is equal to the kind of the app service environment then it will be compliant."
+      }
+    },
+    "id": {
+      "type": "String",
+      "metadata": {
+        "displayName": "virtual network id of the app svc environment",
+        "description": "If the id given in the parameters is equal to the id of the app service environment then it will be compliant."
+      }
+    },
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Web/hostingEnvironments"
+        },
+        {
+          "not": {
+            "allOf": [
+              {
+                "field": "kind",
+                "equals": "[parameters('kind')]"
+              },
+              {
+                "field": "Microsoft.Web/hostingEnvironments/virtualNetwork.id",
+                "equals": "[parameters('id')]"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

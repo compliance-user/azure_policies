@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether Unattached Disk is  Encrypted",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Disks"
+  ],
+  "resource_type": "Storage_Disks",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Unattached Disk Encryption",
+  "name": "Azure_Audit_Unattached_Disk_Encryption",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/ln2dx",
+  "content": "{\n  \"mode\": \"All\",\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Compute/disks\"\n        },\n        {\n          \"field\": \"Microsoft.Compute/disks/diskState\",\n          \"equals\": \"unattached\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"auditIfNotExists\",\n      \"details\": {\n        \"type\": \"Microsoft.Compute/disks\",\n        \"existenceCondition\": {\n          \"field\": \"Microsoft.Compute/disks/encryptionSettingsCollection.enabled\",\n          \"equals\": \"true\"\n        }\n      }\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Unattached_Disk_Encryption"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Unattached_Disk_Encryption.json"
+  }
+}

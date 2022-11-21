@@ -1,0 +1,30 @@
+{
+  "name": "Azure_Enforce_Tag",
+  "display_name": "Azure Enforce Tag for All Resources",
+  "description": "This policy will identify the Azure resources not compliant with the assigned tagging policy for the given subscription. Tags are used for logical grouping of resources.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n  \"parameters\": {\n    \"Tag_Name\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Tag Name\",\n        \"description\": \"Name of the tag, such as environment\"\n      }\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"[concat('tags[', parameters('Tag_Name'), ']')]\",\n      \"exists\": \"false\"\n    },\n    \"then\": {\n      \"effect\": \"audit\"\n    }\n  }\n}",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "uri": "policy/azure_policy/global/azure/consumption/vm/gpana",
+  "recommendations": [
+    "Azure_Manage_Enforce_Tag_Missing_Resources"
+  ]
+}

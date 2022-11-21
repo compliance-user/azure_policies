@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Diagnostic_Logs_SearchServices_Enabled",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/b4330a05-a843-4bc8-bf9a-cacce50c67f4",
+  "display_name": "Azure Audit Diagnostic Logs SearchServices Enabled",
+  "description": "Audit enabling of diagnostic logs. This enables you to recreate activity trails to use for investigation purposes; when a security incident occurs or when your network is compromised",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"Indexed\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/b4330a05-a843-4bc8-bf9a-cacce50c67f4\",\n \"policy_description\": \"Audit enabling of diagnostic logs. This enables you to recreate activity trails to use for investigation purposes; when a security incident occurs or when your network is compromised\",\n \"classification\": \"Operation\",\n \"sub_classification\": \"Logging\",\n \"service_resource\": [\n \"Cognitive_Service_Accounts\"\n ],\n \"resource_type\": \"Cognitive_Services\",\n \"severity\": \"low\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/aINGH\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n }\n },\n \"requiredRetentionDays\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Required retention (days)\",\n \"description\": \"The required diagnostic logs retention in days\"\n },\n \"defaultValue\": \"365\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Search/searchServices\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Insights/diagnosticSettings\",\n \"existenceCondition\": {\n \"count\": {\n \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*]\",\n \"where\": {\n \"anyOf\": [\n {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled\",\n \"equals\": \"true\"\n },\n {\n \"anyOf\": [\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.days\",\n \"equals\": \"0\"\n },\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.days\",\n \"equals\": \"[parameters('requiredRetentionDays')]\"\n }\n ]\n },\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/logs.enabled\",\n \"equals\": \"true\"\n }\n ]\n },\n {\n \"allOf\": [\n {\n \"not\": {\n \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled\",\n \"equals\": \"true\"\n }\n },\n {\n \"field\": \"Microsoft.Insights/diagnosticSettings/logs.enabled\",\n \"equals\": \"true\"\n }\n ]\n }\n ]\n }\n },\n \"greaterOrEquals\": 1\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Operation",
+  "sub_classification": "Logging",
+  "service_resource": [
+    "Cognitive_Service_Accounts"
+  ],
+  "resource_type": "Cognitive_Services",
+  "severity": "low",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Diagnostic_Logs_SearchServices_Enabled",
+    "description": "Audit enabling of diagnostic logs. This enables you to recreate activity trails to use for investigation purposes; when a security incident occurs or when your network is compromised",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/aINGH"
+}

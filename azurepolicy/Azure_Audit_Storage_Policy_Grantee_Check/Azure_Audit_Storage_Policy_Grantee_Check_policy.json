@@ -1,0 +1,55 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/2d992626-9039-4bf6-8824-c60abc68d0aa",
+    "policy_description": "This policy audits storage account grantee access",
+    "recommendation_name": "Azure_Audit_Storage_Policy_Grantee_Check",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "Storage_Accounts",
+    "service_resource": [
+      "Storage_Accounts"
+    ],
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/cbbb4"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    },
+    "principalId": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Approved principalId",
+        "description": "The list of allowed principal IDs.If the principalId given in the parameter matches with the principalId of storage then it will be compliant."
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Storage/storageAccounts"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Authorization/roleAssignments",
+        "existenceScope": "Subscription",
+        "existenceCondition": {
+          "field": "Microsoft.Authorization/roleAssignments/principalId",
+          "equals": "[parameters('principalId')]"
+        }
+      }
+    }
+  }
+}

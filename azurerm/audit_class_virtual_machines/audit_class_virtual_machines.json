@@ -1,0 +1,33 @@
+{
+  "status": "active",
+  "description": "This policy audits whether new Azure Resource Manager v2 for your virtual machines are used. It is to provide security enhancements such as: stronger access control (RBAC), better auditing, ARM-based deployment and governance, access to managed identities, access to key vault for secrets, Azure AD-based authentication and support for tags and resource groups for easier security management",
+  "classification": "Security",
+  "sub_classification": "Host",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Classic Virtual Machines",
+  "name": "Azure_Audit_Classic_Virtual_Machines",
+  "uri": "policy/azure_policy/global/azure/compliance/others/kffek",
+  "content": "{\n\n\"parameters\": {\n\"effect\": {\n\"type\": \"String\",\n\"metadata\": {\n\"displayName\": \"Effect\",\n\"description\": \"Enable or disable the execution of the policy\"\n},\n\"allowedValues\": [\n\"Audit\"\n\n]\n}\n},\n\"policyRule\": {\n\"if\": {\n\"field\": \"type\",\n\"equals\": \"Microsoft.classicCompute/virtualMachines\"\n},\n\"then\": {\n\"effect\": \"[parameters('effect')]\"\n}\n}\n}\n",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Enable_for_classic_virtual_machines"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "audit_class_virtual_machines.json"
+  }
+}
+

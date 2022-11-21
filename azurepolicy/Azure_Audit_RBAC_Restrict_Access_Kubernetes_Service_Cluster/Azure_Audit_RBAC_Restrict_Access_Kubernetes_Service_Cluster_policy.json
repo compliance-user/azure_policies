@@ -1,0 +1,49 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/cc50b1afe6007dffab62727815880712",
+    "policy_description": "This policy validates the RBAC Access for the Kubernetes Service Cluster",
+    "classification": "Security",
+    "sub_classification": "Host",
+    "service_resource": [
+      "Cluster"
+    ],
+    "resource_type": "Azure_Kubernetes_Service",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/g6hpl"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.ContainerService/managedClusters"
+        },
+        {
+          "anyOf": [
+            {
+              "field": "Microsoft.ContainerService/managedClusters/enableRBAC",
+              "exists": "false"
+            },
+            {
+              "field": "Microsoft.ContainerService/managedClusters/enableRBAC",
+              "equals": "false"
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

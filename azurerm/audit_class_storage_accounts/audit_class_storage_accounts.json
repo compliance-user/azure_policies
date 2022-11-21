@@ -1,0 +1,33 @@
+{
+  "status": "active",
+  "description": "This policy audits whether new Azure Resource Manager v2 are used for your storage accounts to provide security enhancements such as: stronger access control (RBAC), better auditing, Azure Resource Manager based deployment and governance, access to managed identities, access to key vault for secrets, Azure AD-based authentication and support for tags and resource groups for easier security management",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "Storage_Accounts"
+  ],
+  "resource_type": "Accounts",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Classic Storage Accounts",
+  "name": "Azure_Audit_Classic_Storage_Accounts",
+  "uri": "policy/azure_policy/global/azure/compliance/others/dnzwh",
+  "content": "{\n\n\"parameters\": {\n\"effect\": {\n\"type\": \"String\",\n\"metadata\": {\n\"displayName\": \"Effect\",\n\"description\": \"Enable or disable the execution of the policy\"\n},\n\"allowedValues\": [\n\"Audit\"\n\n]\n}\n},\n\"policyRule\": {\n\"if\": {\n\"field\": \"type\",\n\"equals\": \"Microsoft.classicStorage/storageAccounts\"\n},\n\"then\": {\n\"effect\": \"[parameters('effect')]\"\n}\n}\n}\n",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Enable_for_classic_storage_Account"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "audit_class_storage_accounts.json"
+  }
+}
+

@@ -1,0 +1,96 @@
+{
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/cd6b3a7ec2e6298e6ecb0833c272d7a8",
+    "policy_description": "Audit configuration of metric alert rules on Batch account to enable the required metric",
+    "classification": "Access",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Batch_Account"
+    ],
+    "resource_type": "Batch_Service",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/kfod*"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    },
+    "metricName": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Metric name",
+        "description": "The metric name that an alert rule must be enabled on"
+      },
+      "allowedValues": [
+        "CoreCount",
+        "TotalNodeCount",
+        "LowPriorityCoreCount",
+        "TotalLowPriorityNodeCount",
+        "CreatingNodeCount",
+        "StartingNodeCount",
+        "WaitingForStartTaskNodeCount",
+        "StartTaskFailedNodeCount",
+        "IdleNodeCount",
+        "OfflineNodeCount",
+        "RebootingNodeCount",
+        "ReimagingNodeCount",
+        "RunningNodeCount",
+        "LeavingPoolNodeCount",
+        "UnusableNodeCount",
+        "PreemptedNodeCount",
+        "TaskStartEvent",
+        "TaskCompleteEvent",
+        "TaskFailEvent",
+        "PoolCreateEvent",
+        "PoolResizeStartEvent",
+        "PoolResizeCompleteEvent",
+        "PoolDeleteStartEvent",
+        "PoolDeleteCompleteEvent",
+        "JobDeleteCompleteEvent",
+        "JobDeleteStartEvent",
+        "JobDisableCompleteEvent",
+        "JobDisableStartEvent",
+        "JobStartEvent",
+        "JobTerminateCompleteEvent",
+        "JobTerminateStartEvent"
+      ]
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Batch/batchAccounts"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Insights/alertRules",
+        "existenceScope": "Subscription",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Insights/alertRules/isEnabled",
+              "equals": "true"
+            },
+            {
+              "field": "Microsoft.Insights/alertRules/condition.dataSource.metricName",
+              "equals": "[parameters('metricName')]"
+            },
+            {
+              "field": "Microsoft.Insights/alertRules/condition.dataSource.resourceUri",
+              "equals": "[concat('/subscriptions/', subscription().subscriptionId, '/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Batch/batchAccounts/', field('name'))]"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

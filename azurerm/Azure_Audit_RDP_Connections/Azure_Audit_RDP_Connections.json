@@ -1,0 +1,32 @@
+{
+  "name": "Azure_Audit_RDP_Connections",
+  "display_name": "Azure Audit RDP Connections",
+  "description": "This policy audits whether RDP is allowed from internet.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n  \"mode\": \"All\",\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Network/networkSecurityGroups/securityRules\"\n        },\n        {\n          \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange\",\n          \"equals\": \"3389\"\n        },\n        {\n          \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules/access\",\n          \"equals\": \"Allow\"\n        },\n        {\n          \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules/direction\",\n          \"equals\": \"Inbound\"\n        },\n        {\n          \"anyOf\": [\n            {\n              \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefix\",\n              \"equals\": \"*\"\n            },\n            {\n              \"field\": \"Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefix\",\n              \"equals\": \"Internet\"\n            }\n          ]\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"audit\"\n    }\n  }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Security_Rule"
+  ],
+  "resource_type": "Virtual_Networks",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "recommendations": [
+    "Azure_Audit_Recommendations_RDP_Connections"
+  ],
+  "metadata": {
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "uri": "policy/azure_policy/global/azure/compliance/others/vl5of"
+}

@@ -1,0 +1,62 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/86d8ec2d-c9c9-46c1-b4a9-0081b59bc0fb",
+    "policy_description": "This policy audits app services should use a private link",
+    "recommendation_name": "Azure_Audit_AppService_Should_Use_PrivateLink",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "App_Services",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/11f0e"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    },
+    "actionsRequired": {
+      "type": "String",
+      "metadata": {
+        "displayName": "actionsRequired for the private endpoint",
+        "description": "If the value of actionsRequired given in the parameters is equal to the value of actionsRequired in the private endpoint then it will be compliant."
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Web/sites"
+        },
+        {
+          "field": "kind",
+          "equals": "app"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Web/sites/privateEndpointConnections",
+        "existenceCondition": {
+          "field": "Microsoft.Web/sites/privateEndpointConnections/privateLinkServiceConnectionState.actionsRequired",
+          "equals": "[parameters('actionsRequired')]"
+        }
+      }
+    }
+  }
+}

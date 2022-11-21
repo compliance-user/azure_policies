@@ -1,0 +1,46 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/3c14b034-bcb6-4905-94e7-5b8e98a47b65",
+    "policy_description": "This policy audits PostgreSQL servers not configured to use a virtual network service endpoint. For more details, visit https://aka.ms/postgresqlvnet.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Databases"
+    ],
+    "resource_type": "PGSQL",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/HkrhE"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.DBforPostgreSQL/servers"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules",
+        "existenceCondition": {
+          "field": "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules/virtualNetworkSubnetId",
+          "exists": "true"
+        }
+      }
+    }
+  }
+}

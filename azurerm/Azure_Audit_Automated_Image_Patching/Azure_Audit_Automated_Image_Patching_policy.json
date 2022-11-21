@@ -1,0 +1,24 @@
+{
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "equals": "Microsoft.Compute/virtualMachineScaleSets",
+          "field": "type"
+        },
+        {
+          "field": "Microsoft.Compute/VirtualMachineScaleSets/upgradePolicy.automaticOSUpgradePolicy.enableAutomaticOSUpgrade",
+          "notEquals": "True"
+        },
+        {
+          "field": "Microsoft.Compute/VirtualMachineScaleSets/upgradePolicy.automaticOSUpgrade",
+          "notEquals": "True"
+        }
+      ]
+    },
+    "then": {
+      "effect": "Audit"
+    }
+  }
+}

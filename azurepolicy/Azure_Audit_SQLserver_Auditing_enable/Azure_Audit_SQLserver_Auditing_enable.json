@@ -1,0 +1,32 @@
+{
+  "name": "Azure_Audit_SQLserver_Auditing_enable",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9",
+  "display_name": "Azure Audit SQLserver Auditing enable",
+  "description": "Auditing on your SQL Server should be enabled to track database activities across all databases on the server and save them in an audit log.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"Indexed\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9\",\n \"policy_description\": \"Auditing on your SQL Server should be enabled to track database activities across all databases on the server and save them in an audit log.\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Data\",\n \"service_resource\": [\n \"MySQL\"\n ],\n \"resource_type\": \"Databases\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/68cfe\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n },\n \"setting\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Desired Auditing setting\"\n },\n \"allowedValues\": [\n \"enabled\",\n \"disabled\"\n ],\n \"defaultValue\": \"enabled\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Sql/servers\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Sql/servers/auditingSettings\",\n \"name\": \"default\",\n \"existenceCondition\": {\n \"field\": \"Microsoft.Sql/auditingSettings.state\",\n \"equals\": \"[parameters('setting')]\"\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "MySQL"
+  ],
+  "resource_type": "Databases",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendations": [
+    "Azure_Audit_SQLserver_Auditing_enable"
+  ],
+  "uri": "policy/azure_policy/global/azure/compliance/others/68cfe"
+}

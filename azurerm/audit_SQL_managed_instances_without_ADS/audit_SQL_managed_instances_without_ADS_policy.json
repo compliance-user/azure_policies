@@ -1,0 +1,31 @@
+{
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists"
+      ]
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Sql/managedInstances"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Sql/managedInstances/securityAlertPolicies",
+        "name": "Default",
+        "existenceCondition": {
+          "field": "Microsoft.Sql/securityAlertPolicies.state",
+          "equals": "Enabled"
+        }
+      }
+    }
+  }
+}

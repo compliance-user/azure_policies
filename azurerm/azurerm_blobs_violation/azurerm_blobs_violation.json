@@ -1,0 +1,33 @@
+{
+  "name": "Azure_Unattached_Disks",
+  "display_name": "Azure Unattached Disks",
+  "description": "Policy to check for any unattached disks under an Azure subscription. All Azure storage disks in disassociated state will be retrieved.\nUse case(s): \nCan be used to identify unattached storage disks to be deleted from Azure subscription and save money",
+  "category": "service",
+  "status": "active",
+  "content": "blob(blob_name, storage_account_name, container_name, lease_state, location) :- azure_storage_disk:disk_storage(blob_name=blob_name, location=location, container_name=container_name, storage_account_name=storage_account_name, LeaseState=lease_state), equal(lease_state, 'available'), endswith(blob_name, '.vhd');",
+  "parameters": {},
+  "classification": "Cost",
+  "sub_classification": "Config",
+  "service_resource": [
+    "Disks"
+  ],
+  "resource_type": "Storage_Disks",
+  "severity": "low",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+    "onboarding_policy": true
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "uri": "policy/congress/global/azure/cost/disks/77san",
+  "recommendations": [
+    "Azure_Delete_Unattached_Storage_Disks_and_Blobs"
+  ]
+}

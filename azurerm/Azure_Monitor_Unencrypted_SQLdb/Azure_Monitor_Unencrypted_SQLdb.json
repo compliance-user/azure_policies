@@ -1,0 +1,35 @@
+{
+  "status": "active",
+  "description": "This policy audits whether SQL databases are encrypted.",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "MSSQL"
+  ],
+  "resource_type": "Servers",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Monitor Unencrypted SQLdb",
+  "name": "Azure_Monitor_Unencrypted_SQLdb",
+  "automation_enabled": true,
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/2oolq",
+  "content": "{\"policyRule\": {\"then\": {\"effect\": \"AuditIfNotExists\", \"details\": {\"type\": \"Microsoft.Security/complianceResults\", \"name\": \"encryption\", \"existenceCondition\": {\"field\": \"Microsoft.Security/complianceResults/resourceStatus\", \"in\": [\"Monitored\", \"NotApplicable\", \"OffByPolicy\", \"Healthy\"]}}}, \"if\": {\"field\": \"type\", \"in\": [\"Microsoft.SQL/servers/databases\"]}}}",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Ensure_Encryption_For_SQLdb"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Monitor_Unencrypted_SQLdb.json"
+  }
+}

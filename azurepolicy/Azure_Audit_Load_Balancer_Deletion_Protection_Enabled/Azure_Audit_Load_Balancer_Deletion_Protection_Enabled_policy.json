@@ -1,0 +1,51 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/4de75529-29c8-43bc-8867-4bbed9f3809e",
+    "policy_description": "This policy Audits if the load balancer enabled deletion protection",
+    "recommendation_name": "Azure_Audit_Load_Balancer_Deletion_Protection",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Subscription",
+    "service_resource": [
+      "Subscription"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/6067b"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Network/loadBalancers"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Authorization/locks",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Authorization/locks/level",
+              "equals": "CanNotDelete"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

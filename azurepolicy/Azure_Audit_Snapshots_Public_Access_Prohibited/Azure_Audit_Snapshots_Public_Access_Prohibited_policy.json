@@ -1,0 +1,59 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/3a616110-0c5b-47eb-927d-53267c26c108",
+    "policy_description": "This policy audits if snapshots are accessible through public to ensure data integrity",
+    "recommendation_name": "Azure_Audit_Snapshots_Public_Access_Prohibited",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/f8e28"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Compute/snapshots"
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "field": "Microsoft.Compute/snapshots/networkAccessPolicy",
+                "equals": "AllowPrivate"
+              },
+              {
+                "field": "Microsoft.Compute/snapshots/networkAccessPolicy",
+                "equals": "DenyAll"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

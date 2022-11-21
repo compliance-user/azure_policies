@@ -1,0 +1,59 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Indexed",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/d38fc420-0735-4ef3-ac11-c806f651a570",
+    "policy_description": "This policy audits any Azure SQL Database with long-term geo-redundant backup not enabled.",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Databases"
+    ],
+    "resource_type": "DBforMariaDB",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/fVlBP"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Sql/servers/databases"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies",
+        "name": "default",
+        "existenceCondition": {
+          "anyOf": [
+            {
+              "field": "Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies/weeklyRetention",
+              "notEquals": "PT0S"
+            },
+            {
+              "field": "Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies/monthlyRetention",
+              "notEquals": "PT0S"
+            },
+            {
+              "field": "Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies/yearlyRetention",
+              "notEquals": "PT0S"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

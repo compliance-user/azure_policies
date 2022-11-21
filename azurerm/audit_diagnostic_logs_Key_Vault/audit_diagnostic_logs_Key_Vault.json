@@ -1,0 +1,33 @@
+{
+  "status": "active",
+  "description": "This policy audits whether diagnostic logs is enabled for Key Vault. This enables you to recreate activity trails to use for investigation purposes; when a security incident occurs or when your network is compromised",
+  "classification": "Operation",
+  "sub_classification": "Logging",
+  "service_resource": [
+    "Vaults"
+  ],
+  "resource_type": "Recovery_Services",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Diagnostic Logs in Key Vault",
+  "name": "Azure_Audit_Diagnostic_Logs_Key_Vault",
+  "uri": "policy/azure_policy/global/azure/compliance/others/zppwh",
+  "content": "{\n    \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"Enable or disable the execution of the policy\"\n        },\n        \"allowedValues\": [\n          \"AuditIfNotExists\",\n          \"Disabled\"\n        ]\n      },\n      \"requiredRetentionDays\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Required retention (days)\",\n          \"description\": \"The required diagnostic logs retention in days\"\n        },\n        \"defaultValue\": \"365\"\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"field\": \"type\",\n        \"equals\": \"Microsoft.KeyVault/vaults\"\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\",\n        \"details\": {\n          \"type\": \"Microsoft.Insights/diagnosticSettings\",\n          \"existenceCondition\": {\n            \"anyOf\": [\n              {\n                \"allOf\": [\n                  {\n                    \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled\",\n                    \"equals\": \"true\"\n                  },\n                  {\n                    \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.days\",\n                    \"equals\": \"[parameters('requiredRetentionDays')]\"\n                  },\n                  {\n                    \"field\": \"Microsoft.Insights/diagnosticSettings/logs.enabled\",\n                    \"equals\": \"true\"\n                  }\n                ]\n              },\n              {\n                \"allOf\": [\n                  {\n                    \"not\": {\n                      \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled\",\n                      \"equals\": \"true\"\n                    }\n                  },\n                  {\n                    \"field\": \"Microsoft.Insights/diagnosticSettings/logs.enabled\",\n                    \"equals\": \"true\"\n                  }\n                ]\n              }\n            ]\n          }\n        }\n      }\n    }\n  }\n",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Enable_Diagnostic_logs_in_Key_Vault"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "audit_diagnostic_logs_Key_Vault.json"
+  }
+}
+

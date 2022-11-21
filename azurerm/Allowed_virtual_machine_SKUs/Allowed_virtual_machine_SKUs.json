@@ -1,0 +1,32 @@
+{
+  "name": "Azure_Audit_Virtual_Machine_SKUs",
+  "display_name": "Azure Audit Virtual Machine SKUs",
+  "description": "This policy audits whether the set of virtual machine SKUs that are not allowed in your organization.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n  \"parameters\": {\n    \"listOfAllowedSKUs\": {\n      \"type\": \"Array\",\n      \"metadata\": {\n        \"description\": \"The list of SKUs that can be specified for virtual machines.\",\n        \"displayName\": \"Allowed SKUs\"\n      }\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Compute/virtualMachines\"\n        },\n        {\n          \"not\": {\n            \"field\": \"Microsoft.Compute/virtualMachines/sku.name\",\n            \"in\": \"[parameters('listOfAllowedSKUs')]\"\n          }\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"Audit\"\n    }\n  }\n}",
+  "parameters": {},
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "uri": "policy/azure_policy/global/azure/compliance/others/lihln",
+  "recommendations": [
+    "Azure_Audit_Violated_Virtual_Machine_SKUs"
+  ]
+}

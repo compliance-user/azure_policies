@@ -1,0 +1,49 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/7269a547-3b01-4ccd-8b6b-13f85fb900aa",
+    "policy_description": "This policy audits Azure SQL Database zone redundant storage enabled",
+    "recommendation_name": "Azure_Audit_SQL_Database_Zone_Redundant_Backup_Storage_Enabled",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "Databases"
+    ],
+    "resource_type": "MySQL",
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/3959c"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy."
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Sql/servers/databases"
+        },
+        {
+          "field": "Microsoft.Sql/servers/databases/requestedBackupStorageRedundancy",
+          "notEquals": "Zone"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+    "policyType": "Custom",
+    "mode": "All",
+    "metadata": {
+      "category": "Key Vault"
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.KeyVault/vaults"
+          },
+          {
+            "field": "Microsoft.KeyVault/vaults/sku.name",
+            "notEquals": "Premium"
+          },
+          {
+            "anyOf": [
+              {
+                "field": "Microsoft.KeyVault/vaults/privateEndpointConnections",
+                "exists": "false"
+              },
+              {
+                "count": {
+                  "field": "Microsoft.KeyVault/vaults/privateEndpointConnections[*]",
+                  "where": {
+                    "field": "Microsoft.KeyVault/vaults/privateEndpointConnections[*].privateLinkServiceConnectionState.status",
+                    "equals": "Approved"
+                  }
+                },
+                "equals": 0
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+}

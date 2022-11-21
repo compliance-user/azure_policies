@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Monitor_JIT_Access",
+  "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/5afac3ef639bbc31be52fa41cd478d50",
+  "display_name": "Azure Audit Monitor JIT Access",
+  "description": "This policy audits whether JIT Access is enabled. JustInTime Helps access mappings to respective VMs",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/5afac3ef639bbc31be52fa41cd478d50\",\n \"policy_description\": \"This policy checks if there is JustInTime available. JIT Helps access mappings to respective VMs\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Network\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"resource_type\": \"Virtual_Machines\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/n2nad\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"AuditIfNotExists\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"equals\": \"Microsoft.Compute/virtualMachines\",\n \"field\": \"type\"\n },\n \"then\": {\n \"details\": {\n \"existenceCondition\": {\n \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\n \"in\": [\n \"NotApplicable\",\n \"OffByPolicy\",\n \"Healthy\"\n ]\n },\n \"name\": \"jitNetworkAccess\",\n \"type\": \"Microsoft.Security/complianceResults\"\n },\n \"effect\": \"[parameters('effect')]\"\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "null",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Monitor_JIT_Access",
+    "description": "It is recommended to have just-in-time access across your VMs, you can set a VM to allow only just-in-time access directly from within the VM. Steps: 1) In the Azure portal, select Virtual machines, 2) Click on the virtual machine you want to limit to just-in-time access, 3) In the menu, click Configuration, 4) Under Just-in-time-access click Enable just-in-time policy.",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/n2nad"
+}

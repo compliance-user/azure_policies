@@ -1,0 +1,32 @@
+{
+  "status": "active",
+  "description": "This policy audits whether Accounts with read permissions that are MFA Disabled in Subscription.  It should be enabled for all subscription accounts with read privileges to prevent a breach of accounts or resources.",
+  "classification": "Access",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Accounts with Read Permissions that are MFA Disabled in Subscription",
+  "name": "Azure_Audit_Accounts_Read_Permission_without_MFA",
+  "uri": "policy/azure_policy/global/azure/compliance/others/awsqi",
+  "content": "{\n \"parameters\": {\n\"effect\": {\n\"type\": \"String\",\n\"metadata\": {\n\"displayName\": \"Effect\",\n\"description\": \"Enable or disable the execution of the policy\"\n },\n\"allowedValues\": [\n\"AuditIfNotExists\"\n]\n }\n},\n\"policyRule\": {\n\"if\": {\n\"field\": \"type\",\n\"equals\": \"Microsoft.Resources/subscriptions\"\n},\n\"then\": {\n\"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Security/complianceResults\",\n \"name\": \"EnableMFAForReadPermissions\",\n\"existenceCondition\": {\n\"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\n\"in\": [\n\"NotApplicable\",\n\"OffByPolicy\",\n\"Healthy\"\n]\n}\n}\n}\n}\n}\n",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Accounts_with_Read_Permissions_who_are_not_MFA_enabled"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "audit_accounts_with_read_permissions_who_not_MFA_enabled_a_subscription.json"
+  }
+}

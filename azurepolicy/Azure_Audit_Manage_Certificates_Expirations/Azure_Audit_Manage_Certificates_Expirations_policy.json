@@ -1,0 +1,51 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "Microsoft.KeyVault.Data",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/f772fb64-8e40-40ad-87bc-7706e1949427",
+    "policy_description": "Manage certificates, that will expire within a specified number of days to ensure your organization has sufficient time to rotate the certificate prior to expiration.",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "service_resource": [
+      "Vaults"
+    ],
+    "resource_type": "Recovery_Services",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/5145e"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "audit",
+        "deny",
+        "disabled"
+      ],
+      "defaultValue": "audit"
+    },
+    "daysToExpire": {
+      "type": "Integer",
+      "metadata": {
+        "displayName": "[Preview]: Days to expire",
+        "description": "The number of days for a certificate to expire."
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.KeyVault.Data/vaults/certificates"
+        },
+        {
+          "field": "Microsoft.KeyVault.Data/vaults/certificates/attributes.expiresOn",
+          "lessOrEquals": "[addDays(utcNow(), parameters('daysToExpire'))]"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

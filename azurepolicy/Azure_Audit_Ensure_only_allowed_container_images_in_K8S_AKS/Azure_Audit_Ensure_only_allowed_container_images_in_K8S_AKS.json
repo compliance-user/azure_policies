@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Ensure_only_allowed_container_images_in_K8S_AKS",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/febd0533-8e55-448f-b837-bd0e06f16469",
+  "display_name": "Azure Audit Ensure only allowed container images in K8S AKS",
+  "description": "This policy ensures only allowed container images are running in a Kubernetes cluster. For instructions on using this policy, visit https://aka.ms/kubepolicydoc.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"all\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/febd0533-8e55-448f-b837-bd0e06f16469\",\n \"policy_description\": \"This policy ensures only allowed container images are running in a Kubernetes cluster. For instructions on using this policy, visit https://aka.ms/kubepolicydoc.\",\n \"classification\": \"Operation\",\n \"sub_classification\": \"Standards\",\n \"service_resource\": [\n \"Cluster\"\n ],\n \"resource_type\": \"AzureKubernetesService\",\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/0150a\"\n },\n \"parameters\": {\n \"allowedContainerImagesRegex\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Allowed container images regex\",\n \"description\": \"The RegEx rule used to match allowed container images in a Kubernetes cluster. For example, to allow any Azure Container Registry image by matching partial path: ^.+azurecr.io/.+$\"\n }\n },\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy.\"\n },\n \"allowedValues\": [\n \"audit\",\n \"deny\",\n \"disabled\"\n ],\n \"defaultValue\": \"audit\"\n },\n \"excludedNamespaces\": {\n \"type\": \"Array\",\n \"metadata\": {\n \"displayName\": \"Namespace exclusions\",\n \"description\": \"List of Kubernetes namespaces to exclude from policy evaluation.\"\n },\n \"defaultValue\": [\n \"kube-system\",\n \"gatekeeper-system\",\n \"azure-arc\"\n ]\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"in\": [\n \"AKS Engine\",\n \"Microsoft.Kubernetes/connectedClusters\",\n \"Microsoft.ContainerService/managedClusters\"\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"constraintTemplate\": \"https://raw.githubusercontent.com/Azure/azure-policy/master/built-in-references/Kubernetes/container-allowed-images/template.yaml\",\n \"constraint\": \"https://raw.githubusercontent.com/Azure/azure-policy/master/built-in-references/Kubernetes/container-allowed-images/constraint.yaml\",\n \"values\": {\n \"allowedContainerImagesRegex\": \"[parameters('allowedContainerImagesRegex')]\",\n \"excludedNamespaces\": \"[parameters('excludedNamespaces')]\"\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Cluster"
+  ],
+  "resource_type": "AzureKubernetesService",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Ensure_only_allowed_container_images_in_K8S_AKS",
+    "description": "This policy ensures only allowed container images are running in a Kubernetes cluster. For instructions on using this policy, visit https://aka.ms/kubepolicydoc.",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/0150a"
+}

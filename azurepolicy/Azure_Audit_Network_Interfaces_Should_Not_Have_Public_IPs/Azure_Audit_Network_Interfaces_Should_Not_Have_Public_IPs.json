@@ -1,0 +1,33 @@
+{
+  "name": "Azure_Audit_Network_Interfaces_Should_Not_Have_Public_IPs",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/83a86a26-fd1f-447c-b59d-e51f44264114",
+  "display_name": "Azure Audit Network Interfaces Should Not Have Public IPs",
+  "description": "This policy denies the network interfaces which are configured with any public IP. Public IP addresses allow internet resources to communicate inbound to Azure resources, and Azure resources to communicate outbound to the internet. This should be reviewed by the network security team",
+  "category": "service",
+  "status": "active",
+  "content": "{\n    \"policyType\": \"BuiltIn\",\n    \"mode\": \"Indexed\",\n    \"description\": \"This policy denies the network interfaces which are configured with any public IP. Public IP addresses allow internet resources to communicate inbound to Azure resources, and Azure resources to communicate outbound to the internet. This should be reviewed by the network security team.\",\n    \"metadata\": {\n      \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/83a86a26-fd1f-447c-b59d-e51f44264114\",\n      \"version\": \"1.0.0\",\n      \"category\": \"Network\"\n    },\n    \"parameters\": {},\n    \"policyRule\": {\n      \"if\": {\n        \"allOf\": [\n          {\n            \"field\": \"type\",\n            \"equals\": \"Microsoft.Network/networkInterfaces\"\n          },\n          {\n            \"not\": {\n              \"field\": \"Microsoft.Network/networkInterfaces/ipconfigurations[*].publicIpAddress.id\",\n              \"notLike\": \"*\"\n            }\n          }\n        ]\n      },\n      \"then\": {\n        \"effect\": \"deny\"\n      }\n    }\n  }\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "High",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Network_Interfaces_Should_Not_Have_Public_IPs",
+    "description": "This policy denies the network interfaces which are configured with any public IP. Public IP addresses allow internet resources to communicate inbound to Azure resources, and Azure resources to communicate outbound to the internet. This should be reviewed by the network security team."
+  },
+    "uri": "policy/azure_policy/global/azure/compliance/others/nerpl"
+}

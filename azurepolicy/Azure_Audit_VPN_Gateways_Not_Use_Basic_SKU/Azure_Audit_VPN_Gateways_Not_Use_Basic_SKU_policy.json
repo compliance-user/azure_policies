@@ -1,0 +1,51 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/e345b6c3-24bd-4c93-9bbb-7e5e49a17b78",
+    "policy_description": "This policy, ensures that VPN gateways do not use 'basic' SKU.",
+    "classification": "Security",
+    "sub_classification": "Network",
+    "service_resource": [
+      "Subscription"
+    ],
+    "resource_type": "Subscription",
+    "severity": "low",
+    "uri": "policy/azure_policy/global/azure/compliance/others/YeyaY"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit",
+        "Disabled"
+      ],
+      "defaultValue": "Audit",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Network/virtualNetworkGateways"
+        },
+        {
+          "field": "Microsoft.Network/virtualNetworkGateways/gatewayType",
+          "equals": "Vpn"
+        },
+        {
+          "field": "Microsoft.Network/virtualNetworkGateways/sku.tier",
+          "equals": "Basic"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

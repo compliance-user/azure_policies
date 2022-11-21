@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_OS_Disk_Encryption",
+  "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/408054b1a0b981eb04e440e12a880cdb",
+  "display_name": "Azure Audit OS Disk Encryption",
+  "description": "This policy audits whether OS Disk Encryption is enabled.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"mode\": \"Indexed\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/408054b1a0b981eb04e440e12a880cdb\",\n \"policy_description\": \"This policy checks to see if the OS Disk is encrypted or not\",\n \"classification\": \"Operation\",\n \"sub_classification\": \"Standards\",\n \"service_resource\": [\n \"Disks\"\n ],\n \"resource_type\": \"Storage_Disks\",\n \"severity\": \"high\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/4vnyd\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"auditIfNotExists\"\n ],\n \"defaultValue\": \"auditIfNotExists\"\n }\n },\n \"policyRule\": {\n \"if\": {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Compute/disks\"\n },\n {\n \"field\": \"Microsoft.Compute/disks/diskState\",\n \"equals\": \"attached\"\n },\n {\n \"field\": \"Microsoft.Compute/disks/osType\",\n \"exists\": \"true\"\n }\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Compute/disks\",\n \"existenceCondition\": {\n \"field\": \"Microsoft.Compute/disks/encryptionSettingsCollection.enabled\",\n \"equals\": \"true\"\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Disks"
+  ],
+  "resource_type": "Storage_Disks",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_OS_Disk_Encryption",
+    "description": "It is recommended to enable OS Disk encryption. ",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/4vnyd"
+}

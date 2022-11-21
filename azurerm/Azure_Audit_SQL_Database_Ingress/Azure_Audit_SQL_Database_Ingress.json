@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether the SQL DB is allowing the external traffic in its firewall rule.",
+  "classification": "Security",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "MSSQL"
+  ],
+  "resource_type": "Servers",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit SQL Database Ingress",
+  "name": "Azure_Audit_SQL_Database_Ingress",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/osnui",
+  "content": "{\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Sql/servers/firewallRules\"\n        },\n        {\n          \"field\": \"Microsoft.Sql/servers/firewallRules/startIpAddress\",\n          \"equals\": \"0.0.0.0\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"Audit\"\n    }\n  }\n}",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_SQL_Database_Ingress"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_SQL_Database_Ingress.json"
+  }
+}

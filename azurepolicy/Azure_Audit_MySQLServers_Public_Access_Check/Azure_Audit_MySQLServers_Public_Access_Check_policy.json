@@ -1,0 +1,48 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/f346c9b0-bdea-42d5-aea1-2b67dc31d13f",
+    "policy_description": "This policy audit whether MySQL Servers are accessible through public",
+    "recommendation_name": "Azure_Audit_MySQLServers_Public_Access_Check",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "high",
+    "uri": "policy/azure_policy/global/azure/compliance/others/76ec6"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.DBforMySQL/flexibleservers"
+        },
+        {
+          "field": "Microsoft.DBforMySQL/flexibleservers/publicNetworkAccess",
+          "notEquals": "Enabled"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

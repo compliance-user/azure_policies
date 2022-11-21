@@ -1,0 +1,38 @@
+{
+  "name": "Ensure_HTTPS_Traffic_Only_StorageAccount",
+  "display_name": "Azure Ensure https traffic only for storage account",
+  "description": "This policy audits whether HTTPS traffic only is enabled for Storage Account.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Storage/storageAccounts\"\n        },\n        {\n          \"not\": {\n            \"field\": \"Microsoft.Storage/storageAccounts/supportsHttpsTrafficOnly\",\n            \"equals\": \"true\"\n          }\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"audit\"\n    }\n  }\n}",
+  "parameters": {},
+  "classification": "Security",
+  "automation_enabled": true,
+  "sub_classification": "Data",
+  "service_resource": [
+    "Storage_Accounts"
+  ],
+  "resource_type": "Accounts",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {
+    "system_scheduled_details": [
+      {
+        "interval": 1440
+      }
+    ]
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": true,
+  "recommendations": [
+    "Azure_Storage_Account_Ensure_Https_Only"
+  ],
+  "uri": "policy/azure_policy/global/azure/compliance/storage/pxawe"
+}

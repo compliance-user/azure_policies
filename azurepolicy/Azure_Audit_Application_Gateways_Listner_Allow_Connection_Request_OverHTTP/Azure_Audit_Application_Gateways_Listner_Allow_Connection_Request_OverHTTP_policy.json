@@ -1,0 +1,51 @@
+{
+  "policyType": "Custom",
+  "description": "Azure Application gateways listener that allow connection requests over HTTP",
+  "mode": "All",
+  "metadata": {
+    "policy_description": "Azure Application gateways listener that allow connection requests over HTTP",
+    "recommendation_name": "Azure_Audit_Application_Gateways_Listner_Allow_Connection_Request_OverHTTP",
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/ca4dc775-c1eb-4da2-afbb-202230aa3c15",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "App_Services",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "severity": "medium",
+    "category": "Network",
+    "uri": "policy/azure_policy/global/azure/compliance/others/40156"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "count": {
+        "field": "Microsoft.Network/applicationGateways/httpListeners[*]",
+        "where": {
+          "field": "Microsoft.Network/applicationGateways/httpListeners[*].protocol",
+          "equals": "Http"
+        }
+      },
+      "equals": 0
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "ca4dc775-c1eb-4da2-afbb-202230aa3c15"
+}

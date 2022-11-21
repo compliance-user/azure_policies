@@ -1,0 +1,32 @@
+{
+  "name": "Azure_Audit_NetworkWatcher",
+  "display_name": "Azure Audit NetworkWatcher",
+  "description": "This policy audits whether NetworkWatcher is enabled in the region.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n  \"mode\": \"All\",\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"equals\": \"Microsoft.Network/virtualNetworks\"\n    },\n    \"then\": {\n      \"effect\": \"auditIfNotExists\",\n      \"details\": {\n        \"type\": \"Microsoft.Network/networkWatchers\",\n        \"resourceGroupName\": \"NetworkWatcherRG\",\n        \"existenceCondition\": {\n          \"field\": \"location\",\n          \"equals\": \"[parameters('location')]\"\n        }\n      }\n    }\n  },\n  \"parameters\": {\n    \"location\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Audit if Network Watcher is not enabled for region\",\n        \"description\": \"This policy audits if Network Watcher is not enabled for a selected region.\"\n      },\n      \"allowedValues\": [\n        \"Australia East\",\n        \"Australia Southeast\",\n        \"Brazil South\",\n        \"Canada Central\",\n        \"Canada East\",\n        \"Central India\",\n        \"Central US\",\n        \"East Asia\",\n        \"East US\",\n        \"East US 2\",\n        \"Japan East\",\n        \"Japan West\",\n        \"Korea Central\",\n        \"Korea South\",\n        \"North Central US\",\n        \"North Europe\",\n        \"South Central US\",\n        \"South India\",\n        \"Southeast Asia\",\n        \"UK South\",\n        \"UK West\",\n        \"West Central US\",\n        \"West Europe\",\n        \"West India\",\n        \"West US\",\n        \"West US 2\"\n      ]\n    }\n  }\n}\n",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "recommendations": [
+    "Azure_Audit_Recommendations_NetworkWatcher"
+  ],
+  "metadata": {
+  },
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "uri": "policy/azure_policy/global/azure/compliance/others/n7ty4"
+}

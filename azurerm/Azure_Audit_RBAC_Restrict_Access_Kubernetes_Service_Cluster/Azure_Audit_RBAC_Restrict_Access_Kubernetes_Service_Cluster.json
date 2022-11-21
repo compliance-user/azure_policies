@@ -1,0 +1,34 @@
+{
+  "status": "active",
+  "description": "This policy audits whether the RBAC Access for the Kubernetes Service Cluster is enabled.",
+  "classification": "Security",
+  "sub_classification": "Host",
+  "service_resource": [
+    "Cluster"
+  ],
+  "resource_type": "Azure_Kubernetes_Service",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit RBAC Restrict Access Kubernetes Service Cluster",
+  "name": "Azure_Audit_RBAC_Restrict_Access_Kubernetes_Service_Cluster",
+  "parameters": {},
+  "uri": "policy/azure_policy/global/azure/compliance/others/g6hpl",
+  "content": "{\n  \"mode\": \"All\",\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.ContainerService/managedClusters\"\n        },\n        {\n          \"anyOf\": [\n            {\n              \"field\": \"Microsoft.ContainerService/managedClusters/enableRBAC\",\n              \"exists\": \"false\"\n            },\n            {\n              \"field\": \"Microsoft.ContainerService/managedClusters/enableRBAC\",\n              \"equals\": \"false\"\n            }\n          ]\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"Audit\"\n    }\n  }\n}\n\n",
+  "is_system_policy": false,
+  "resources": [],
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_RBAC_Restrict_Access_Kubernetes_Service_Cluster"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_RBAC_Restrict_Access_Kubernetes_Service_Cluster.json"
+  }
+}

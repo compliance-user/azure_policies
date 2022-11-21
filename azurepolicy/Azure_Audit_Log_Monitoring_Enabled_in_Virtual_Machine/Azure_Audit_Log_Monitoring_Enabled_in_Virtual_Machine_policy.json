@@ -1,0 +1,55 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/fa2c2b1d-1414-489d-8146-1c428702c6aa",
+    "policy_description": "This policy Audits log monotoring enabled in virtual machine",
+    "recommendation_name": "Azure_Audit_Log_Monitoring_Enabled_in_Virtual_Machine",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/32fb6"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    },
+    "provisioningState": {
+      "type": "String",
+      "metadata": {
+        "displayName": "provisioningState of the data collection rules",
+        "description": "If the value of the provisioning state given in the parameter is equal to the value in the data collection rule then it will be compliant."
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Compute/virtualMachines"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Insights/dataCollectionRules",
+        "existenceScope": "Subscription",
+        "existenceCondition": {
+          "field": "Microsoft.Insights/dataCollectionRules/provisioningState",
+          "equals": "[parameters('provisioningState')]"
+        }
+      }
+    }
+  }
+}

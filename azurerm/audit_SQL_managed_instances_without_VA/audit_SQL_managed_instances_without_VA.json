@@ -1,0 +1,41 @@
+{
+  "status": "active",
+  "description": "This policy audits whether  SQL managed instances have recurring vulnerability assessment scans enabled. Vulnerability assessment can discover, track, and help you remediate potential database vulnerabilities.",
+  "classification": "Security",
+  "sub_classification": "Data",
+  "service_resource": [
+    "MSSQL"
+  ],
+  "resource_type": "Servers",
+  "severity": "medium",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit SQL managed instances without Vulnerability Assessment",
+  "name": "Azure_Audit_SQL_Managed_Instance_without_VA",
+  "uri": "policy/azure_policy/global/azure/compliance/others/ryutr",
+  "content": "{\n  \"parameters\": {\n    \"effect\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Effect\",\n        \"description\": \"Enable or disable the execution of the policy\"\n      },\n      \"allowedValues\": [\n        \"AuditIfNotExists\"\n      ]\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"equals\": \"Microsoft.Sql/managedInstances\"\n    },\n    \"then\": {\n      \"effect\": \"[parameters('effect')]\",\n      \"details\": {\n        \"type\": \"Microsoft.Sql/managedInstances/vulnerabilityAssessments\",\n        \"name\": \"default\",\n        \"existenceCondition\": {\n          \"field\": \"Microsoft.Sql/managedInstances/vulnerabilityAssessments/recurringScans.isEnabled\",\n          \"equals\": \"True\"\n        }\n      }\n    }\n  }\n}\n",
+  "is_system_policy": true,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Audit_SQL_Managed_Instances_without_VA"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "system_scheduled_details": [
+      {
+        "interval": 1440,
+        "args": {
+          "effect": "AuditIfNotExists"
+        }
+      }
+    ],
+    "file": "audit_SQL_managed_instances_without_VA.json"
+  }
+}
+

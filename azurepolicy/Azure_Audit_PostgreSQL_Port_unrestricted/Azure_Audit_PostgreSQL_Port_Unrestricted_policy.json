@@ -1,0 +1,97 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_description": " PostgreSQL port unrestricted",
+    "classification": "Security",
+    "sub_classification": "Data",
+    "service_resource": [
+      "PGSQL"
+    ],
+    "resource_type": "Databases",
+    "severity": "high",
+    "uri": ""
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "Audit",
+        "Disabled"
+      ],
+      "defaultValue": "Audit",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or  disable the execution of the policy"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "anyOf": [
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Network/networkSecurityGroups/securityRules"
+            },
+            {
+              "not": {
+                "field": "Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefix",
+                "notEquals": "*"
+              }
+            },
+            {
+              "anyOf": [
+                {
+                  "field": "Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange",
+                  "equals": "22"
+                },
+                {
+                  "field": "Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange",
+                  "equals": "5432"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Network/networkSecurityGroups"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Network/networkSecurityGroups/securityRules[*]",
+                "where": {
+                  "allOf": [
+                    {
+                      "field": "Microsoft.Network/networkSecurityGroups/securityRules[*].sourceAddressPrefix",
+                      "equals": "*"
+                    },
+                    {
+                      "anyOf": [
+                        {
+                          "field": "Microsoft.Network/networkSecurityGroups/securityRules[*].destinationPortRange",
+                          "equals": "22"
+                        },
+                        {
+                          "field": "Microsoft.Network/networkSecurityGroups/securityRules[*].destinationPortRange",
+                          "equals": "5432"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "greater": 0
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }
+}

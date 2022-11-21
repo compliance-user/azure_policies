@@ -1,0 +1,98 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_description": " MSSQL port unrestricted",
+    "severity": "high",
+    "classification": "Security",
+    "uri": "policy/azure_policy/global/azure/compliance/others/6356e",
+    "service_resource": [
+      "Databases"
+    ],
+    "resource_type": "MySQL",
+    "sub_classification": "Data"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    }
+  },
+  "policyRule": {
+    "then": {
+      "effect": "[parameters('effect')]"
+    },
+    "if": {
+      "anyOf": [
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Network/networkSecurityGroups/securityRules"
+            },
+            {
+              "not": {
+                "field": "Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefix",
+                "notEquals": "*"
+              }
+            },
+            {
+              "anyOf": [
+                {
+                  "field": "Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange",
+                  "equals": "22"
+                },
+                {
+                  "field": "Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange",
+                  "equals": "1433"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Network/networkSecurityGroups"
+            },
+            {
+              "count": {
+                "field": "Microsoft.Network/networkSecurityGroups/securityRules[*]",
+                "where": {
+                  "allOf": [
+                    {
+                      "field": "Microsoft.Network/networkSecurityGroups/securityRules[*].sourceAddressPrefix",
+                      "equals": "*"
+                    },
+                    {
+                      "anyOf": [
+                        {
+                          "field": "Microsoft.Network/networkSecurityGroups/securityRules[*].destinationPortRange",
+                          "equals": "22"
+                        },
+                        {
+                          "field": "Microsoft.Network/networkSecurityGroups/securityRules[*].destinationPortRange",
+                          "equals": "1433"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "greater": 0
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

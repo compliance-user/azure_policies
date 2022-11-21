@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Application_Insights_Components_Should_Block_Non_AzureAD_Based_Ingestion",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/199d5677-e4d9-4264-9465-efe1839c06bd",
+  "display_name": "Azure Audit Application Insights Components Should Block Non AzureAD Based Ingestion",
+  "description": "Enforcing log ingestion to require Azure Active Directory authentication prevents unauthenticated logs from an attacker which could lead to incorrect status, false alerts, and incorrect logs stored in the system",
+  "category": "service",
+  "status": "active",
+  "content": "{\n    \"policyType\": \"BuiltIn\",\n    \"mode\": \"Indexed\",\n    \"metadata\": {\n      \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/199d5677-e4d9-4264-9465-efe1839c06bd\",\n      \"version\": \"1.0.0\",\n      \"category\": \"Monitoring\"\n    },\n    \"parameters\": {\n      \"effect\": {\n        \"type\": \"String\",\n        \"metadata\": {\n          \"displayName\": \"Effect\",\n          \"description\": \"Enable or disable the execution of the policy\"\n        },\n        \"allowedValues\": [\n          \"Deny\",\n          \"Audit\",\n          \"Disabled\"\n        ],\n        \"defaultValue\": \"Audit\"\n      }\n    },\n    \"policyRule\": {\n      \"if\": {\n        \"allOf\": [\n          {\n            \"field\": \"type\",\n            \"equals\": \"Microsoft.Insights/components\"\n          },\n          {\n            \"field\": \"Microsoft.Insights/components/DisableLocalAuth\",\n            \"notEquals\": \"true\"\n          }\n        ]\n      },\n      \"then\": {\n        \"effect\": \"[parameters('effect')]\"\n      }\n    }\n}",
+  "parameters": {},
+  "classification": "Security",
+  "sub_classification": "Application",
+  "service_resource": [
+    "Subscription"
+  ],
+  "resource_type": "Subscription",
+  "severity": "high",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Application_Insights_Components_Should_Block_Non_AzureAD_Based_Ingestion",
+    "description": "Enforcing log ingestion to require Azure Active Directory authentication prevents unauthenticated logs from an attacker which could lead to incorrect status, false alerts, and incorrect logs stored in the system",
+    "actions": []
+  },
+    "uri": "policy/azure_policy/global/azure/security/application/t99kb"
+}

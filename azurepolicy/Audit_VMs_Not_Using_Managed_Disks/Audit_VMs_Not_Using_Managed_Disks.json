@@ -1,0 +1,35 @@
+{
+  "name": "Audit_VMs_Not_Using_Managed_Disks",
+  "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/568400d8919a1fd48333c613001f10a8",
+  "display_name": "Audit VMs Not Using Managed Disks",
+  "description": "This policy audits VMs that do not use managed disks",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"metadata\": {\n \"policy_id\": \"/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/568400d8919a1fd48333c613001f10a8\",\n \"policy_description\": \"This policy audits VMs that do not use managed disks\",\n \"classification\": \"Operation\",\n \"sub_classification\": \"Standards\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"resource_type\": \"Virtual_Machines\",\n \"severity\": \"low\",\n \"uri\": \"policy/congress/global/azure/consumption/vm/ahnmr\"\n },\n \"policyRule\": {\n \"if\": {\n \"anyOf\": [\n {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Compute/virtualMachines\"\n },\n {\n \"field\": \"Microsoft.Compute/virtualMachines/osDisk.uri\",\n \"exists\": \"True\"\n }\n ]\n },\n {\n \"allOf\": [\n {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Compute/VirtualMachineScaleSets\"\n },\n {\n \"anyOf\": [\n {\n \"field\": \"Microsoft.Compute/VirtualMachineScaleSets/osDisk.vhdContainers\",\n \"exists\": \"True\"\n },\n {\n \"field\": \"Microsoft.Compute/VirtualMachineScaleSets/osdisk.imageUrl\",\n \"exists\": \"True\"\n }\n ]\n }\n ]\n }\n ]\n },\n \"then\": {\n \"effect\": \"audit\"\n }\n }\n}\n",
+  "parameters": "null",
+  "classification": "Operation",
+  "sub_classification": "Standards",
+  "content_password_or_key": "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",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "low",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "null",
+    "description": "This policy audits VMs that do not use managed disks",
+    "actions": []
+  },
+  "uri": "policy/congress/global/azure/consumption/vm/ahnmr"
+}

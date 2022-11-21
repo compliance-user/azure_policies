@@ -1,0 +1,24 @@
+{
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "equals": "Microsoft.Compute/virtualMachines",
+      "field": "type"
+    },
+    "then": {
+      "details": {
+        "existenceCondition": {
+          "field": "Microsoft.Security/complianceResults/resourceStatus",
+          "in": [
+            "NotApplicable",
+            "OffByPolicy",
+            "Healthy"
+          ]
+        },
+        "name": "jitNetworkAccess",
+        "type": "Microsoft.Security/complianceResults"
+      },
+      "effect": "AuditIfNotExists"
+    }
+  }
+}

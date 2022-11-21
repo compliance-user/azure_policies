@@ -1,0 +1,32 @@
+{
+  "parameters": {
+    "listOfAllowedLocations": {
+      "type": "Array",
+      "metadata": {
+        "description": "The list of locations that can be specified when deploying resources.",
+        "displayName": "Allowed locations"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "location",
+          "notIn": "[parameters('listOfAllowedLocations')]"
+        },
+        {
+          "field": "location",
+          "notEquals": "global"
+        },
+        {
+          "field": "type",
+          "notEquals": "Microsoft.AzureActiveDirectory/b2cDirectories"
+        }
+      ]
+    },
+    "then": {
+      "effect": "audit"
+    }
+  }
+}

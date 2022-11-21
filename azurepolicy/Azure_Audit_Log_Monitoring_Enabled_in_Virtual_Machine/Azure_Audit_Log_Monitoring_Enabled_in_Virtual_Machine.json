@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Log_Monitoring_Enabled_in_Virtual_Machine",
+  "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/fa2c2b1d-1414-489d-8146-1c428702c6aa",
+  "display_name": "Azure Audit Log Monitoring Enabled in Virtual Machine",
+  "description": "This policy Audits log monotoring enabled in virtual machine",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"Custom\",\n \"mode\": \"All\",\n \"metadata\": {\n \"policy_id\": \"/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/fa2c2b1d-1414-489d-8146-1c428702c6aa\",\n \"policy_description\": \"This policy Audits log monotoring enabled in virtual machine\",\n \"recommendation_name\": \"Azure_Audit_Log_Monitoring_Enabled_in_Virtual_Machine\",\n \"classification\": \"Security\",\n \"sub_classification\": \"Standards\",\n \"resource_type\": \"Virtual_Machines\",\n \"service_resource\": [\n \"Virtual_Machines\"\n ],\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/32fb6\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"AuditIfNotExists\",\n \"Disabled\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n },\n \"provisioningState\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"provisioningState of the data collection rules\",\n \"description\": \"If the value of the provisioning state given in the parameter is equal to the value in the data collection rule then it will be compliant.\"\n }\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Compute/virtualMachines\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Insights/dataCollectionRules\",\n \"existenceScope\": \"Subscription\",\n \"existenceCondition\": {\n \"field\": \"Microsoft.Insights/dataCollectionRules/provisioningState\",\n \"equals\": \"[parameters('provisioningState')]\"\n }\n }\n }\n }\n}\n",
+  "parameters": "null",
+  "classification": "Security",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Virtual_Machines"
+  ],
+  "resource_type": "Virtual_Machines",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Log_Monitoring_Enabled_in_Virtual_Machine",
+    "description": "This policy Audits log monotoring enabled in virtual machine",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/32fb6"
+}

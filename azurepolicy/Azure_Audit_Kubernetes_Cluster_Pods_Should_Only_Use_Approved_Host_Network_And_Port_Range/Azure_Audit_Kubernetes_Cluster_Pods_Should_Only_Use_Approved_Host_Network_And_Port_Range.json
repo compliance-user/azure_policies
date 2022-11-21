@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Kubernetes_Cluster_Pods_Should_Only_Use_Approved_Host_Network_And_Port_Range",
+  "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/82985f06-dc18-4a48-bc1c-b9f4f0098cfe",
+  "display_name": "Azure Audit Kubernetes Cluster Pods Should Only Use Approved Host Network And Port Range",
+  "description": " This policy controls pod access to the host network and the allowable host port range in a Kubernetes cluster. This policy is generally available for Kubernetes Service (AKS), and preview for AKS Engine and Azure Arc enabled Kubernetes. For instructions on using this policy, visit https://aka.ms/kubepolicydoc.",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"policyType\": \"BuiltIn\",\n \"mode\": \"Microsoft.Kubernetes.Data\",\n \"metadata\": {\n \"policy_id\": \"/providers/Microsoft.Authorization/policyDefinitions/82985f06-dc18-4a48-bc1c-b9f4f0098cfe\",\n \"policy_description\": \" This policy controls pod access to the host network and the allowable host port range in a Kubernetes cluster. This policy is generally available for Kubernetes Service (AKS), and preview for AKS Engine and Azure Arc enabled Kubernetes. For instructions on using this policy, visit https://aka.ms/kubepolicydoc.\",\n \"classification\": \"Access\",\n \"sub_classification\": \"Standards\",\n \"service_resource\": [\n \"Cluster\"\n ],\n \"resource_type\": \"Azure_Kubernetes_Service\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/64fe9\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"allowedValues\": [\n \"audit\",\n \"deny\",\n \"disabled\"\n ],\n \"defaultValue\": \"audit\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"'Audit' allows a non-compliant resource to be created or updated, but flags it as non-compliant. 'Deny' blocks the non-compliant resource creation or update. 'Disabled' turns off the policy.\"\n }\n },\n \"excludedNamespaces\": {\n \"type\": \"Array\",\n \"metadata\": {\n \"displayName\": \"Namespace exclusions\",\n \"description\": \"List of Kubernetes namespaces to exclude from policy evaluation.\"\n },\n \"defaultValue\": [\n \"kube-system\",\n \"gatekeeper-system\",\n \"azure-arc\"\n ]\n },\n \"namespaces\": {\n \"type\": \"Array\",\n \"metadata\": {\n \"displayName\": \"Namespace inclusions\",\n \"description\": \"List of Kubernetes namespaces to only include in policy evaluation. An empty list means the policy is applied to all resources in all namespaces.\"\n },\n \"defaultValue\": []\n },\n \"labelSelector\": {\n \"type\": \"Object\",\n \"metadata\": {\n \"displayName\": \"Kubernetes label selector\",\n \"description\": \"Label query to select Kubernetes resources for policy evaluation. An empty label selector matches all Kubernetes resources.\"\n },\n \"defaultValue\": {},\n \"schema\": {\n \"description\": \"A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all resources.\",\n \"type\": \"object\",\n \"properties\": {\n \"matchLabels\": {\n \"description\": \"matchLabels is a map of {key,value} pairs.\",\n \"type\": \"object\",\n \"additionalProperties\": {\n \"type\": \"string\"\n },\n \"minProperties\": 1\n },\n \"matchExpressions\": {\n \"description\": \"matchExpressions is a list of values, a key, and an operator.\",\n \"type\": \"array\",\n \"items\": {\n \"type\": \"object\",\n \"properties\": {\n \"key\": {\n \"description\": \"key is the label key that the selector applies to.\",\n \"type\": \"string\"\n },\n \"operator\": {\n \"description\": \"operator represents a key's relationship to a set of values.\",\n \"type\": \"string\",\n \"enum\": [\n \"In\",\n \"NotIn\",\n \"Exists\",\n \"DoesNotExist\"\n ]\n },\n \"values\": {\n \"description\": \"values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.\",\n \"type\": \"array\",\n \"items\": {\n \"type\": \"string\"\n }\n }\n },\n \"required\": [\n \"key\",\n \"operator\"\n ],\n \"additionalProperties\": false\n },\n \"minItems\": 1\n }\n },\n \"additionalProperties\": false\n }\n },\n \"allowHostNetwork\": {\n \"type\": \"Boolean\",\n \"metadata\": {\n \"displayName\": \"Allow host network usage\",\n \"description\": \"Set this value to true if pod is allowed to use host network otherwise false.\"\n },\n \"defaultValue\": false\n },\n \"minPort\": {\n \"type\": \"Integer\",\n \"metadata\": {\n \"displayName\": \"Min host port\",\n \"description\": \"The minimum value in the allowable host port range that pods can use in the host network namespace.\"\n },\n \"defaultValue\": 0\n },\n \"maxPort\": {\n \"type\": \"Integer\",\n \"metadata\": {\n \"displayName\": \"Max host port\",\n \"description\": \"The maximum value in the allowable host port range that pods can use in the host network namespace.\"\n },\n \"defaultValue\": 0\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"in\": [\n \"AKS Engine\",\n \"Microsoft.Kubernetes/connectedClusters\",\n \"Microsoft.ContainerService/managedClusters\"\n ]\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"constraintTemplate\": \"https://store.policy.core.windows.net/kubernetes/host-network-ports/v1/template.yaml\",\n \"constraint\": \"https://store.policy.core.windows.net/kubernetes/host-network-ports/v1/constraint.yaml\",\n \"excludedNamespaces\": \"[parameters('excludedNamespaces')]\",\n \"namespaces\": \"[parameters('namespaces')]\",\n \"labelSelector\": \"[parameters('labelSelector')]\",\n \"values\": {\n \"allowHostNetwork\": \"[parameters('allowHostNetwork')]\",\n \"minPort\": \"[parameters('minPort')]\",\n \"maxPort\": \"[parameters('maxPort')]\"\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Access",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Cluster"
+  ],
+  "resource_type": "Azure_Kubernetes_Service",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Kubernetes_Cluster_Pods_Should_Only_Use_Approved_Host_Network_And_Port_Range",
+    "description": " This policy controls pod access to the host network and the allowable host port range in a Kubernetes cluster. This policy is generally available for Kubernetes Service (AKS), and preview for AKS Engine and Azure Arc enabled Kubernetes. For instructions on using this policy, visit https://aka.ms/kubepolicydoc.",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/64fe9"
+}

@@ -1,0 +1,59 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/7aff50fb-f036-4f1f-9879-18ffac81bc0a",
+    "policy_description": "Ensure that UDP Services are restricted from the Internet",
+    "recommendation_name": "Azure_Audit_Ensure_That_UDP_Services_Are_Restricted_From_The_Internet",
+    "classification": "Network",
+    "sub_classification": "Application",
+    "resource_type": "Virtual_Machines",
+    "service_resource": [
+      "Virtual_Machines"
+    ],
+    "uri": "policy/azure_policy/global/azure/compliance/others/2c87b",
+    "severity": "high"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.Network/networkSecurityGroups"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+        "existenceCondition": {
+          "allOf": [
+            {
+              "field": "Microsoft.Network/networkSecurityGroups/securityRules/protocol",
+              "equals": "UDP"
+            },
+            {
+              "field": "Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefix",
+              "equals": "*"
+            },
+            {
+              "field": "Microsoft.Network/networkSecurityGroups/securityRules/access",
+              "equals": "Allow"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

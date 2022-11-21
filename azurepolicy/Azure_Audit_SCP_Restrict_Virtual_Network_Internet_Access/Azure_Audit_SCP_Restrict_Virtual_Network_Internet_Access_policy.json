@@ -1,0 +1,36 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/c7427ec2-c7a2-43e0-8f50-29dc1531486d/providers/Microsoft.Authorization/policyDefinitions/633f569b-2910-450b-afba-c75b9d8612b0",
+    "policy_description": " This policy denies the network interfaces which are configured with any public IP. Public IP addresses allow internet resources to communicate inbound to Azure resources, and Azure resources to communicate outbound to the internet. This should be reviewed by the network security team.",
+    "classification": "Operation",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Subscription"
+    ],
+    "resource_type": "Subscription",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/93bbd"
+  },
+  "parameters": {},
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Network/networkInterfaces"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Network/networkInterfaces/ipconfigurations[*].publicIpAddress.id",
+            "notLike": "*"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  }
+}

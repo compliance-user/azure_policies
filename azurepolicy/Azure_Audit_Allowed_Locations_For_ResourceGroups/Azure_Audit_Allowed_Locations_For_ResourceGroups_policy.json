@@ -1,0 +1,100 @@
+{
+  "policyType": "BuiltIn",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988",
+    "policy_description": "This policy enables you to restrict the locations your organization can create resource groups in. Use to enforce your geo-compliance requirements",
+    "classification": "Security",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Subscription"
+    ],
+    "resource_type": "Subscription",
+    "severity": "low",
+    "uri": "policy/azure_policy/global/azure/compliance/others/Wnhwb"
+  },
+  "parameters": {
+    "listOfAllowedLocations": {
+      "type": "Array",
+      "allowedValues": [
+        "northcentralus",
+        "germanywestcentral",
+        "centralindia",
+        "uksouth",
+        "westusstage",
+        "asiapacific",
+        "japaneast",
+        "eastasiastage",
+        "germanynorth",
+        "westcentralus",
+        "brazilsouth",
+        "japan",
+        "southafricawest",
+        "uaecentral",
+        "canadaeast",
+        "norwayeast",
+        "francecentral",
+        "norwaywest",
+        "uaenorth",
+        "centralus",
+        "francesouth",
+        "centralusstage",
+        "southcentralusstage",
+        "eastus2",
+        "koreasouth",
+        "canadacentral",
+        "westindia",
+        "australiacentral2",
+        "southafricanorth",
+        "unitedstates",
+        "europe",
+        "switzerlandwest",
+        "westus2stage",
+        "australia",
+        "northeurope",
+        "koreacentral",
+        "westus2",
+        "southcentralus",
+        "eastus2euap",
+        "australiacentral",
+        "westeurope",
+        "westus",
+        "northcentralusstage",
+        "eastus2stage",
+        "australiasoutheast",
+        "southindia",
+        "eastus",
+        "ukwest",
+        "australiaeast",
+        "switzerlandnorth",
+        "uk",
+        "centraluseuap",
+        "japanwest",
+        "eastasia",
+        "southeastasia"
+      ],
+      "metadata": {
+        "description": "The list of locations that resource groups can be created in.",
+        "strongType": "location",
+        "displayName": "Allowed locations"
+      }
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+        },
+        {
+          "field": "location",
+          "notIn": "[parameters('listOfAllowedLocations')]"
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  }
+}

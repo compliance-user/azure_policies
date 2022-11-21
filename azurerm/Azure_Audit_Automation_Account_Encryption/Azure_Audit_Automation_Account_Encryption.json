@@ -1,0 +1,32 @@
+{
+  "status": "active",
+  "description": "This policy audits whether encryption of Automation account variable is enabled.",
+  "classification": "Access",
+  "sub_classification": "Standards",
+  "resource_type": "Automation",
+  "service_resource": [
+    "Automation_Account"
+  ],
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Variable Encryption in Automation Account",
+  "name": "Azure_Audit_Encyrption_Automation_Account",
+  "uri": "policy/azure_policy/global/azure/compliance/others/gjdd&",
+  "content": "{\n  \"mode\": \"All\",\n  \"parameters\": {\n    \"effect\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Effect\",\n        \"description\": \"Enable or disable the execution of the policy\"\n      },\n      \"allowedValues\": [\n        \"Audit\"\n      ]\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"allOf\": [\n        {\n          \"field\": \"type\",\n          \"equals\": \"Microsoft.Automation/automationAccounts/variables\"\n        },\n        {\n          \"field\": \"Microsoft.Automation/automationAccounts/variables/isEncrypted\",\n          \"notEquals\": \"true\"\n        }\n      ]\n    },\n    \"then\": {\n      \"effect\": \"[parameters('effect')]\"\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Encyrption_Automation_Account"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Automation_Account_Encryption.json"
+  }
+}

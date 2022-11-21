@@ -1,0 +1,34 @@
+{
+  "name": "Azure_Audit_Metric_Alerts_Batch_Accounts",
+  "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/cd6b3a7ec2e6298e6ecb0833c272d7a8",
+  "display_name": "Azure Audit Metric Alerts Batch Accounts",
+  "description": "Audit configuration of metric alert rules on Batch account to enable the required metric",
+  "category": "service",
+  "status": "active",
+  "content": "{\n \"metadata\": {\n \"policy_id\": \"/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/cd6b3a7ec2e6298e6ecb0833c272d7a8\",\n \"policy_description\": \"Audit configuration of metric alert rules on Batch account to enable the required metric\",\n \"classification\": \"Access\",\n \"sub_classification\": \"Standards\",\n \"service_resource\": [\n \"Batch_Account\"\n ],\n \"resource_type\": \"Batch_Service\",\n \"severity\": \"medium\",\n \"uri\": \"policy/azure_policy/global/azure/compliance/others/kfod*\"\n },\n \"parameters\": {\n \"effect\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Effect\",\n \"description\": \"Enable or disable the execution of the policy\"\n },\n \"allowedValues\": [\n \"AuditIfNotExists\"\n ],\n \"defaultValue\": \"AuditIfNotExists\"\n },\n \"metricName\": {\n \"type\": \"String\",\n \"metadata\": {\n \"displayName\": \"Metric name\",\n \"description\": \"The metric name that an alert rule must be enabled on\"\n },\n \"allowedValues\": [\n \"CoreCount\",\n \"TotalNodeCount\",\n \"LowPriorityCoreCount\",\n \"TotalLowPriorityNodeCount\",\n \"CreatingNodeCount\",\n \"StartingNodeCount\",\n \"WaitingForStartTaskNodeCount\",\n \"StartTaskFailedNodeCount\",\n \"IdleNodeCount\",\n \"OfflineNodeCount\",\n \"RebootingNodeCount\",\n \"ReimagingNodeCount\",\n \"RunningNodeCount\",\n \"LeavingPoolNodeCount\",\n \"UnusableNodeCount\",\n \"PreemptedNodeCount\",\n \"TaskStartEvent\",\n \"TaskCompleteEvent\",\n \"TaskFailEvent\",\n \"PoolCreateEvent\",\n \"PoolResizeStartEvent\",\n \"PoolResizeCompleteEvent\",\n \"PoolDeleteStartEvent\",\n \"PoolDeleteCompleteEvent\",\n \"JobDeleteCompleteEvent\",\n \"JobDeleteStartEvent\",\n \"JobDisableCompleteEvent\",\n \"JobDisableStartEvent\",\n \"JobStartEvent\",\n \"JobTerminateCompleteEvent\",\n \"JobTerminateStartEvent\"\n ]\n }\n },\n \"policyRule\": {\n \"if\": {\n \"field\": \"type\",\n \"equals\": \"Microsoft.Batch/batchAccounts\"\n },\n \"then\": {\n \"effect\": \"[parameters('effect')]\",\n \"details\": {\n \"type\": \"Microsoft.Insights/alertRules\",\n \"existenceScope\": \"Subscription\",\n \"existenceCondition\": {\n \"allOf\": [\n {\n \"field\": \"Microsoft.Insights/alertRules/isEnabled\",\n \"equals\": \"true\"\n },\n {\n \"field\": \"Microsoft.Insights/alertRules/condition.dataSource.metricName\",\n \"equals\": \"[parameters('metricName')]\"\n },\n {\n \"field\": \"Microsoft.Insights/alertRules/condition.dataSource.resourceUri\",\n \"equals\": \"[concat('/subscriptions/', subscription().subscriptionId, '/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Batch/batchAccounts/', field('name'))]\"\n }\n ]\n }\n }\n }\n }\n}\n",
+  "parameters": {},
+  "classification": "Access",
+  "sub_classification": "Standards",
+  "service_resource": [
+    "Batch_Account"
+  ],
+  "resource_type": "Batch_Service",
+  "severity": "medium",
+  "type": [
+    "Cloud"
+  ],
+  "services": [
+    "Azure"
+  ],
+  "scope": "global",
+  "metadata": {},
+  "resources": [],
+  "is_temp": false,
+  "is_system_policy": false,
+  "recommendation": {
+    "name": "Azure_Audit_Metric_Alerts_Batch_Accounts",
+    "description": "Audit configuration of metric alert rules on Batch account to enable the required metric",
+    "actions": []
+  },
+  "uri": "policy/azure_policy/global/azure/compliance/others/kfod*"
+}

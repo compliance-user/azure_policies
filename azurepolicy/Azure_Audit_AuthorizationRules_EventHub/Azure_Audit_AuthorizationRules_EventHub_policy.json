@@ -1,0 +1,36 @@
+{
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/b2b011ba-57e6-42aa-9768-1e2ed6408194/providers/Microsoft.Authorization/policyDefinitions/22ed02b85484dd7390a6177f8909f6da",
+    "policy_description": "This policy Audits existence of authorization rules on Event Hub entities to grant least-privileged access.",
+    "classification": "Access",
+    "sub_classification": "Standards",
+    "service_resource": [
+      "Namespaces"
+    ],
+    "resource_type": "Event_Hubs",
+    "severity": "medium",
+    "uri": "policy/azure_policy/global/azure/compliance/others/kpyyq"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "allowedValues": [
+        "AuditIfNotExists"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "field": "type",
+      "equals": "Microsoft.EventHub/namespaces/eventhubs"
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.EventHub/namespaces/eventHubs/authorizationRules"
+      }
+    }
+  }
+}

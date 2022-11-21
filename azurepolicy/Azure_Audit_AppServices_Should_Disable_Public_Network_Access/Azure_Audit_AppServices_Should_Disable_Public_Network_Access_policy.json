@@ -1,0 +1,55 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+    "policy_id": "/subscriptions/f52b9d6b-f076-48c2-b466-c4b2e6d7cfc6/providers/Microsoft.Authorization/policyDefinitions/77ceb9a1-5fdf-40e2-a165-0ddaf5c682e1",
+    "policy_description": "This policy audits app services not allows public network access",
+    "recommendation_name": "Azure_Audit_AppServices_Should_Disable_Public_Network_Access",
+    "classification": "Security",
+    "sub_classification": "Application",
+    "resource_type": "App_Services",
+    "service_resource": [
+      "Web_Apps"
+    ],
+    "uri": "policy/azure_policy/global/azure/compliance/others/42b00",
+    "severity": "medium"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "AuditIfNotExists",
+        "Disabled"
+      ],
+      "defaultValue": "AuditIfNotExists"
+    }
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Web/sites"
+        },
+        {
+          "field": "kind",
+          "equals": "app,container,windows"
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]",
+      "details": {
+        "type": "Microsoft.Web/sites/privateEndpointConnections",
+        "existenceCondition": {
+          "field": "Microsoft.Web/sites/privateEndpointConnections/privateLinkServiceConnectionState.status",
+          "equals": "Approved"
+        }
+      }
+    }
+  }
+}

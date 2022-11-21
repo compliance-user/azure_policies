@@ -1,0 +1,33 @@
+{
+  "status": "active",
+  "description": "This policy audits whether diagnostic logs is enabled for Data Lake Store. This enables you to recreate activity trails to use for investigation purposes; when a security incident occurs or when your network is compromised.",
+  "classification": "Security",
+  "sub_classification": "Network",
+  "service_resource": [
+    "Data_lake_Storage_Gen1_Accounts"
+  ],
+  "resource_type": "Data_lake_Storage_Gen1",
+  "severity": "high",
+  "is_temp": false,
+  "services": [
+    "Azure"
+  ],
+  "category": "service",
+  "display_name": "Azure Audit Diagnostic Logs in Data Lake Store",
+  "name": "Azure_Audit_Diagnostic_Logs_Data_Lake_Store",
+  "uri": "policy/azure_policy/global/azure/compliance/others/#hu%1",
+  "content": "{\n  \"parameters\": {\n    \"effect\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Effect\",\n        \"description\": \"Enable or disable the execution of the policy\"\n      },\n      \"allowedValues\": [\n        \"AuditIfNotExists\"\n      ]\n    },\n    \"requiredRetentionDays\": {\n      \"type\": \"String\",\n      \"metadata\": {\n        \"displayName\": \"Required retention (days)\",\n        \"description\": \"The required diagnostic logs retention in days\"\n      },\n      \"defaultValue\": \"365\"\n    }\n  },\n  \"policyRule\": {\n    \"if\": {\n      \"field\": \"type\",\n      \"equals\": \"Microsoft.DataLakeStore/accounts\"\n    },\n    \"then\": {\n      \"effect\": \"[parameters('effect')]\",\n      \"details\": {\n        \"type\": \"Microsoft.Insights/diagnosticSettings\",\n        \"existenceCondition\": {\n          \"anyOf\": [\n            {\n              \"allOf\": [\n                {\n                  \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled\",\n                  \"equals\": \"true\"\n                },\n                {\n                  \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.days\",\n                  \"equals\": \"[parameters('requiredRetentionDays')]\"\n                },\n                {\n                  \"field\": \"Microsoft.Insights/diagnosticSettings/logs.enabled\",\n                  \"equals\": \"true\"\n                }\n              ]\n            },\n            {\n              \"allOf\": [\n                {\n                  \"not\": {\n                    \"field\": \"Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled\",\n                    \"equals\": \"true\"\n                  }\n                },\n                {\n                  \"field\": \"Microsoft.Insights/diagnosticSettings/logs.enabled\",\n                  \"equals\": \"true\"\n                }\n              ]\n            }\n          ]\n        }\n      }\n    }\n  }\n}\n",
+  "is_system_policy": false,
+  "type": [
+    "Cloud"
+  ],
+  "recommendations": [
+    "Azure_Audit_Enable_Diagnostic_logs_in_Data_Lake_Store"
+  ],
+  "scope": "global",
+  "engine_type": "azure_policy",
+  "metadata": {
+    "file": "Azure_Audit_Diagnostic_logs_Data_Lake_Store.json"
+  }
+}
+
